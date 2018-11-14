@@ -1,0 +1,68 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+                账号ID：<input type="text" style="width:90px;" name="acc_id" class="txtinput"/>
+                账号名称：<input type="text" style="width:90px;" name="acc_name" class="txtinput"/>
+                角色名称：<input type="text" style="width:90px;" name="role_name" class="txtinput"/>
+      <input class="btn" style="padding: 6px " type="button" name="login" value="登录 " onclick="location.href='?m=SMP_Player_Login';">
+      <span style="color:red"> ×请注意，你的登录意味着系统将另一端的玩家踢下线</span>    
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+
+<tr>
+  <th>管理员</th>
+  <th>IP</th>
+  <th>登录账号ID</th>
+  <th>登录账号名称</th>
+  <th>登录角色名称</th>
+  <th>时间</th>
+</tr>
+</thead>
+<tbody>
+
+<tr >
+  <td>niuniu</td>
+  <td>14.147.85.30(广东省 电信)</td>
+  <td>330757</td>
+  <td>zooweb11432</td>
+  <td>夏侯晓柏</td>
+  <td>2012-08-22 22:28:29</td>
+</tr>
+
+<tr >
+  <td>wpf</td>
+  <td>113.108.203.158(广东省广州市 电信)</td>
+  <td>330580</td>
+  <td>wowo3699</td>
+  <td>夏沛梦</td>
+  <td>2012-08-21 16:45:47</td>
+</tr>
+
+<tr >
+  <td>wpf</td>
+  <td>113.108.203.158(广东省广州市 电信)</td>
+  <td>306</td>
+  <td>546462469qq</td>
+  <td>米粒之光</td>
+  <td>2012-08-21 16:45:39</td>
+</tr>
+
+</tbody>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

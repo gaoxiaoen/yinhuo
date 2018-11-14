@@ -1,0 +1,69 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="{$params['kw_key']}" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="{$params['kw_name']}" style="width:80px;" class="txtinput"/>
+                物品ID：<input type="text" name="kw_goods_id" value="{$params['kw_goods_id']}" style="width:80px;" class="txtinput"/>
+                物品名称<input type="text" name="kw_goods_name" value="{$params['kw_goods_name']}" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>类型</th>
+                <th>ID</th>
+                <th>玩家KEY</th>
+                <th>玩家昵称</th>
+                <th>物品id</th>
+                <th>物品名字</th>
+                <th>数量</th>
+                <th>来源</th>
+                <th>来源备注</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{if !empty($data)}>
+                <{foreach $data as $d}>
+                <tr>
+                    <td>
+                        <{if '1' === $d['is_create']}>
+                            <span class='hl1'>新增</span>
+                        <{else}>
+                            <span class='hl0'>消耗</span>
+                        <{/if}>
+                    </td>
+                    <td>{$d['id']}</td>
+                    <td>{$d['pkey']}</td>
+                    <td>{$d['nickname']}</td>
+                    <td>{$d['goods_id']}</td>
+                    <td><?php  global $Ggoods; echo $Ggoods[$d['goods_id']] ?></td>
+                    <td>{$d['num']}</td>
+                    <td>{$d['res']}</td>
+                    <td><{echo $this->consume_type[$d['res']]}></td>
+                    <td><{echo getDateStr($d['time'])}></td>
+                </tr>
+                <{/foreach}>
+            <{else}>
+                <tr><td colspan="10">暂无数据.</td></tr>
+            <{/if}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

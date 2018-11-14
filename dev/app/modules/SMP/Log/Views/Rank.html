@@ -1,0 +1,368 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search" >
+            <form method="post">
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+
+    <div id="content">
+        <{include file="Views/Widget/Tab.html"}>
+
+            <div id="js_tab_rankcbp_body" style="width:100%;">
+                <table class="dtable tablesorter" style="width:100%;">
+                    <thead>
+                    <tr>
+                        <td style="width: 20%">玩家key</td>
+                        <td>昵称</td>
+                        <td>战斗力</td>
+                        <td>排名</td>
+                        <td>快照时间</td>
+                    </tr>
+                    </thead>
+                    <{foreach $rankcbp as $d}>
+                        <tr>
+                            <td>{$d['pkey']}</td>
+                            <td>{$d['nickname']}</td>
+                            <td>{$d['rank_data']}</td>
+                            <td>{$d['rank']}</td>
+                            <td><{echo getDateStr($d['time'])}></td>
+                        </tr>
+                    <{/foreach}>
+                </table>
+            </div>
+            <div id="js_tab_ranklv_body" style="width:100%;display: none;">
+                <table class="dtable tablesorter" style="width:100%;">
+                    <thead>
+                    <tr>
+                        <td style="width: 20%">玩家key</td>
+                        <td>昵称</td>
+                        <td>等级</td>
+                        <td>排名</td>
+                        <td>快照时间</td>
+                    </tr>
+                    </thead>
+                    <{foreach $ranklv as $d}>
+                    <tr>
+                        <td>{$d['pkey']}</td>
+                        <td>{$d['nickname']}</td>
+                        <td>{$d['rank_data']}</td>
+                        <td>{$d['rank']}</td>
+                        <td><{echo getDateStr($d['time'])}></td>
+                    </tr>
+                    <{/foreach}>
+                </table>
+            </div>
+            <div id="js_tab_rankmount_body" style="width:100%;display: none;">
+                <table class="dtable tablesorter" style="width:100%;">
+                    <thead>
+                    <tr>
+                        <td style="width: 20%">玩家key</td>
+                        <td>昵称</td>
+                        <td>坐骑显示阶级</td>
+                        <td>坐骑显示星级</td>
+                        <td>坐骑实际星级</td>
+                        <td>排名</td>
+                        <td>快照时间</td>
+                    </tr>
+                    </thead>
+                    <{foreach $rankmount as $d}>
+                    <tr>
+                        <td>{$d['pkey']}</td>
+                        <td>{$d['nickname']}</td>
+                        <td><?php echo floor(($d['rank_data'] - 1) / 10 ) + 1 ?></td>
+                        <td><?php echo $d['rank_data']  % 10  ?></td>
+                        <td>{$d['rank_data']}</td>
+                        <td>{$d['rank']}</td>
+                        <td><{echo getDateStr($d['time'])}></td>
+                    </tr>
+                    <{/foreach}>
+                </table>
+            </div>
+        <div id="js_tab_rankwing_body" style="width:100%;display: none;">
+            <table class="dtable tablesorter" style="width:100%;">
+                <thead>
+                <tr>
+                    <td style="width: 20%">玩家key</td>
+                    <td>昵称</td>
+                    <td>光翼显示阶级</td>
+                    <td>光翼显示星级</td>
+                    <td>光翼实际星级</td>
+                    <td>排名</td>
+                    <td>快照时间</td>
+                </tr>
+                </thead>
+                <{foreach $rankwing as $d}>
+                <tr>
+                    <td>{$d['pkey']}</td>
+                    <td>{$d['nickname']}</td>
+                    <td><?php echo floor(($d['rank_data'] - 1) / 10 ) + 1 ?></td>
+                    <td><?php echo $d['rank_data']  % 10  ?></td>
+                    <td>{$d['rank_data']}</td>
+                    <td>{$d['rank']}</td>
+                    <td><{echo getDateStr($d['time'])}></td>
+                </tr>
+                <{/foreach}>
+            </table>
+        </div>
+        <div id="js_tab_rankfb_body" style="width:100%;display: none;">
+            <table class="dtable tablesorter" style="width:100%;">
+                <thead>
+                <tr>
+                    <td style="width: 20%">玩家key</td>
+                    <td>昵称</td>
+                    <td>法宝显示阶级</td>
+                    <td>法宝显示星级</td>
+                    <td>法宝实际星级</td>
+                    <td>排名</td>
+                    <td>快照时间</td>
+                </tr>
+                </thead>
+                <{foreach $rankfb as $d}>
+                <tr>
+                    <td>{$d['pkey']}</td>
+                    <td>{$d['nickname']}</td>
+                    <td><?php echo floor(($d['rank_data'] - 1) / 10 ) + 1 ?></td>
+                    <td><?php echo $d['rank_data']  % 10  ?></td>
+                    <td>{$d['rank_data']}</td>
+                    <td>{$d['rank']}</td>
+                    <td><{echo getDateStr($d['time'])}></td>
+                </tr>
+                <{/foreach}>
+            </table>
+        </div>
+        <div id="js_tab_ranksb_body" style="width:100%;display: none;">
+            <table class="dtable tablesorter" style="width:100%;">
+                <thead>
+                <tr>
+                    <td style="width: 20%">玩家key</td>
+                    <td>昵称</td>
+                    <td>神兵显示阶级</td>
+                    <td>神兵显示星级</td>
+                    <td>神兵实际星级</td>
+                    <td>排名</td>
+                    <td>快照时间</td>
+                </tr>
+                </thead>
+                <{foreach $ranksb as $d}>
+                <tr>
+                    <td>{$d['pkey']}</td>
+                    <td>{$d['nickname']}</td>
+                    <td><?php echo floor(($d['rank_data'] - 1) / 10 ) + 1 ?></td>
+                    <td><?php echo $d['rank_data']  % 10  ?></td>
+                    <td>{$d['rank_data']}</td>
+                    <td>{$d['rank']}</td>
+                    <td><{echo getDateStr($d['time'])}></td>
+                </tr>
+                <{/foreach}>
+            </table>
+        </div>
+        <div id="js_tab_rankpet_body" style="width:100%;display: none;">
+            <table class="dtable tablesorter" style="width:100%;">
+                <thead>
+                <tr>
+                    <td style="width: 20%">玩家key</td>
+                    <td>昵称</td>
+                    <td>宠物显示阶级</td>
+                    <td>宠物显示星级</td>
+                    <td>宠物实际星级</td>
+                    <td>排名</td>
+                    <td>快照时间</td>
+                </tr>
+                </thead>
+                <{foreach $rankpet as $d}>
+                <tr>
+                    <td>{$d['pkey']}</td>
+                    <td>{$d['nickname']}</td>
+                    <td><?php echo floor(($d['rank_data'] - 1) / 10 ) + 1 ?></td>
+                    <td><?php echo $d['rank_data']  % 10  ?></td>
+                    <td>{$d['rank_data']}</td>
+                    <td>{$d['rank']}</td>
+                    <td><{echo getDateStr($d['time'])}></td>
+                </tr>
+                <{/foreach}>
+            </table>
+        </div>
+        <div id="js_tab_rankguild_body" style="width:100%;display: none;">
+            <table class="dtable tablesorter" style="width:100%;">
+                <thead>
+                <tr>
+                    <td style="width: 20%">玩家key</td>
+                    <td>昵称</td>
+                    <td>帮派等级</td>
+                    <td>排名</td>
+                    <td>快照时间</td>
+                </tr>
+                </thead>
+                <{foreach $rankguild as $d}>
+                <tr>
+                    <td>{$d['pkey']}</td>
+                    <td>{$d['nickname']}</td>
+                    <td>{$d['rank_data']}</td>
+                    <td>{$d['rank']}</td>
+                    <td><{echo getDateStr($d['time'])}></td>
+                </tr>
+                <{/foreach}>
+            </table>
+        </div>
+        <div id="js_tab_rankfwtower_body" style="width:100%;display: none;">
+            <table class="dtable tablesorter" style="width:100%;">
+                <thead>
+                <tr>
+                    <td style="width: 20%">玩家key</td>
+                    <td>昵称</td>
+                    <td>层数</td>
+                    <td>排名</td>
+                    <td>快照时间</td>
+                </tr>
+                </thead>
+                <{foreach $rankfwtower as $d}>
+                <tr>
+                    <td>{$d['pkey']}</td>
+                    <td>{$d['nickname']}</td>
+                    <td>{$d['rank_data']}</td>
+                    <td>{$d['rank']}</td>
+                    <td><{echo getDateStr($d['time'])}></td>
+                </tr>
+                <{/foreach}>
+            </table>
+        </div>
+        <!--<div id="js_tab_rankfb_body" style="width:100%;display: none;">-->
+            <!--<table class="dtable tablesorter" style="width:100%;">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<td style="width: 20%">玩家key</td>-->
+                    <!--<td>昵称</td>-->
+                    <!--<td>法宝显示阶级</td>-->
+                    <!--<td>法宝显示星级</td>-->
+                    <!--<td>法宝实际星级</td>-->
+                    <!--<td>排名</td>-->
+                    <!--<td>快照时间</td>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<{foreach rankwing as $d}>-->
+                <!--<tr>-->
+                    <!--<td>{$d['pkey']}</td>-->
+                    <!--<td>{$d['nickname']}</td>-->
+                    <!--<td><?php echo floor(($d['rank_data'] - 1) / 10 ) + 1 ?></td>-->
+                    <!--<td><?php echo $d['rank_data']  % 10  ?></td>-->
+                    <!--<td>{$d['rank_data']}</td>-->
+                    <!--<td>{$d['rank']}</td>-->
+                    <!--<td><{echo getDateStr($d['time'])}></td>-->
+                <!--</tr>-->
+                <!--<{/foreach}>-->
+            <!--</table>-->
+        <!--</div>-->
+        <!--<div id="js_tab_ranksb_body" style="width:100%;display: none;">-->
+            <!--<table class="dtable tablesorter" style="width:100%;">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<td style="width: 20%">玩家key</td>-->
+                    <!--<td>昵称</td>-->
+                    <!--<td>神兵显示阶级</td>-->
+                    <!--<td>神兵显示星级</td>-->
+                    <!--<td>神兵实际星级</td>-->
+                    <!--<td>排名</td>-->
+                    <!--<td>快照时间</td>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<{foreach $ranksb as $d}>-->
+                <!--<tr>-->
+                    <!--<td>{$d['pkey']}</td>-->
+                    <!--<td>{$d['nickname']}</td>-->
+                    <!--<td><?php echo floor(($d['rank_data'] - 1) / 10 ) + 1 ?></td>-->
+                    <!--<td><?php echo $d['rank_data']  % 10  ?></td>-->
+                    <!--<td>{$d['rank_data']}</td>-->
+                    <!--<td>{$d['rank']}</td>-->
+                    <!--<td><{echo getDateStr($d['time'])}></td>-->
+                <!--</tr>-->
+                <!--<{/foreach}>-->
+            <!--</table>-->
+        <!--</div>-->
+        <!--<div id="js_tab_rankpet_body" style="width:100%;display: none;">-->
+            <!--<table class="dtable tablesorter" style="width:100%;">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<td style="width: 20%">玩家key</td>-->
+                    <!--<td>昵称</td>-->
+                    <!--<td>宠物显示阶级</td>-->
+                    <!--<td>宠物显示星级</td>-->
+                    <!--<td>宠物实际星级</td>-->
+                    <!--<td>排名</td>-->
+                    <!--<td>快照时间</td>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<{foreach rankpet as $d}>-->
+                <!--<tr>-->
+                    <!--<td>{$d['pkey']}</td>-->
+                    <!--<td>{$d['nickname']}</td>-->
+                    <!--<td><?php echo floor(($d['rank_data'] - 1) / 10 ) + 1 ?></td>-->
+                    <!--<td><?php echo $d['rank_data']  % 10  ?></td>-->
+                    <!--<td>{$d['rank_data']}</td>-->
+                    <!--<td>{$d['rank']}</td>-->
+                    <!--<td><{echo getDateStr($d['time'])}></td>-->
+                <!--</tr>-->
+                <!--<{/foreach}>-->
+            <!--</table>-->
+        <!--</div>-->
+        <!--<div id="js_tab_rankguild_body" style="width:100%;display: none;">-->
+            <!--<table class="dtable tablesorter" style="width:100%;">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<td style="width: 20%">玩家key</td>-->
+                    <!--<td>昵称</td>-->
+                    <!--<td>显示</td>-->
+                    <!--<td>排名</td>-->
+                    <!--<td>快照时间</td>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<{foreach rankguild as $d}>-->
+                <!--<tr>-->
+                    <!--<td>{$d['pkey']}</td>-->
+                    <!--<td>{$d['nickname']}</td>-->
+                    <!--<td>{$d['rank_data']}</td>-->
+                    <!--<td>{$d['rank']}</td>-->
+                    <!--<td><{echo getDateStr($d['time'])}></td>-->
+                <!--</tr>-->
+                <!--<{/foreach}>-->
+            <!--</table>-->
+        <!--</div>-->
+        <!--<div id="js_tab_rankfwtower_body" style="width:100%;display: none;">-->
+            <!--<table class="dtable tablesorter" style="width:100%;">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<td style="width: 20%">玩家key</td>-->
+                    <!--<td>昵称</td>-->
+                    <!--<td>符文塔</td>-->
+                    <!--<td>排名</td>-->
+                    <!--<td>快照时间</td>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<{foreach rankfwtower as $d}>-->
+                <!--<tr>-->
+                    <!--<td>{$d['pkey']}</td>-->
+                    <!--<td>{$d['nickname']}</td>-->
+                    <!--<td>{$d['rank_data']}</td>-->
+                    <!--<td>{$d['rank']}</td>-->
+                    <!--<td><{echo getDateStr($d['time'])}></td>-->
+                <!--</tr>-->
+                <!--<{/foreach}>-->
+            <!--</table>-->
+        <!--</div>-->
+
+
+
+
+
+
+
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

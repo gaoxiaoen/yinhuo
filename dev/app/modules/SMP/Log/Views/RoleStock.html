@@ -1,0 +1,65 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search" >
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+               玩家key：<input type="text" name="kw_rid" value="" style="width:70px;" class="txtinput"/>
+        角色名：<input type="text" name="kw_name" value="" style="width:70px;" class="txtinput"/>        
+        物品ID：<input type="text" name="kw_itemId" value="" style="width:70px;" class="txtinput"/>    
+        &nbsp;-> 表示放入仓库 , <- 表示从仓库取出
+              时间：<{include file="Views/Widget/SearchTime.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+    <th>玩家key</th>
+	<th>角色名</th>
+	<th>服务器标识</th>
+	<th>物品ID</th>
+	<th>物品名</th>
+	<th>操作类型</th>
+	<th>物品信息</th>
+	<th>操作时间</th>    
+</tr>
+</thead>
+<tbody>
+
+
+<tr>
+	<td>707</td>
+	<td>Shiraho</td>
+	<td>4399_mhfx_1</td>
+	<td>33110</td>
+	<td>相思石</td>
+	<td><-寻宝仓库</td>
+	<td>[<font color="#0066FF">品质:蓝色</font>],[数量:37],[绑定:已绑定],[强化:不可强化],[开孔:无]</td>                    
+	<td>2012-08-23 11:38:13</td>
+</tr>
+
+<tr>
+	<td>331015</td>
+	<td>梅一斌</td>
+	<td>4399_mhfx_1</td>
+	<td>33110</td>
+	<td>相思石</td>
+	<td><-寻宝仓库</td>
+	<td>[<font color="#0066FF">品质:蓝色</font>],[数量:36],[绑定:已绑定],[强化:不可强化],[开孔:无]</td>                    
+	<td>2012-08-23 10:14:23</td>
+</tr>
+
+</tbody>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

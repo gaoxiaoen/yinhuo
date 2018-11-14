@@ -1,0 +1,35 @@
+<table class="dtable tablesorter" style="width:100%;table-layout:fixed;word-break:break-all">
+	<thead>
+		<tr>
+			<{foreach $player_column as $column}>
+				<td>{$column}</td>
+			<{/foreach}>
+		</tr>
+	</thead>
+	<tbody>
+		<{if isset($info) && !empty($info)}>
+		<{foreach $info as $v}>
+			<tr>
+				<td>{$v['id']}</td>
+				<td>{$v['pkey']}</td>
+				<td>{$v['nickname']}</td>
+				<td>
+					<{echo isset($currency_type[$v['type']]) ? $currency_type[$v['type']] : '未知';}>
+				</td>
+				<td><{if $v['desc']}>{$v['desc']}<{else}>未知<{/if}> | {$v['addreason']}</td>
+				<td><{echo $v['type'] === '1' ? $v['oldbgold'] : ($v['type'] === '2' ? $v['oldcoin']:$v['oldgold']);}></td>
+				<td>{$v['change']}</td>
+				<td><{echo $v['type'] === '1' ? $v['newbgold'] : ($v['type'] === '2' ? $v['newcoin']:$v['newgold']);}></td>
+				<td><{echo getDateStr($v['time'])}></td>
+			</tr>
+		<{/foreach}>
+
+		<{else}>
+			<td colspan="10">暂无数据...</td>
+		<{/if}>
+	</tbody>
+</table>
+{$page}
+<script type="text/javascript">
+
+</script>

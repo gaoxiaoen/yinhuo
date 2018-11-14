@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>{$title}</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css"/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <style type="text/css">
+        /*body {*/
+            /*background-image: url("imgs/bg.jpeg");*/
+            /*background-position: center;*/
+            /*background-repeat: no-repeat;*/
+        /*}*/
+        .signin-box {
+            margin: 12px auto;
+            padding: 20px 25px 15px;
+            background: whiteSmoke;
+            border: 1px solid #E5E5E5;
+            width: 335px;
+        }
+
+        #main {
+            width: auto;
+            max-width: 1000px;
+            min-width: 780px;
+        }
+
+        #main {
+            margin: 0 auto;
+            width: 650px;
+            padding-top: 23px;
+            padding-bottom: 100px;
+        }
+        .signin-box label {
+            display: block;
+            margin: 0 0 1.5em;
+        }
+        .signin-box .user-label, .signin-box .passwd-label , .signin-box .code-label {
+            font-weight: bold;
+            margin: 0 0 .5em;
+            display: block;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        strong {
+            color: #222;
+        }
+        .signin-box label.remember {
+            display: inline-block;
+            vertical-align: top;
+            margin: 9px 0 0;
+        }
+        .signin-box .remember-label {
+            font-weight: normal;
+            color: #666;
+            line-height: 0;
+            padding: 0 0 0 .4em;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        .submitbtn{
+            margin: 0 1.5em 1.2em 0;
+            height: 32px;
+            font-size: 13px;
+        }
+        .signin-box h2 {
+            font-size: 16px;
+            line-height: 17px;
+            height: 16px;
+            margin: 0 0 1.2em;
+            position: relative;
+        }
+        .txtinput{
+            width: 100%;
+            height: 32px;
+            line-height: 32px;
+            font-size: 15px;
+        }
+        .codeinput{
+            width: 40%;
+            height: 18px;
+            line-height: 32px;
+            font-size: 15px;
+        }
+        .codeimage{
+            vertical-align:middle;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div id="header_body" style="padding-left: 0px;" >
+       <h1 align="center">登录 </h1>
+    </div>
+</div>
+<div id="main" style="padding-top: 70px;">
+    <div class="signin-box">
+        <form id="loginform" action="?m=SMP_Auth_Login" method="post">
+            <label>
+                <strong class="user-label">用户名</strong>
+                <input type="text" name="username" id="username" class="txtinput" value="{$_POST['username']}"/>
+            </label>
+            <label>
+                <strong class="passwd-label">密码</strong>
+                <input type="password" name="passwd" class="txtinput" id="passwd"/>
+            </label>
+            <label>
+                <strong class="code-label">验证码</strong><{if $errMsg}><div style="color: red;">{$errMsg}</div><{/if}>
+                <input type="text" name="code"  id="code"/> &nbsp;&nbsp; <span><img id="codeimg" class="codeimage" src="./imgs/code.php" alt="验证码">&nbsp;&nbsp;<a onclick='$("#codeimg").attr("src","./imgs/code.php?"+Math.random(1))'>刷新</a></span>
+            </label>
+            <input type="submit" class="btn" name="signIn" id="signIn" value="登录">
+            <label class="remember" for="PersistentCookie">
+                <input type="checkbox" name="PersistentCookie" id="PersistentCookie" value="<{echo Html::setChecked($_POST['PersistentCookie']=='yes')}>" />
+                <strong class="remember-label">
+                    保持登录状态
+                </strong>
+            </label>
+        </form>
+    </div>
+</div>
+<{include file="Views/Footer.html"}>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                场景名称：<select style='height:25px;width:150px;' name='kw_scene_id'>
+                                <option value=''>全部</option>
+                            <{foreach $scene_info as $sid=>$sname}>
+                                <option value="{$sid}" <{if $sid == $req_params['kw_scene_id']}>selected<{/if}>>{$sname}</option>
+                            <{/foreach}>
+                          </select>
+                副本类型：<input type="text" name="kw_dun_type" value="{$req_params['kw_dun_type']}" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>场景ID</th>
+                <th>场景名称</th>
+                <th>当日进入场景人数</th>
+                <th>当日进入场景次数</th>
+                <th>当日可进入人数</th>
+                <th>参与率</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['time']}</td>
+                <td>{$d['scene_id']}</td>
+                <td>{$d['scene_name']}</td>
+                <td>{$d['cnt']}</td>
+                <td>{$d['all_cnt']}</td>
+                <td>{$d['total']}</td>
+                <td>{$d['rate']}</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

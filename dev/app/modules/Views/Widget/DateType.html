@@ -1,0 +1,3 @@
+<label><input name="dateType" value="month" type="radio" <{echo Html::setChecked($_REQUEST['dateType']=='month')}> />按月</label>
+<label><input name="dateType" value="week" type="radio" <{echo Html::setChecked($_REQUEST['dateType']=='week')}> />按周</label>
+<label><input name="dateType" value="daily" type="radio" <{echo Html::setChecked(!$_REQUEST['dateType']||$_REQUEST['dateType']=='daily')}> />按天</label>

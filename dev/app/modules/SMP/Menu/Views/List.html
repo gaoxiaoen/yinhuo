@@ -1,0 +1,62 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <{include file="Views/Widget/Message.html"}>
+    <div id="content">
+        <form method="post" action="?m={$MODULE_NAME}">
+            <div id="sections-header">
+                名称：<input class="txtinput" type="text" name="parent[name]"/>
+                排序：<input class="txtinput" type="text" name="parent[sort]" value="0"/>
+                <input class="btn" type="submit" name="submit" value=" 添加父级菜单 "/>
+            </div>
+
+            <{foreach $menus as $pmenu}>
+            <div style="padding: 5px;">
+                <div style="margin-top: 4px;" class="data_row">
+                    |____
+                    名称：<input class="txtinput" type="text" name="menu[{$pmenu['id']}][name]" value="{$pmenu['name']}"/>
+                    排序：<input class="txtinput" type="text" name="menu[{$pmenu['id']}][sort]" value="{$pmenu['sort']}"/>
+                    <input class="redbtn" type="button" name="del" value=" 删除 "
+                           onclick="if(confirm('你确认要删除这个大类吗，其下面的子菜单也会一起删除！！')){location.href='?m=SMP_Menu_List&del_id={$pmenu['id']}';}"/>
+                </div>
+
+                <div style="padding-left: 45px;" class="data_row">
+                    |____
+                    名称：<input class="txtinput" type="text" name="submenu[{$pmenu['id']}][name]" value=""/>
+                    排序：<input class="txtinput" type="text" name="submenu[{$pmenu['id']}][sort]" value="0"/>
+                    模块：<input class="txtinput" type="text" name="submenu[{$pmenu['id']}][module]" value=""/>
+                    <input class="btn" type="submit" name="submit" value=" 添加子菜单 "/>
+                </div>
+                <{foreach $pmenu['sub'] as $m}>
+                <div style="padding-left: 45px;" class="data_row">
+                    |____
+                    名称：<input class="txtinput" type="text" name="menu[{$m['id']}][name]" value="{$m['name']}"/>
+                    排序：<input class="txtinput" type="text" name="menu[{$m['id']}][sort]" value="{$m['sort']}"/>
+                    模块：<input class="txtinput" type="text" name="menu[{$m['id']}][module]" value="{$m['module']}"/>
+                    移至：<select name="menu[{$m['id']}][pid]">
+                    <{foreach $menus as $p}>
+                    <option value="{$p['id']}"
+                    <{echo Html::setSelected($p['id']==$m['pid'])}>>{$p['name']}</option>
+                    <{/foreach}>
+                    <{if $m[hide]==0}>
+                    <input class="btn" type="button" name="hide" value=" 隐藏 "
+                           onclick="self.location.href='?m=SMP_Menu_List&hide_id={$m['id']}'"/>
+                    <{else}>
+                    <input class="redbtn" type="button" name="show" value=" 显示 "
+                           onclick="self.location.href='?m=SMP_Menu_List&show_id={$m['id']}'"/>
+
+                    <{/if}>
+
+                    <input class="redbtn" type="button" name="del" value=" 删除 "
+                           onclick="self.location.href='?m=SMP_Menu_List&del_id={$m['id']}'"/>
+                </div>
+                <{/foreach}>
+            </div>
+            <{/foreach}>
+            <div style="margin: 10px 0; padding-left: 50px;">
+                <input class="btn" name="submit" type="submit" value=" 保存 "/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<{include file="Views/Footer.html"}>

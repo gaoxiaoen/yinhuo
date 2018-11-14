@@ -1,0 +1,122 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+     编辑开服申请
+  </div>
+  <div class="search">
+    
+  </div>
+</div>
+
+<div id="content">
+<form action="?m=SMP_Server_Schedule&do=edit&id={$plan_list[0]['id']}" method="post" onsubmit="return checkit(this);">
+<table class="dtable tablesorter" style="width:100%;">
+<tr>
+    <td valign="top">平台申请开服区：</td>
+    <td><span style="color:#15C">平台1区一般由厂商填写，如要申请10区，填写示例：10</span><br>
+        <input type="text" name="items[platform_num]" value="{$plan_list[0]['srv_id']}" size="20" class="txtinput"/>
+    </td>
+</tr>
+<tr>
+    <td valign="top">正式开服时间：</td>
+    <td>
+    <span style="color:#15C">一般设置为官方开服时间的前10分钟，格式为: 年-月-日 时:分:秒，如: 2012-03-09 12:50:00</span><br> 
+          时间：<input name="items[st]" type="text" class="txtinput js_st" id="js_st" value="{$plan_list[0]['open_time']}" readonly="true"/>&nbsp;&nbsp;
+    <select name="seltime" id="seltime">
+	    <option value="00:00:00">00:00:00</option>
+	    <option value="07:50:00">07:50:00</option>
+	    <option value="08:50:00">08:50:00</option>
+	    <option value="09:50:00">09:50:00</option>
+	    <option value="10:50:00">10:50:00</option>
+	    <option value="11:50:00">11:50:00</option>
+	    <option value="12:50:00">12:50:00</option>
+		<option value="13:50:00">13:50:00</option>
+		<option value="14:50:00">14:50:00</option>
+    </select>&nbsp;&nbsp;
+          自定义时分秒:<input name="diyst" type="text" class="txtinput" />&nbsp;&nbsp; <span style="color:#15C">自定义时分秒格式为: 时:分:秒，如: 12:50:00</span>
+    </td>
+</tr>
+<tr>
+    <td valign="top">服务器名称：</td>
+    <td><span style="color:#15C">服务器名称，也作为页面title</span><br>
+        <input type="text" name="items[name]" value="{$plan_list[0]['name']}" size="50" class="txtinput"/>
+    </td>
+</tr>
+<tr>
+    <td valign="top"></td>
+    <td>
+        <input type="submit" name="submit" class="btn" value="提交" />
+        <input type="button" class="btn" value="返回" onclick="history.go(-1);" />
+</td>
+</tr>
+</table>
+</form>
+</div>
+
+<script language='javascript'>
+
+    $(document).ready(function(){
+        
+        var msg = [];
+        
+	    if(msg.length > 0)
+	    {
+	      alert(msg.join("\n"));
+	      return false;
+	    }
+	    
+	    $("#seltime").change(function(){
+	    	
+	    	var st = $("input[name='items[st]']").val().substring(0,10);
+	    	if(st == ''){
+	    		alert('请先选择日期时间！');
+	    		return false;
+	    	}
+	    	
+	    	var seltime = $("#seltime").val();
+	    	var editTime = st+' '+seltime;
+	    	$("input[name='items[st]']").val(editTime);
+	    });
+	    
+	    $("input[name='diyst']").blur(function(){
+	    	var st = $("input[name='items[st]']").val().substring(0,10);
+            if(st == ''){
+                alert('请先选择日期时间！');
+                return false;
+            }
+            
+            var diyst = $("input[name='diyst']").val();
+            var editTime = st+' '+diyst;
+            $("input[name='items[st]']").val(editTime);
+	    });
+	    
+    });
+    
+    function checkit(form)
+    {
+      var msg = [];
+      if(!$.trim($(form['items[platform_num]']).val()))
+          msg.push('平台申请开服区不能为空！');
+      
+      if($.trim($(form['items[name]']).val()) == '')
+          msg.push('服务器名称不能为空！');
+      
+      if($.trim($(form['items[st]']).val()) == '')
+          msg.push('日期时间不能为空！');
+      
+      if(msg.length > 0)
+      {
+        alert(msg.join("\n"));
+        return false;
+      }
+    }
+    
+   
+</script>
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

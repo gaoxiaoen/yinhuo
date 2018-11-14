@@ -1,0 +1,80 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_pkey" value="{$req_params['kw_pkey']}" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="{$req_params['kw_name']}" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>玩家名</th>
+                <th>玩家KEY</th>
+                <th>玩家区服</th>
+                <th>注册渠道</th>
+                <th>注册时间</th>
+                <th>等级</th>
+                <th>战力</th>
+                <th>当日为止的累计充值</th>
+                <th>当前VIP等级</th>
+                <th>装备1</th>
+                <th>装备2</th>
+                <th>装备3</th>
+                <th>装备4</th>
+                <th>装备5</th>
+                <th>装备6</th>
+                <th>装备7</th>
+                <th>装备8</th>
+                <th>装备9</th>
+                <th>装备10</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{if $data}>
+                <{foreach $data as $d}>
+                <tr>
+                    <td>{$d['date']}</td>
+                    <td>{$d['pname']}</td>
+                    <td>{$d['pkey']}</td>
+                    <td>{$d['sn']}</td>
+                    <td>{$d['pf']}</td>
+                    <td>{$d['reg_time']}</td>
+                    <td>{$d['lv']}</td>
+                    <td>{$d['cbp']}</td>
+                    <td>{$d['total_fee']}</td>
+                    <td>{$d['vip_lv']}</td>
+                    <td>{{$d['class1']},{$d['star1']},{$d['color1']}}</td>
+                    <td>{{$d['class2']},{$d['star2']},{$d['color2']}}</td>
+                    <td>{{$d['class3']},{$d['star3']},{$d['color3']}}</td>
+                    <td>{{$d['class4']},{$d['star4']},{$d['color4']}}</td>
+                    <td>{{$d['class5']},{$d['star5']},{$d['color5']}}</td>
+                    <td>{{$d['class6']},{$d['star6']},{$d['color6']}}</td>
+                    <td>{{$d['class7']},{$d['star7']},{$d['color7']}}</td>
+                    <td>{{$d['class8']},{$d['star8']},{$d['color8']}}</td>
+                    <td>{{$d['class9']},{$d['star9']},{$d['color9']}}</td>
+                    <td>{{$d['class10']},{$d['star10']},{$d['color10']}}</td>
+                </tr>
+                <{/foreach}>
+            <{else}>
+                <tr><td colspan='20'>暂无数据</td></tr>
+            <{/if}>
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

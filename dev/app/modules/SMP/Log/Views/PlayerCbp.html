@@ -1,0 +1,57 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家KEY</th>
+                <th>旧战力</th>
+                <th>新战力</th>
+                <th>变化战力</th>
+                <th>当前协议号</th>
+                <th>有变化的属性</th>
+                <th>变化的属性差值</th>
+                <th>总属性</th>
+                <th>总属性的差值</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['old_cbp']}</td>
+                <td>{$d['new_cbp']}</td>
+                <td>{$d['change_cbp']}</td>
+                <td>{$d['proto']}</td>
+                <td>{$d['attrs']}</td>
+                <td>{$d['change_attr']}</td>
+                <td>{$d['sum_attr']}</td>
+                <td>{$d['sum_attr_change']}</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

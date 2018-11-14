@@ -1,0 +1,62 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家KEY</th>
+                <th>玩家昵称</th>
+                <th>操作类型</th>
+                <th>操作的孔（位置）</th>
+                <th>之前的符文物品ID</th>
+                <th>之前的符文等级</th>
+                <th>之后的符文物品id</th>
+                <th>之后的符文等级</th>
+                <th>操作前身上的符文列表</th>
+                <th>操作后身上的符文列表</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['pname']}</td>
+                <td>
+                    <{if $d['op_type'] == 0}>穿上符文<{/if}>
+                    <{if $d['op_type'] == 1}>替换符文<{/if}>
+                </td>
+                <td>{$d['pos']}</td>
+                <td>{$d['old_fuwen_id']}</td>
+                <td>{$d['old_lv']}</td>
+                <td>{$d['new_fuwen_id']}</td>
+                <td>{$d['new_lv']}</td>
+                <td>{$d['before_list']}</td>
+                <td>{$d['after_list']}</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

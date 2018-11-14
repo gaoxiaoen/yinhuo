@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>{$title} - {$CONFIG['title']}</title>
+    <link rel="stylesheet" type="text/css" href="styles/main.css?v={$CONFIG['ver']}"/>
+    <link rel="stylesheet" type="text/css" href="styles/dc.css?v={$CONFIG['ver']}"/>
+    <script type="text/javascript" src="js/jquery.js?v={$CONFIG['ver']}"></script>
+    <script type="text/javascript" src="js/jquery.metadata.js?v={$CONFIG['ver']}"></script>
+    <script type="text/javascript" src="js/datepicker/WdatePicker.js?v={$CONFIG['ver']}"></script>
+    <script type="text/javascript" src="js/jquery.tablesorter.js?v={$CONFIG['ver']}"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js?v={$CONFIG['ver']}"></script>
+    <script type="text/javascript" src="js/units.js?v={$CONFIG['ver']}"></script>
+    <script type="text/javascript" src="js/layer/layer.js?v={$CONFIG['ver']}"></script>
+    <script type="text/javascript" src="js/echarts.common.min.js?v={$CONFIG['ver']}"></script>
+
+</head>
+<body>
+<div id="header">
+    <div id="header_body">
+        <div id="logo"><span onclick="window.location.href='?m=SMP_Index_Default'">{$CONFIG['title']}</span></div>
+        <div id="nav">
+        </div>
+        <div id="nav_right">
+            你好，{$_SESSION['nickname']} [ <a style="color: #fff"  onclick="window.location.href='?m=SMP_Auth_Logout'">安全登出</a> ]&nbsp;&nbsp;
+           <{if count($header_servers_plts) > 0}> <span onclick="popoup()">服务器列表</span><{/if}>
+
+        </div>
+    </div>
+</div>
+<div id="main">
+    <div id="leftnav" style="overflow-y:scroll;width:auto;height:975px;">
+        <div class="lnsep noborder"></div>
+        <{foreach $menus as $pmenu}>
+        <{if $pmenu['sub']}>
+        <div id="js_menu_p{$pmenu['id']}" class="mcate <{echo isset($pmenu['sub'][$MODULE_NAME]) ? 'mexpanded' : 'mcollapsed'}>">
+            <div class="mtitle">
+                <div class="icon"></div>
+                <div class="mtxt">{$pmenu['name']}</div>
+            </div>
+            <ul class="mitem">
+                <{foreach $pmenu['sub'] as $m}>
+                <{if $m['hide']==0}>
+                <{if $m['module']==$MODULE_NAME}>
+                <li class="msel">
+                    <a href="?m={$m['module']}" onclick="leftNavMark($('#leftnav'));">{$m['name']}</a>
+                </li>
+                <{else}>
+                <li><a href="?m={$m['module']}" onclick="leftNavMark($('#leftnav'));">{$m['name']}</a></li>
+                <{/if}>
+                <{/if}>
+                <{/foreach}>
+                <li><div class="lnsep"></div></li>
+            </ul>
+        </div>
+        <{/if}>
+        <{/foreach}>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        if($.cookie('head_leftnav_mark')) {
+            $('#leftnav').scrollTop($.cookie('head_leftnav_mark'));
+            $.cookie('head_leftnav_mark',null);
+        }
+        //根据菜单栏宽度设置内容主界面的margin-left值
+        $('#center_col').css('margin-left',$('#leftnav').css('width'));
+    });
+    function jump(obj){
+        var values=obj.value.split(';');
+        var url=values[0];
+        var sn=values[1];
+        window.location.href=url+"?jump="+sn+"&ses_tk={$ses_tk}&{$session}"
+    }
+    var content = "<div style='padding: 20px'>";
+    <{foreach $header_servers_plts as $plts}>
+        content +="<a>{$plts['name']}</a><br/>";
+        <{if $plts['servers']}>
+        <{foreach $plts['servers'] as $n => $server}>
+            content += "<a target='_blank' style='text-decoration:none' href='{$server['url']}?jump={$server['sid']}&ses_tk={$ses_tk}&{$session}'>s{$server['sid']}&nbsp;&nbsp;</a>";
+            //content += "{$server['sid']}";
+            <{if $n % 20 ==0}> content += " <br/>";<{/if}>
+        <{/foreach}>
+        <{/if}>
+        content +="<br/>";
+    <{/foreach}>
+    content += "</div>";
+    function popoup(){
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: true,
+            area: ['950px', '600px'],
+            shadeClose: true,
+            fix:true,
+            scrollbar:true,
+            shade:0.5,
+            skin: '',
+            content:content
+        });
+    }
+
+    function leftNavMark (obj) {
+            var h = obj.scrollTop();
+            if(h > 0) {
+                $.cookie('head_leftnav_mark',h);
+            }
+    }
+</script>

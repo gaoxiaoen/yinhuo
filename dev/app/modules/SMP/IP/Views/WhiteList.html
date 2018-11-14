@@ -1,0 +1,67 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <script>
+    function check_banip(){
+        if(! (new RegExp('^\\d+\\.\\d+\\.\\d+\\.\\d+$')).test($('#js_ip').val())){
+            alert('IP填写错误');
+            return false;
+        }
+        if($('#js_memo').val().length < 3){
+            alert('原因必需3个字以上');
+            return false;
+        }
+        return true;
+    }
+    </script>
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+      IP: <input type="text" style="width:110px" id="js_ip" name="ip" class="txtinput"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                原因(选填)：<input id="js_memo" type="text" value="" style="width:110px" name="memo" class="txtinput"/>
+      <input class="redbtn" style="padding: 6px; width:80px " type="button" name="refresh" value="添加" onclick="location.href='#';">
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+    <th style="width:50px;">管理员</th>
+    <th>IP</th>
+    <th>原因</th>
+    <th>添加时间</th>
+    <th>操作</th> 
+</tr>
+</thead>
+<tbody>
+
+
+<tr >
+    <td>4399yc</td>
+    <td>180.143.246.56</td>
+    <td></td>
+    <td>2012-04-30 14:16:24</td>
+    <td><a href="#">解除</a></td>
+</tr>
+
+<tr >
+    <td>youjuntian2012</td>
+    <td>183.23.100.23</td>
+    <td></td>
+    <td>2012-06-21 09:39:12</td>
+    <td><a href="#">解除</a></td>
+</tr>
+
+</tbody>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

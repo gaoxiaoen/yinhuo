@@ -1,0 +1,218 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+            修改活动
+        </div>
+    </div>
+    <div id="content">
+        <form method="post" action="?m=SMP_Act_Activity&do=edit" onsubmit="return checkit(this);">
+            <{include file="Views/Widget/SelectServerList.html"}>
+            <input type="hidden" name="type" value="{$type}" />
+            <input type="hidden" name="act_id" value="{$act_data['data']['act_id']}" />
+            <table class="dtable tablesorter" style="width:100%">
+                <tbody>
+                <tr>
+                    <td>活动名称：</td>
+                    <td>
+                        <input name="items[name]" size="10" maxlength="8" value="{$act_data['name']}" readonly="true">
+                    </td>
+                </tr>
+                <tr>
+                    <td>活动子id：</td>
+                    <td>
+                        <input name="items[id]" size="10" maxlength="8" value="{$act_data['data']['act_id']}" readonly="true">
+                        每个活动的子ID不能重复
+                    </td>
+                </tr>
+                <tr>
+                    <td>子活动名称：</td>
+                    <td>
+                        <input name="items[id_desc]" size="50" maxlength="50" value="{$act_data['data']['id_desc']}">
+                        尽量给每个子活动命名和描述，如:封测1-开服7天累充
+                    </td>
+                </tr>
+                <tr>
+                    <td>活动配置数据：</td>
+                    <td>
+                        <textarea name="items[content]" cols="120" rows="8">{$act_data['data']['content']}</textarea>
+                        <br>每行代表一条完整数据
+                        <br>数据格式：{$act_data['title']}
+                        <br><input type="button" class="btn" value="查看excel" onclick="location.href='?m=SMP_Act_Activity&do=ShowExcel&type={$type}&act_id={$act_data['data']['act_id']}';" />
+                        <input type="button" class='btn' value="预览" onclick="getPreviewContent(this);" is_preview='0'><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>优先级：</td>
+                    <td>
+                        <input name="items[priority]" size="10" maxlength="8" value="{$act_data['data']['priority']}">
+                        0开服活动优先 1全服活动优先 默认可不填
+                    </td>
+                </tr>
+                <tr>
+                    <td>跨服状态：</td>
+                    <td>
+                        <input name="items[kf_state]" size="10" maxlength="1" value="{$act_data['data']['kf_state']}" list = "kf_state_list">
+                        <datalist id="kf_state_list">
+                            <option value="0" />
+                            <option value="1" />
+                            <option value="2" />
+                        </datalist>
+                        0 All 1 单服活动 2 跨服活动
+                    </td>
+                </tr>
+                <tr>
+                    <td>开服多少天后移动到二级菜单：</td>
+                    <td>
+                        <input name="items[show_pos_day]" size="10" maxlength="8" value="{$act_data['data']['show_pos_day']}">
+                        0默认不移动 默认可不填
+                    </td>
+                </tr>
+                <tr>
+                    <td>开服第几天才可出现(新服活动、全服活动均生效)：</td>
+                    <td>
+                        <input name="items[after_open_day]" size="10" maxlength="8" value="{$act_data['data']['after_open_day']}">
+                        默认可不填
+                    </td>
+                </tr>
+                <tr>
+                    <td>开服第几天开始：</td>
+                    <td>
+                        <input name="items[open_days]" size="10" maxlength="8" value="{$act_data['data']['open_day']}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>开服第几天结束：</td>
+                    <td>
+                        <input name="items[end_days]" size="10" maxlength="8" value="{$act_data['data']['end_day']}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>开始时间：</td>
+                    <td>
+                        <input name="items[start_time]" type="text" class="txtinput js_st" id="js_st" value="{$act_data['data']['start_time']}" onFocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss',startDate:'%y-%M-%d 00:00:00'})"/>
+                        <!--<input name="items[start_time]" size="20" maxlength="100" value="{$act_data['data']['start_time']}" />-->
+                        时间格式(24小时制)：2016-10-19 00:00:00
+                    </td>
+                </tr>
+                <tr>
+                    <td>结束时间：</td>
+                    <td>
+                        <input name="items[end_time]" type="text" class="txtinput js_et" id="js_et" value="{$act_data['data']['end_time']}" onFocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss',startDate:'%y-%M-%d 23:59:59'})"/>
+                        <!--<input name="items[end_time]" size="20" maxlength="100" value="{$act_data['data']['end_time']}" />-->
+                        时间格式(24小时制)：2016-10-20 23:59:59
+                    </td>
+                </tr>
+                <tr>
+                    <td>合服第几天开始：</td>
+                    <td>
+                        <input name="items[merge_st_day]" size="10" maxlength="8" value="{$act_data['data']['merge_st_day']}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>合服第几天结束：</td>
+                    <td>
+                        <input name="items[merge_et_day]" size="10" maxlength="8" value="{$act_data['data']['merge_et_day']}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>合服次数限制：</td>
+                    <td>
+                        <input name="items[merge_times_list]" size="20" maxlength="50" value="{$act_data['data']['merge_times_list']}">
+                        用于游戏活动的合服次数限制控制，(用|分割)，可不填
+                    </td>
+                </tr>
+                <tr>
+                    <td>活动冲突列表：</td>
+                    <td>
+                        <input name="items[conflict_list]" size="20" maxlength="50" value="{$act_data['data']['conflict_list']}">
+                        用于游戏活动的冲突限制，填入后台活动id，(用|分割)，可不填
+                    </td>
+                </tr>
+                <tr>
+                    <td>图标ID：</td>
+                    <td>
+                        <input name="items[icon]" size="20" maxlength="50" value="{$act_data['data']['icon']}">
+                        用于游戏活动主界面的图标显示，使用默认图标，可不填
+                    </td>
+                </tr>
+                <tr>
+                    <td>登录广告图片ID：</td>
+                    <td>
+                        <input name="items[ad_pic]" size="20" maxlength="50" value="{$act_data['data']['ad_pic']}">
+                        用于游戏登录后显示的广告图标，不显示可不填  格式：{图片ID,跳转ID}
+                    </td>
+                </tr>
+                <tr>
+                    <td>活动名称：</td>
+                    <td>
+                        <input name="items[act_name]" size="20" maxlength="50" value="{$act_data['data']['act_name']}">
+                        用于活动总览里的名称(可不填)
+                    </td>
+                </tr>
+                <tr>
+                    <td>活动描述：</td>
+                    <td>
+                        <textarea name="items[act_desc]" cols="120" rows="8">{$act_data['data']['act_desc']}</textarea>
+                        <br>用于活动总览里的描述(可不填)
+                    </td>
+                </tr>
+                <tr>
+                    <td>展示物品：</td>
+                    <td>
+                        <textarea name="items[show_goods_list]" cols="120" rows="2">{$act_data['data']['show_goods_list']}</textarea>
+                        <br>[物品ID1,物品ID2](可不填)
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" name="submit" class="btn" value="确定并返回" />
+                        <input type="button" class="btn" value="返回" onclick="window.history.back(-1);" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+</div>
+<script type="text/javascript">
+    function checkit(form)
+    {
+        var msg = [];
+
+        if(!$.trim($(form['items[id]']).val()))
+            msg.push('广播ID不能为空！');
+
+        if(msg.length > 0)
+        {
+            alert(msg.join("\n"));
+            return false;
+        }
+        return true;
+    }
+function getPreviewContent(obj)
+{
+    if(obj.value == '取消') {
+        $(obj).val('预览');
+        $('#preview').remove();
+    }else{
+        $(obj).val('取消');
+        var content = $('textarea[name="items[content]"]').val();
+        if(content) {
+            $.post('?m=SMP_Act_Activity&do=getPreviewContent',{content:content},function(content){
+                content = content.replace(/\n/g,'<br/><br/>');
+                var html = "<div id='preview'><diV style='width:850px;border:2px solid #999;padding:5px;color:blue;'>"+content+"</div>";
+                html += '<br/><span class="hl7">注: 标红的若是物品,请注意ID是否填写正确.</span></div>';
+                $('textarea[name="items[content]"]').parent().append(html);
+            },'text');
+        }else{
+            layer.msg('内容为空.');
+        }
+    }
+}
+</script>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

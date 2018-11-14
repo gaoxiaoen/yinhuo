@@ -1,0 +1,112 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+               玩家key：<input type="text" name="kw_pkey" value="{$params['pkey']}" style="width:80px;" class="txtinput"/>
+               角色名称：<input type="text" name="kw_name" value="{$params['nickname']}" style="width:80px;" class="txtinput"/>
+               日期 [ 在线时长 ] : <input name="online_ts" type="text" class="txtinput js_ts" id="js_st" value="<{echo getDateStr($params['online_ts'],'Y-m-d 00:00:00')}>" />
+               充值时间段: <{include file="Views/Widget/SearchTime.html"}>
+    </form>
+  </div>
+</div>
+<div id="content">
+<form method="post">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+	<td colspan="23">
+	       总人数：<span style='color:blue'>{$totaluser}</span>人&nbsp;&nbsp;&nbsp;&nbsp;
+            剑士：<span style='color:red'>{$c1money}</span>元/<span style='color:blue'>{$c1num}</span>人 &nbsp;&nbsp;&nbsp;&nbsp;
+            超过7天没有充值的人数：<span style='color:blue'>{$nocharge}</span>人
+	</td>
+</tr>
+<tr>
+  <th>角色名</th>
+  <th>key</th>
+  <th>等级</th>
+  <th>当前等级</th>
+  <th>职业</th>
+  <th>性别</th>
+  <th>背包库存元宝</th>
+  <th>背包库存铜钱</th>  
+  <th>充值RMB总额（%）</th>
+  <th>充值次数</th>
+  <th>平均充值</th>
+  <th>停充天数</th>
+  <th>未登陆天数</th>
+  <th>在线时长</th>
+  <th>注册时间</th>
+  <th>首充时间</th>
+  <th>最后充值时间</th>
+  <th>最后登陆时间</th>
+</tr>
+</thead>
+<tbody>
+
+<{foreach $roles as $role}>
+<tr >
+  <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$role['pkey']}">{$role['nickname']}</a></td>
+  <td>{$role['pkey']}</td>
+  <td>{$role['lv']}</td>
+  <td>{$role['lv_state']}</td>
+  <td>{$career[$role['career']]}</td>
+  <td><{if $role['sex'] == 1}> <{echo 男}><{else}> <{echo 女}> <{/if}></td>
+  <td>{$role['gold']}</td>
+  <td>{$role['coin']}</td>
+  <td>{$role['totalcharge']}</td>
+  <td>{$role['ctime']}</td>
+  <td><{echo round($role['totalcharge'] / $role['ctime']) }></td>
+  <td><{if $role['stopcharge'] > 3}> <span style='color:red'> {$role['stopcharge']} </span><{else}> {$role['stopcharge']} <{/if}></td>
+  <td>{$role['nologin']}</td>
+  <td>{$role['online_time']}</td>
+  <td>{$role['reg_time']}</td>
+  <td>{$role['firsttime']}</td>
+  <td>{$role['lasttime']}</td>
+  <td>{$role['last_login_time']}</td>
+</tr>
+<{/foreach}>
+</tbody>
+</table>
+{$page}
+
+</form>
+<script>
+//  function load_shop_info(rid, rname){
+//
+//    if($.trim($('#js_menu'+rid).html())){
+//      $('#js_menu'+rid).show();
+//      return;
+//    }
+//    $.getJSON('?rid='+rid, function(data){
+//      if(!data['data'])
+//        return alert('无法获取数据！');
+//      var v = data['data'];
+//      var html = '';
+//      html += '<table border="0" style="background:#fff;">';
+//      html += '<tr><td><b>'+rname+'</b></td><td align="right"><a href="#this" onclick="$(\'#js_menu'+rid+'\').hide();">关闭</a></td></tr>';
+//      html += '<tr><td width="190" valign="top"><div style="font-weight: bold;">所有消耗类型 (事件/元宝)</div>';
+//      html += '<ul style="list-style: none;">';
+//      for(i in v['spend']){
+//        html += '<li>'+v['spend'][i]['type']+'：'+v['spend'][i]['goldnum']+'</li>';
+//      }
+//      html += '</ul></td><td width="400" valign="top"><div style="font-weight: bold;">商城购买 (物品名称/数量)</div>';
+//      html += '<ul style="list-style: none;">';
+//      for(i in v['shop']){
+//        html += '<li style="float:left;width:180px;">'+v['shop'][i]['item_name']+'：'+v['shop'][i]['num']+'</li>';
+//      }
+//      html += '</ul><div style="clear: both;"></div></td></tr></table>';
+//      $('#js_menu'+rid).html(html);
+//      $('#js_menu'+rid).show();
+//    });
+//
+//  }
+</script>
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

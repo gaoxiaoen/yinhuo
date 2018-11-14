@@ -1,0 +1,103 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div class="overview">
+        <input class="redbtn" style="padding: 6px; width:100px " type="button" name="add_activity" value="添加活动类型" onclick="location.href='?m=SMP_Act_Activity&do=addActivityType';">
+        <input class="redbtn" style="padding: 6px; width:100px " type="button" name="sync_platform" value="同步服列表" onclick="if(confirm('确定同步外服服务器列表？注意：不能频繁同步')){location.href='?m=SMP_Act_Activity&do=sync_platform'};">
+        <input class="redbtn" style="padding: 6px; width:100px " type="button" name="mtup_platform" value="手动更新活动" onclick="location.href='?m=SMP_Act_Activity&do=mtupActivity';">
+        <input class="redbtn" style="padding: 6px; width:100px " type="button" name="reload_all" value="重载所有活动" onclick="if(confirm('确定重载所有活动？注意：所有活动文件都会重新生成一遍')){location.href='?m=SMP_Act_Activity&do=reload_all'};">
+        <input class="btn" style="padding: 6px; width:100px " type="button" name="reload_select" value="重载选中活动" onclick="reload_select();">
+    </div>
+
+    <div id="sections-header">
+    </div>
+
+    <div id="js_tab_allNotice_body" style="width:100%;display:block">
+        <form id="mainForm" method="post" >
+            <table class="dtable" style="width:100%">
+                <thead>
+                <tr>
+                    <th width="2%"><input type="checkbox" onclick="do_select(this, 'all')"></th>
+                    <th width="3%">Type</th>
+                    <th width="10%">活动名称</th>
+                    <th width="15%">活动文件名</th>
+                    <th width="15%">配置文件名</th>
+                    <th width="40%">数据结构说明</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+                <tbody valign="top">
+                <{foreach $act_type as $act}>
+                <tr type="{$act['type']}">
+                    <td><input type="checkbox" name="reload_select" value="{$act['type']}|{$act['name']}" ></td>
+                    <td>{$act['type']}</td>
+                    <td>{$act['name']}</td>
+                    <td>{$act['act_file_name']}</td>
+                    <td>{$act['file_name']}</td>
+                    <td>{$act['title']}</td>
+                    <td>
+                        <a href="?m=SMP_Act_Activity&do=editActivityType&type={$act['type']}">编辑</a>&nbsp;|
+                        <a href="?m=SMP_Act_Activity&do=Activity&type={$act['type']}">查看活动</a>&nbsp;
+                    </td>
+                </tr>
+                <{/foreach}>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+            {$page}
+        </form>
+    </div>
+</div>
+<!-- end center_col  -->
+<script>
+function do_select (obj, type) {
+    if(type == 'all') {
+        var is_checked = $(obj).attr('checked');
+        if (is_checked == 'checked') {
+            $(obj).attr('checked','checked');
+            $('table').find('td').find('input[name=reload_select]').each(function(){
+                $(this).attr('checked','checked');
+            });
+        }else{
+            $(obj).removeAttr('checked');
+            $('table').find('td').find('input[name=reload_select]').each(function(){
+                $(this).removeAttr('checked');
+            });
+        }
+
+    }
+}
+
+//异步选中重载
+function reload_select () {
+    var req_params = [];    //异步请求参数, type数组
+    var reload_info = [];   //加载活动信息
+    var msg = '';    //加载前提示信息
+    $('input:checkbox[name=reload_select]:checked').each(function(){
+        var v = $(this).val();
+        var tmp= v.split('|');
+        msg += tmp + '<br/>';
+        reload_info[tmp[0]] = tmp[1];
+        req_params.push(tmp[0]);
+    });
+    if (req_params.length < 1) msg += '无选中活动.';
+    var confirm = layer.confirm('共 '+req_params.length+' 个待重载活动 : </br>'+msg,function(){
+        layer.close(confirm);
+        if(req_params.length > 0) {
+            var loading = layer.load(0);
+            var promise = $.post('?m=SMP_Act_Activity&do=reload_select',{type:req_params},function(res){
+                if(promise.done) layer.close(loading);  //关闭加载图标
+                    var res_msg = (res.state == '1') ? '<span class="hl2"> 共 '+res.data.length+' 个活动重载成功:  </span><br/>' : '<span class="hl0"> 共'+res.data.length+'个活动重载失败,请检查:  </span><br/>';  //重载完后提示信息
+                    $.each(res.data,function(key,val){
+                        res_msg += val+ ' : ' +reload_info[val] + '<br/>';
+                    });
+                    if(res.state == '1') res_msg += '<br/><span class="hl7">提示: 需要重启服务器才能生效!</span>';
+                    layer.alert(res_msg);
+            },'json');
+        }else{
+            layer.msg('请选择要重载的项目.');
+        }
+    });
+}
+</script>

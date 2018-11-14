@@ -1,0 +1,49 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>　
+                BOSS类型：<input type="text" name="mon_type" value="{$req_params['mon_type']}" style="width:120px;" class="txtinput"/>
+                BOSS：    <input type="text" name="mon_name"   value="{$req_params['mon_name']}"   style="width:120px;" class="txtinput"/>
+                时间：    <input name="st" type="text" class="txtinput js_st" id="js_st" value="<{echo $this->getStartTime()}>" onclick="WdatePicker({dateFmt:'yyyy-M-d'})"/>
+                          &nbsp;<{include file="Views/Widget/SearchButton.html"}>
+                <!-- <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志"> -->
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>BOSS [ BOSS类型id_BOSS ]</th>
+                <th>被击杀次数</th>
+                <th>击杀人次</th>
+                <th>击杀人数</th>
+                <th>参与玩家平均战力</th>
+                <th>参与玩家平均等级</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $n=>$d}>
+            <tr>
+                <td><a href="?m=SMP_Log_BossParticipationRate&act=getMonPlayerDetail&mon_name={$d['mon_name']}&mon_type={$d['mon_type']}&sdate={$sdate}" target="_blank">{$n}</a></td>
+                <td>{$d['kill_num']}</td>
+                <td>{$d['kill_pnum']}</td>
+                <td>{$d['pnum']}</td>
+                <td><{echo $d['total_lv'] >  0 ? number_format(round($d['total_lv']  / $d['kill_pnum'],2),2) : 0; }></td>
+                <td><{echo $d['total_cbp'] > 0 ? number_format(round($d['total_cbp'] / $d['kill_pnum'],2),2) : 0; }></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

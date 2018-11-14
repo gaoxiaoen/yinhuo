@@ -1,0 +1,74 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+            编辑活动类型
+        </div>
+    </div>
+    <div id="content">
+        <form method="post" action="?m=SMP_Act_Activity&do=edit_activity_finish" onsubmit="return checkit(this);">
+            <table class="dtable tablesorter" style="width:100%">
+                <tbody>
+                <input name="items[type]" size="10" maxlength="8" value="{$act['type']}" readOnly="true" hidden="true">
+                <tr>
+                    <td>活动名称：</td>
+                    <td>
+                        <input name="items[name]" size="10" maxlength="8" value="{$act['name']}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>活动文件名：</td>
+                    <td>
+                        <input name="items[act_file_name]" size="35" maxlength="100" value="{$act['act_file_name']}">
+                    </td>
+                </tr>
+                 <tr>
+                    <td>配置文件名称：</td>
+                    <td>
+                        <input name="items[file_name]" size="35" maxlength="100" value="{$act['file_name']}">
+                    </td>
+                </tr>
+                <!--<tr>-->
+                    <!--<td>状态：</td>-->
+                    <!--<td>-->
+                        <!--<input name="items[state]" size="10" maxlength="8" value="{$act['state']}">-->
+                        <!--1启用0停用-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <tr>
+                    <td>活动配置数据结构说明：</td>
+                    <td>
+                        <textarea name="items[title]" cols="80" rows="8">{$act['title']}</textarea>
+                        <!-- 数据格式：{$act['title']} -->
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="submit" class="btn" value="确定" />
+                        <input type="button" class="btn" value="返回" onclick="location.href='?m=SMP_Act_Activity&do=allActivityType';" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+
+</div>
+<script type="text/javascript">
+    function checkit(form)
+    {
+        var msg = [];
+
+        if(!$.trim($(form['items[type]']).val()))
+            msg.push('活动类型不能为空！');
+
+        if(msg.length > 0)
+        {
+            alert(msg.join("\n"));
+            return false;
+        }
+        return true;
+    }
+</script>
+<!-- end center_col  -->

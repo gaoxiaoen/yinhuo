@@ -1,0 +1,22 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+      日期：<{include file="Views/Widget/SearchTime.html"}>
+      <span style="color:red">时间跨度不能超过30天</span>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<p>{$chart}</p>
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

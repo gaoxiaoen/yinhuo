@@ -1,0 +1,31 @@
+<{php $blocks=$this->widget->getGameServerList();}>
+<div id="game_srvlist">
+  <ul class="nolist">
+    <!-- 默认需要，但是不必要显示的表单 -->
+    <{foreach $blocks['hidden'] as $name=>$block}>
+      <{foreach $block as $value=>$v}>
+        <input type="hidden" name="{$name}" value="{$value}" />
+      <{/foreach}>
+    <{/foreach}>
+    <!-- 需要显示的表单 -->
+    <{foreach $blocks['display'] as $name=>$block}>
+    <li>
+      <{foreach $block as $value=>$v}>
+        <label><input name="{$name}" type="<{echo $v['checkbox']>0?'checkbox':'radio'}>" value="{$value}" <{echo Html::setChecked($v['checked'])}> {$v['extra']} /><{if $v['checkbox']==2 }>{$v['name']}<{else}><a href="{$v['href']}">{$v['name']}</a><{/if}></label>
+      <{/foreach}>
+    </li>
+    <{/foreach}>
+  </ul>
+</div>
+<script type="text/javascript">
+    function game_list_chk(input)
+    {
+        var p = $(input).parent().parent().find('input');
+        if(input.checked)
+        {
+            p.attr('checked', 'checked');
+        }else{
+            p.removeAttr('checked');
+        }
+    }
+</script>

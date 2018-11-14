@@ -1,0 +1,100 @@
+<{php $data = SMP_Act_Activity::get_server_list();$servers=$data['servers'];$group=$data['group'];}>
+<{php $gp=array();foreach($gp_id as $g){$gp[$g]=true;};}>
+<{php $gs=array();foreach($gs_id as $s){$gs[$s]=true;};}>
+<div id="select_srv" style="width:100%;display:block">
+    <table class="dtable tablesorter" style="width:100%">
+        <thead>
+        <tr>
+            <th style="width:50px;">服务器组</th>
+            <th style="width:120px;">全选</th>
+            <th width="80%">服务id</th>
+        </tr>
+        </thead>
+        <tbody valign="top">
+        <{foreach $group as $key=>$s}>
+        <tr>
+            <td>{$group[$key]['name']}</td>
+            <td>&nbsp; <input type="checkbox" class="jq_group_select" name="gp[]" value="{$key}" <?php if(!isAdmin()){echo("onclick='return false'");} ?> onclick="allselect('gp[]','gs{$key}[]',this);" <?php if($gp[$key]||$gp[0]){$gp[$key]=true;echo("checked");}?> >全选&nbsp;(服段:{$group[$key]['st']}-{$group[$key]['et']})</td>
+            <td>
+                <{if $s['gp_id'] == '0'}><input type="checkbox" onclick="allselect_servers(this.checked);"><{/if}>
+                <{foreach $servers[$key] as $ss}>
+                <input type="checkbox" class="jq_servers_select" name="gs{$key}[]" value="{$ss['gs_id']}"  <?php if(!isAdmin()){echo("onclick='return false'");} ?> onclick="checkallselect({$key});" <?php if($gs[$ss['gs_id']]||$gp[$key])echo("checked");?> >{$ss['gs_id']}&nbsp;
+                <{/foreach}>
+            </td>
+        </tr>
+        <{/foreach}>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="11">
+                指定不开该活动的服ID：
+                <input name="no_gs" size="60" maxlength="150" value="{$ignore_gs}">
+                格式如: 1,2,3,4
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">
+                注：全选指定渠道到，以后新加的服也会自动被选定
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script language="javascript">
+    function allselect(GpId,GsId,Obj)
+    {
+        if(Obj.value==0){
+            var allcollid = document.getElementsByName(GpId)
+            for(var i=0;i<allcollid.length;i++){
+                //先修改指定渠道的全选标识
+                allcollid[i].checked = allcollid[0].checked
+                var NGsId = 'gs'+allcollid[i].value+'[]'
+                select(GpId,NGsId,allcollid[i])
+            }
+        }else{
+            select(GpId,GsId,Obj)
+        }
+    }
+    function select(GpId,GsId,Obj)
+    {
+        var coll = document.getElementsByName(GsId)
+        if(Obj.checked){
+            for(var i = 0; i < coll.length; i++)
+                coll[i].checked = true;
+        }else{
+            for(var i = 0; i < coll.length; i++)
+                coll[i].checked = false;
+            //去掉所有服全选
+            var allcollid = document.getElementsByName('gp[]')
+            allcollid[0].checked = false
+        }
+    }
+    function checkallselect(Type)
+    {
+        var SId = 'gs'+Type+'[]'
+        var GId = 'gp[]'
+        var coll = document.getElementsByName(SId)
+        //去掉所有服全选
+        var AllCheck = false
+        for(var i = 0; i < coll.length; i++)
+            AllCheck = AllCheck && coll[i].checked
+        var collid = document.getElementsByName(GId)
+        for(var i = 0; i < collid.length; i++){
+            if(collid[i].value == Type)
+                collid[i].checked = AllCheck
+        }
+        if(!AllCheck){
+            var allcollid = document.getElementsByName('gp[]')
+            allcollid[0].checked = false
+        }
+    }
+    function allselect_servers(is_checked) {
+        if(is_checked) {
+            $('.jq_group_select').each(function(){$(this).removeAttr('checked')});
+            $('.jq_servers_select').each(function(){$(this).attr('checked','checked')});
+        }else{
+            $('.jq_servers_select').each(function(){$(this).removeAttr('checked')});
+        }
+    }
+</script>

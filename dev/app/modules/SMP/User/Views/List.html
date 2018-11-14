@@ -1,0 +1,49 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview"><input class="redbtn" type="button" name="add" value=" 新增用户 "
+                                     onclick="location.href='?m=SMP_User_Edit&show_id=0';"/></div>
+        <div class="search">
+            <form method="post">
+                最后登录时间：<{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>登录名称</th>
+                <th>昵称</th>
+                <th>用户组</th>
+                <th>最后登录时间</th>
+                <th>登录次数</th>
+                <th>最后登录IP</th>
+                <th>权限分组</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $users as $u}>
+            <tr>
+                <td>{$u['login_name']}</td>
+                <td>{$u['nickname']}</td>
+                <td>{$u['user_group_name']}</td>
+                <td>{$u['last_login_time']}</td>
+                <td>{$u['login_num']}</td>
+                <td>{$u['ip']}</td>
+                <td>{$u['group']}</td>
+                <td><a href="?m=SMP_User_Edit&del_id={$u['id']}" onclick="return confirm('确认要删除这个用户吗？');">删除</a>&nbsp;|&nbsp;<a
+                        href="?m=SMP_User_Edit&show_id={$u['id']}">编辑</a></td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

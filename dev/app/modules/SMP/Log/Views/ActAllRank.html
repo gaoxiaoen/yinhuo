@@ -1,0 +1,56 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家KEY</th>
+                <th>玩家昵称</th>
+                <th>排行榜类型</th>
+                <th>排名</th>
+                <th>得到的物品</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['pname']}</td>
+                <td>
+                    <{if $d['type'] == 1}>等级榜<{/if}>
+                    <{if $d['type'] == 2}>坐骑榜<{/if}>
+                    <{if $d['type'] == 3}>宠物榜<{/if}>
+                    <{if $d['type'] == 4}>每日累冲榜<{/if}>
+                    <{if $d['type'] == 5}>宝石总镶嵌榜<{/if}>
+                    <{if $d['type'] == 6}>战力榜<{/if}>
+                </td>
+                <td>{$d['rank']}</td>
+                <td>{$d['goods_list']}</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

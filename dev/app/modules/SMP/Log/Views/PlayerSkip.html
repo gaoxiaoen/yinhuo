@@ -1,0 +1,39 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                剧情id：<input type="text" name="kw_id" value="" style="width:80px;" class="txtinput"/>             
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>剧情ID</th>
+                <th>跳过数量</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['id']}</td>
+                <td>{$d['num']}</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

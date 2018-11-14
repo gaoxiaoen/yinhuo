@@ -1,0 +1,58 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" name="kw_rname" value="{$params['nickname']}" style="width:80px;" class="txtinput"/>
+                装备ID：<input type="text" name="kw_gkey" value="{$params['gkey']}" style="width:80px;" class="txtinput"/>
+            </select>
+                <{include file="Views/Widget/SearchButton.html"}>
+
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>Key</th>
+                <th>玩家key</th>
+                <th>角色名</th>
+                <th>装备ID</th>
+                <th>装备名称</th>
+                <th>装备等级</th>
+                <th>穿戴英雄key</th>
+                <th>来源</th>
+                <th>生成时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['ekey']}</td>
+                <td>{$g['pkey']}</td>
+                <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$g['pkey']}">{$g['nickname']}</a></td>
+                <td>{$g['equip_id']}</td>
+                <td>{$g['goodsname']}</td>
+                <td>{$g['equip_lv']}</td>
+                <td>{$g['wearherokey']}</td>
+                <td>{$g['res']}</td>
+                <td>{$g['create_time']}</td>
+                <td><a onclick="if(confirm('确定删除物品将无法恢复？')){this.href='?m=SMP_Player_EquipList&act=del&gkey={$g[ekey]}'}">删除</a></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

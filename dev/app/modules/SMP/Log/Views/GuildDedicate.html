@@ -1,0 +1,57 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家Key</th>
+                <th>玩家昵称</th>
+                <th>公会key</th>
+                <th>消耗元宝</th>
+                <th>消耗物品</th>
+                <th>当前剩余奉献</th>
+                <th>累计奉献</th>
+                <th>奉献改变</th>
+                <th>改变原因</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['nickname']}</td>
+                <td>{$d['gkey']}</td>
+                <td>{$d['gold_num']}</td>
+                <td>{$d['goods_num']}</td>
+                <td>{$d['leave_dedicate']}</td>
+                <td>{$d['acc_dedicate']}</td>
+                <td>{$d['dedicate']}</td>
+                <td>{$d['msg']}</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

@@ -1,0 +1,57 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                日期：<{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th style="width:6%;text-align: center;">日期</th>
+                <th style="text-align: center;">次留</th>
+                <th style="text-align: center;">3日</th>
+                <th style="text-align: center;">4日</th>
+                <th style="text-align: center;">5日</th>
+                <th style="text-align: center;">6日</th>
+                <th style="text-align: center;">7日</th>
+                <th style="text-align: center;">10日</th>
+                <th style="text-align: center;">15日</th>
+                <th style="text-align: center;">30日</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $day}>
+            <tr>
+                <td ><{echo date('Y-m-d',$day['date'])}></td>
+                <{if $day['d1'] != ''}>
+                <td style="text-align: center;"><{if $day['d1'] != ''}> <{echo $day['d1'] * 100}>% <{else}> - <{/if}></td>
+                <td style="text-align: center;"><{if $day['d2'] != ''}> <{echo $day['d2'] * 100}>% <{else}> - <{/if}></td>
+                <td style="text-align: center;"><{if $day['d3'] != ''}> <{echo $day['d3'] * 100}>% <{else}> - <{/if}></td>
+                <td style="text-align: center;"><{if $day['d4'] != ''}> <{echo $day['d4'] * 100}>% <{else}> - <{/if}></td>
+                <td style="text-align: center;"><{if $day['d5'] != ''}> <{echo $day['d5'] * 100}>% <{else}> - <{/if}></td>
+                <td style="text-align: center;"><{if $day['d6'] != ''}> <{echo $day['d6'] * 100}>% <{else}> - <{/if}></td>
+                <td style="text-align: center;"><{if $day['d7'] != ''}> <{echo $day['d7'] * 100}>% <{else}> - <{/if}></td>
+                <td style="text-align: center;"><{if $day['d15'] != ''}> <{echo $day['d15'] * 100}>% <{else}> - <{/if}></td>
+                <td style="text-align: center;"><{if $day['d30'] != ''}> <{echo $day['d30'] * 100}>% <{else}> - <{/if}></td>
+                <{else}>
+                <td colspan="9">暂无数据...</td>
+                <{/if}>
+            </tr>
+            <{/foreach}>
+            </tbody>
+
+        </table>
+        {$page}
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

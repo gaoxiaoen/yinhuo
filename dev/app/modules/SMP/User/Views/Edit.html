@@ -1,0 +1,94 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">{$title}</div>
+    </div>
+
+    <div id="content">
+        <{include file="Views/Widget/Message.html"}>
+        <form method="post" action="?m=SMP_User_Edit" onsubmit="return checkit(this);">
+            <input type="hidden" name="edit_id" value="{$show_id}" />
+            <table class="dtable" style="width:100%;">
+                <tbody>
+                <tr>
+                    <td class="txtright" width="120">登录名：</td>
+                    <td><input type="text" class="txtinput" name="u[login_name]" value="{$user['login_name']}" /></td>
+                </tr>
+                <tr>
+                    <td class="txtright">昵称：</td>
+                    <td><input type="text" class="txtinput" name="u[nickname]" value="{$user['nickname']}" /></td>
+                </tr>
+                <tr>
+                    <td class="txtright">密码：</td>
+                    <td><input type="password" class="txtinput" name="u[passwd]" value="" /> 留空表示不修改</td>
+                </tr>
+                <tr>
+                    <td class="txtright">确认密码：</td>
+                    <td><input type="password" class="txtinput" name="u[passwd2]" value="" /></td>
+                </tr>
+                <tr>
+                    <td class="txtright">权限组</td>
+                    <td>
+                        <{foreach $groupList as $gl}>
+                        <input type="checkbox" name = "u[group][]" value="<{echo $gl['gp_id']}>" <{if in_array($gl['gp_id'],$user['group'])}>checked<{/if}>>
+                        <{echo $gl['name']}>
+                        <{/foreach}>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="txtright">用户组：</td>
+                    <td>
+                        <select name="u[user_group_id]">
+                            <{if !$_SESSION['user_group_id']}><option value="0">Root</option><{/if}>
+                            <{foreach $user_groups as $v}>
+                            <option value="{$v['id']}" <{echo Html::setSelected($v['id']==$user['user_group_id'])}>>{$v['name']}</option>
+                            <{/foreach}>
+                        </select>
+                        <{if !$_SESSION['user_group_id']}>注：Root权限为最高权限<{/if}>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <input name="submit" type="submit" value=" 提交 " class="btn" />
+                        <input name="back" onclick="location.href='?m=SMP_User_List';" type="button" value=" 返回 " class="btn" />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function checkit(form)
+    {
+        var msg = [];
+        if(!$.trim($(form['u[login_name]']).val()))
+            msg.push('登录名不能为空！');
+
+        if(!$.trim($(form['u[nickname]']).val()))
+            msg.push('昵称不能为空！');
+
+        if(form['edit_id'].value < 1)
+        {
+            if($.trim($(form['u[passwd]']).val()) == '')
+                msg.push('密码不能为空！');
+        }
+
+        if($.trim($(form['u[passwd]']).val()) != '')
+        {
+            if($.trim($(form['u[passwd]']).val()) != $.trim($(form['u[passwd2]']).val()))
+                msg.push('密码不一致');
+        }
+
+        if(msg.length > 0)
+        {
+            alert(msg.join("\n"));
+            return false;
+        }
+        return true;
+    }
+
+</script>
+<{include file="Views/Footer.html"}>

@@ -1,0 +1,103 @@
+<{include file="Views/Header.html"}>
+<style type="text/css">
+#chart-1,#chart-2{float:left;}
+</style>
+<div id="center_col">
+<form method="post">
+        <div style="margin-top:10px;">
+                日期：<{include file="Views/Widget/SearchTime.html"}><br/>
+        </div>
+    <div id="content">
+        <{include file="Views/Widget/Tab.html"}>
+        <div id="js_tab_Total_body">
+            <div>
+                {$charts_charge}
+                {$charts_online}
+            </div>
+            <table class="dtable tablesorter" style="width:100%">
+                <thead>
+                    <th>日期</th>
+                    <th>首充人数</th>
+                    <th>首充金额</th>
+                    <th>在线时长 [ 小时 ] </th>
+                    <th>平均首充金额</th>
+                    <th>平均在线时长</th>
+                </thead>
+
+                <tbody>
+                    <{if is_array($date_total) && !empty($date_total)}>
+                        <tr style="background-color:lightgray;">
+                            <td>合计</td>
+                            <td>{$total['num']}</td>
+                            <td><{echo number_format($total['total_fee'],2);}></td>
+                            <td><{echo number_format($total['total_online_time']);}></td>
+                            <td><{echo $total['total_fee'] > 0 ? number_format(round($total['total_fee'] / $total['num'],2),2) : 0;}></td>
+                            <td><{echo $total['total_online_time'] > 0 ? number_format(round($total['total_online_time'] / $total['num'],0)) : 0;}></td>
+                        <tr/>
+                        <{foreach $date_total as $date=>$data}>
+                        <tr>
+                            <td>{$date}</td>
+                            <td>{$data['num']}</td>
+                            <td><{echo number_format($data['total_fee'],2);}></td>
+                            <td><{echo number_format($data['total_online_time']);}></td>
+                            <td><{echo $data['total_fee'] > 0 ? number_format(round($data['total_fee'] / $data['num'],2),2) : 0;}></td>
+                            <td><{echo $data['total_online_time'] > 0 ? number_format(round($data['total_online_time'] / $data['num'],0)) : 0;}></td>
+                        <tr/>
+                        <{/foreach}>
+                    <{else}>
+                        <tr><td colspan="6">暂无数据</td><tr/>
+                    <{/if}>
+                </tbody>
+            </table>
+        </div>
+        <div id="js_tab_FirstCharge_Money_body" style="display:none;">
+            充值区间设置 : <input type="text" class="txtinput" name="money_interval" value="{$money_interval}" style="width:500px;margin:10px;"><br/>
+            <table class="dtable tablesorter" style="width:100%">
+                <thead>
+                    <th>玩家首充金额区间</td>
+                    <th>首充人数</td>
+                    <th>占比</td>
+                </thead>
+                <tbody>
+                <{if is_array($interval_money) && !empty($interval_money)}>
+                    <{foreach $interval_money as $item}>
+                        <tr>
+                            <td>{$item['name']}</td>
+                            <td>{$item['count']}</td>
+                            <td><{echo $item['count'] > 0 ? round($item['count'] / $total['num'], 2)*100 : 0 ;}>%</td>
+                        </tr>
+                    <{/foreach}>
+                <{else}>
+                    暂无数据
+                <{/if}>
+                </tbody>
+            </table>
+        </div>
+        <div id="js_tab_FirstCharge_Lv_body" style="display:none;">
+            等级区间设置 : <input type="text" class="txtinput" name="lv_interval" value="{$lv_interval}" style="width:500px;margin:10px;"><br/>
+            <table class="dtable tablesorter" style="width:100%">
+                <thead>
+                    <th>玩家首充等级区间</td>
+                    <th>首充人数</td>
+                    <th>占比</td>
+                </thead>
+                <tbody>
+                <{if is_array($interval_lv) && !empty($interval_lv)}>
+                    <{foreach $interval_lv as $item}>
+                        <tr>
+                            <td>{$item['name']}</td>
+                            <td>{$item['count']}</td>
+                            <td><{echo $item['count'] > 0 ? round($item['count'] / $total['num'], 2)*100 : 0 ;}>%</td>
+                        </tr>
+                    <{/foreach}>
+                <{else}>
+                    暂无数据
+                <{/if}>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</form>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

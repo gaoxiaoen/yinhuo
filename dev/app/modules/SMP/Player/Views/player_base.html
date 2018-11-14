@@ -1,0 +1,103 @@
+<style type="text/css">
+   .dpage {
+      width:130%;
+      margin-top:50px;
+   }
+</style>
+<{if $params['side_type'] == 1}>
+   <{if $info['pkey']}>
+      <p class='player_topic'>玩家基本信息</p>
+      <div class='player_info'><span class="hl3">{$player_column['pkey']}:　 </span>{$info['pkey']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['nickname']}:　 </span>{$info['nickname']} <span class="hl0">(vip{$info['vip_lv']})</span> <span class="hl3"></span> [ 充值金额: {$info['total_charge_money']} ] </div>
+      <div class='player_info'><span class="hl3">{$player_column['accname']}:　 </span>{$info['accname']}<{if $info['game_channel_id']}> [<{echo $gc_info[$info['game_channel_id']] ? $gc_info[$info['game_channel_id']]:'未知';}> | {$info['game_channel_id']}]<{/if}></div>
+      <div class='player_info'><span class="hl3">{$player_column['online']}:　 </span><span class='hl0'><{if $info['online']}>在线<{else}>不在线<{/if}></span></div>
+      <div class='player_info'><span class="hl3">{$player_column['sex']} </span></div>
+      <div class='player_info'><span class="hl3">{$player_column['guild_name']}:　 </span><span class='hl0'><{if $info['guild_name']}>{$info['guild_name']}<{else}>无<{/if}></span></div>
+      <div class='player_info'><span class="hl3">{$player_column['lv']}:　 </span>{$info['lv']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['realm']}:　 </span>{$info['realm']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['career']}:　 </span>{$career[$info['career']]}</div>
+      <div class='player_info'><span class="hl3">{$player_column['status']}:　 </span><{if $info['status'] == 0}>正常<{elseif $info['status'] == 1}><span>封号</span><{elseif $info['status'] == 2}>禁言<{elseif $info['status'] == 3}>封号且禁言<{/if}></div>
+      <div class='player_info'><span class="hl3">{$player_column['cbp']}:　</span>{$info['cbp']} [历史最高:{$info['maxcbp']}]</div>
+      <div class='player_info'><span class="hl3">{$player_column['silent']}:　</span><{if $player_ban_status[$info['pkey']]['type'] == 0}>正常<{else}><span class='hl2'><{echo $player_ban_status[$info['pkey']]['type'] == 1 ? '普通禁言' : '特殊禁言'}> </span>[过期时间:{$player_ban_status[$info['pkey']]['expire_time']}]<{/if}></div>
+      <div class='player_info'><span class="hl3">{$player_column['exp']}:　</span>{$info['exp']}</span></div>
+      <div class='player_info'>　</div>
+      <p class="player_topic">登录注册</p>
+      <div class='player_info'><span class="hl3">{$player_column['reg_time']}:　</span><{echo getDateStr($info['reg_time'])}></div>
+      <div class='player_info'><span class="hl3">{$player_column['reg_ip']}:　</span>{$info['reg_ip']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['last_login_time']}:　</span><{echo getDateStr($info['last_login_time'])}></div>
+      <div class='player_info'><span class="hl3">{$player_column['logout_time']}:　</span><{echo getDateStr($info['logout_time'])}></div>
+      <div class='player_info'><span class="hl3">{$player_column['last_login_ip']}:　</span>{$info['last_login_ip']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['location']}:　</span>{$info['location']}</div>
+      <p class="player_topic">货币</p>
+      <div class='player_info'><span class="hl3">{$player_column["gold"]}:　</span>{$info['gold']} </div>
+      <div class='player_info'><span class="hl3">{$player_column["coin"]}:　</span>{$info['coin']}</div>
+      <div class='player_info'><span class="hl3">{$player_column["explore"]}:　</span>{$info['explore']}</div>
+      <div class='player_info'>　</div>
+      <p class="player_topic">其他</p>
+      <div class='player_info'><span class="hl3">{$player_column["qtimes"]}:　</span>{$info['qtimes']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['likes']}:　</span>{$info['likes']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['petid']}:　</span>{$info['petid']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['frip']}:　</span>{$info['frip']}</div>
+      <div class='player_info'><span class="hl3">{$player_column['total_online_time']}:　</span><{echo round($info['total_online_time']/3600,2)}></div>
+      <div class='player_info'><span class="hl3">{$player_column['login_days']}:　</span>{$info['login_days']}</div>
+   <{else}>
+      暂无数据...
+   <{/if}>
+<{else}>
+      <{if isset($second_column)}>
+         <div style="border-bottom:1px solid #ddd;height:31px;width:130%;margin-bottom:5px;">
+         <{foreach $second_column as $v}>
+            <div class="<{if $v['type']==1}>tab_header_selected<{else}>tab_header<{/if}> j_second_tab" type="{$v['type']}">{$v['name']}</div>
+         <{/foreach}>
+         </div>
+      <{/if}>
+         <{foreach $player_column as $k=>$v}>
+         <table class="dtable tablesorter" type="{$k}" style="width:130%;table-layout:fixed;word-break:break-all;<{if $k!=1}>display:none;<{/if}>;">
+           <thead>
+               <tr>
+                  <{foreach $v as $columnName}>
+                     <th>{$columnName}</th>
+                  <{/foreach}>
+               </tr>
+           </thead>
+           <tbody>
+             <{if !empty($info[$k])}>
+              <{foreach $info[$k] as $row}>
+              <tr>
+                 <{foreach $player_column_val[$k] as $index}>
+                     <td><{if $index == 'time'}> <{echo getDateStr($row[$index]);}> <{else}> {$row[$index]} <{/if}> </td>
+                 <{/foreach}>
+              </tr>
+              <{/foreach}>
+              <{else}>
+               <tr><td colspan="<{echo count($player_column[$k]);}>">暂无数据...</td></tr>
+              <{/if}>
+            </tbody>
+         </table>
+       <{/foreach}>
+       <{if $params['side_type'] == 7}>
+       {$page}
+       <{/if}>
+<{/if}>
+
+<script type="text/javascript">
+$('.j_second_tab').click(function(){
+   var tab_type = $(this).attr('type');
+   $('.j_second_tab').each(function(){
+       if(tab_type == $(this).attr('type')){
+         $(this).attr('class','tab_header_selected j_second_tab');
+      }else{
+         $(this).attr('class','tab_header j_second_tab');
+      }
+   });
+   $('table').each(function(){
+      var t_type = $(this).attr('type');
+      if(tab_type == t_type){
+         $(this).css('display','');
+      }else{
+         $(this).css('display','none');
+      }
+     
+   });
+});
+</script>

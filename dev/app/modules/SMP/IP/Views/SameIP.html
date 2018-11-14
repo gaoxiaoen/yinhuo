@@ -1,0 +1,83 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+                最后登录IP：<input type="text" name="kw_lastip" value="" style="width:120px;" class="txtinput"/>&nbsp;
+        注册IP：<input type="text" name="kw_regip" value="" style="width:120px;" class="txtinput"/>&nbsp;
+        角色名：<input type="text" name="kw_name" value="" style="width:100px;" class="txtinput"/>&nbsp;   
+      <{include file="Views/Widget/SearchButton.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+  <th>玩家key</th>
+  <th>角色名</th>
+  <th>账号</th>
+  <th>服务器标识</th>
+  <th>等级</th>
+  <th>元宝</th>
+  <th>铜钱</th>
+  <th>职业</th>
+  <th>注册IP</th>
+  <th>最后登录IP</th>                    
+  <th>最后登录时间</th>
+  <th>同IP人数</th>   
+</tr>
+</thead>
+<tbody>
+
+
+<tr >
+    <td>33</td>
+    <td><a href="?m=SMP_Player_List" target="_blank">我叫MT</a></td>
+    <td>junho2009</td>
+    <td>4399_mhfx_1</td>
+    <td>66</td>
+    <td>999980459</td>
+    <td>6362884</td>
+    <td>天尊</td>
+    <td>113.108.203.158</td>
+    <td>113.108.203.158</td>                    
+    <td>2012-07-20 18:57:12</td>
+    <td>10</td>
+</tr>
+
+<tr >
+    <td>258105</td>
+    <td><a href="?m=SMP_Player_List" target="_blank">柯辰忌</a></td>
+    <td>xui0o3jnp</td>
+    <td>4399_mhfx_1</td>
+    <td>45</td>
+    <td>0</td>
+    <td>0</td>
+    <td>真武</td>
+    <td>183.21.149.205</td>
+    <td>121.10.52.124</td>                  
+    <td>2012-07-10 04:03:30</td>
+    <td>7</td>
+</tr>
+
+</tbody>
+<tfoot>
+<tr>
+    <td colspan="12">
+                注：默认为在线的相同登录IP数量排行统计
+    </td>
+</tr>
+</tfoot>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

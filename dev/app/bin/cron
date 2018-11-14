@@ -1,0 +1,27 @@
+#!/bin/bash
+
+export PATH="/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin"
+
+MODULE=$1
+METHOD=$2
+ARGS=$3
+CURDIR=$(dirname $0)
+
+cd $CURDIR
+
+if [ -f ../../var/cache/phpcron_${MODULE}.lock ];then
+    exit
+fi
+
+EXEC_FILE=../../var/cache/phpcron_${MODULE}_${METHOD}.sh
+#CMD="/usr/bin/php ${CURDIR}/cron.php ${MODULE} ${METHOD} ${ARGS}"
+CMD="/alidata/server/php/bin/php ${CURDIR}/cron.php ${MODULE} ${METHOD} ${ARGS}"
+cat > ${EXEC_FILE} <<EOF
+#!/bin/bash
+rand=`expr $RANDOM % 7`;
+sleep $rand
+${CMD}
+EOF
+
+chmod +x $EXEC_FILE
+screen -dm -s $EXEC_FILE

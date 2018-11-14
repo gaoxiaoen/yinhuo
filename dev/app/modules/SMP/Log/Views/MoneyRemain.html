@@ -1,0 +1,36 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>物品名</th>
+                <th>产出的总数</th>
+                <th>剩余的总数</th>
+                <th>剩余比例</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['goods_name']}</td>
+                <td>{$d['num']}</td>
+                <td>{$d['leave_num']}</td>
+                <td>{$d['pro']}</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

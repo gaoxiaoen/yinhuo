@@ -1,0 +1,61 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" name="kw_rname" value="{$params['nickname']}" style="width:80px;" class="txtinput"/>
+                玩家key：<input type="text" name="kw_gkey" value="{$params['gkey']}" style="width:80px;" class="txtinput"/>
+                <{include file="Views/Widget/SearchButton.html"}>
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>玩家key</th>
+                <th>角色名字</th>
+                <th>当前光翼形象</th>
+                <th>可幻化光翼形象</th>
+                <th>光翼等级</th>
+                <th>光翼经验</th>
+                <th>光翼技能列表（技能id,激活状态（0未激活1可激活2已激活）,显示位置）</th>
+                <th>光翼丹药列表（物品id,使用数量,属性列表，属性提升百分比）</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['pkey']}</td>
+                <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$g['pkey']}">{$g['nickname']}</a></td>
+                <td>{$g['wing_image_id']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','wing_image_id')}">修改</a> </td>
+                <td>{$g['wing_image_list']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','wing_image_list')}">修改</a> </td>
+                <td>{$g['wing_lv']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','wing_lv')}">修改</a> </td>
+                <td>{$g['wing_exp']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','wing_exp')}">修改</a> </td>
+                <td>{$g['wing_skills']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','wing_skills')}">修改</a> </td>
+                <td>{$g['wing_elixir_log']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','wing_elixir_log')}">修改</a> </td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+        <script type="text/javascript">
+            function setval(a, pkey,file) {
+                var t = prompt('请输入');
+                if (t === null)return false;
+                a.href='?m=SMP_Player_Mount&act=update&file=' + file+ '&value=' + t + '&pkey=' + pkey;
+                return true;
+            }
+        </script>
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

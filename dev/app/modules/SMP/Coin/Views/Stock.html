@@ -1,0 +1,59 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+      日期：<{include file="Views/Widget/SearchTime.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+  <th>统计日期</th>
+  <th>新增绑定铜</th>
+  <th>消耗绑定铜</th>
+  <th>库存绑定铜</th>
+  <th>新增铜</th>
+  <th>消耗铜</th>
+  <th>库存铜</th>
+</tr>
+</thead>
+<tbody>
+
+
+<tr>
+
+  <td>2012-08-22</td>
+  <td>1613430</td>
+  <td>445000</td>
+  <td>30727644935</td>
+  <td>315000</td>
+  <td>0</td>
+  <td>75688122752</td>
+  
+</tr>
+<tr>
+
+  <td>2012-08-21</td>
+  <td>6407677</td>
+  <td>4085837</td>
+  <td>30721108356</td>
+  <td>4620000</td>
+  <td>23838163</td>
+  <td>75781710178</td>
+</tr>
+</tbody>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

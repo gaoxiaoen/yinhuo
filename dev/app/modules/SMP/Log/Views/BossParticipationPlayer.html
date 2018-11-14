@@ -1,0 +1,63 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>　
+                BOSS类型：<input type="text" name="mon_type" value="{$req_params['mon_type']}" style="width:120px;" class="txtinput"/>
+                BOSS：    <input type="text" name="mon_name"   value="{$req_params['mon_name']}"   style="width:120px;" class="txtinput"/>
+                时间：    <input name="sdate" type="text" class="txtinput js_st" id="js_st" value="<{echo getDateStr($req_params['sdate']);}>" onFocus="WdatePicker({dateFmt:'yyyy-M-d'})"/>
+                          &nbsp;<{include file="Views/Widget/SearchButton.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>日期</th>
+                <th>BOSS [ BOSS类型id_BOSS ]</th>
+                <th>输出</th>
+                <th>是否击杀</th>
+                <th>玩家角色名</th>
+                <th>玩家ID</th>
+                <th>玩家区服</th>
+                <th>注册渠道</th>
+                <th>注册时间</th>
+                <th>当日等级</th>
+                <th>当日战力</th>
+                <th>累计充值</th>
+                <th>当日VIP</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $n=>$d}>
+            <tr>
+                <td>{$d['time']}</td>
+                <td>{$d['mon_type']}_{$d['mon_name']}</td>
+                <td>{$d['hurt']}</td>
+                <td>{$d['is_kill']}</td>
+                <td>{$d['pname']}</td>
+                <td>{$d['pkey']}</td>
+                <td>{$d['sn']}</td>
+                <td>{$d['pf']}</td>
+                <td>{$d['reg_time']}</td>
+                <td>{$d['lv']}</td>
+                <td>{$d['cbp']}</td>
+                <td>{$d['total_fee']}</td>
+                <td>{$d['vip_lv']}</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

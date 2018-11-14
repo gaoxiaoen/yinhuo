@@ -1,0 +1,186 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        物品名称/ID查询<input type="text" class="txtinput" id="search"> <input type="button" class="btn2" id = "searchBtn" value="查询" > <input id="searchRet" class="txtinput" style="border: 0px;width: 50%" >
+    </div>
+    <div id="content">
+        <{include file="Views/Widget/Message.html"}>
+        <{include file="Views/Widget/Tab.html"}>
+
+        <div id="js_tab_FSendMail_body" style="width:100%">
+            <form action="" method="post">
+                <table style="width:100%;">
+                    <tbody>
+
+                    <tr>
+                        <td style="width: 150px">邮件标题：</td>
+                        <td>
+                            <input type = "text" name="items[title]" class="txtinput" style="width: 400px"/><a style="font-size: 90%;color: #999">　请输入邮件标题 < 20 个字符</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>邮件内容</td>
+                        <td>
+                            <textarea name="items[text]" cols="80" rows="10" ></textarea> <a style="font-size: 90%;color: #999">　请输入邮件文字 < 120 个字符</a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>发送目标：<input type="hidden" name="act" value="send"/></td>
+                        <td>
+                            <input name="items[type]" type="radio" value="1" />&nbsp;全服 &nbsp;
+                            <input name="items[type]" type="radio" value="0" />&nbsp;指定玩家 &nbsp;
+                            <input name="items[type]" type="radio" value="2" />&nbsp;按搜索条件 &nbsp;
+
+                        </td>
+                    </tr>
+                    <tr style="display: none;" id='role_name_textarea'>
+                        <td>指定玩家</td>
+                        <td>
+                            <textarea id="rolearea" name="items[role_name]" cols="80" rows="5" class="txtinput"></textarea> <a style="font-size: 90%;color: #999">　每行一个玩家名字/key</a></td>
+                        </td>
+                    </tr>
+                    <tr class='jq_search'>
+                        <td>等级:</td>
+                        <td><input type="text" name="items[lv_s]" value="0"> ~ <input type="text" name="items[lv_e]" value="300"></td>
+                    </tr>
+                    <tr class='jq_search'>
+                        <td>渠道ID:</td>
+                        <td><input type="text" name="items[game_channel_id]" ><a style="font-size: 90%;color: #999">　只能填写一个平台ID,默认留空</a></td>
+                    </tr>
+                    <tr class='jq_search'>
+                        <td>注册时间:</td>
+                        <td>
+                            <input name="items[reg_time_s]" type="text" class="txtinput js_st" id="js_st" value="<{echo $this->getStartTime()}>" /> ~ <input name="items[reg_time_e]" type="text" class="txtinput js_et" id="js_et" value="<{echo $this->getEndTime()}>" />
+                            <a style="font-size: 90%;color: #999">　请填写服务器当地时间,默认留空</a></td>
+                        </td>
+                    </tr>
+                    <tr class='jq_search'>
+                        <td>登陆时间:</td>
+                        <td>
+                            <input name="items[login_time_s]" type="text" class="txtinput js_st" id="js_st" value="<{echo $this->getStartTime()}>" /> ~ <input name="items[login_time_e]" type="text" class="txtinput js_et" id="js_et" value="<{echo $this->getEndTime()}>" />
+                            <a style="font-size: 90%;color: #999">　请填写服务器当地时间,默认留空</a></td>
+                        </td>
+                    </tr>　
+
+                    <tr>
+                        <td>物品列表:</td>
+                        <td>
+                            <input type="button" class="btn" value="添加物品" onclick="add_item()">
+                            <input type="button" class="btn" value="清空" onclick="clear_item()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+
+                        <td><div id="goodslist"></div></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" name="submit" class="btn" value="发送" />
+
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        <div id="js_tab_InwardMail_body" style="width:100%;display: none;">
+
+        </div>
+
+        <div id="js_tab_PlayerMail_body" style="width:100%;display: none;">
+            <table class="dtable tablesorter" style="width:100%;">
+                <thead>
+
+                <tr>
+                    <th>发信人姓名</th>
+                    <th>邮件类型</th>
+                    <th>收信人角色列表</th>
+                    <th>邮件标题</th>
+                    <th style="width: 40%">邮件内容</th>
+                    <th>物品列表</th>
+                    <th>发送时间</th>
+                    <th width="5%">发送状态</th>
+                    <th>操作</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <{foreach $list as $v}>
+                <tr>
+                    <th>{$v['user']}</th>
+                    <th><{if $v['type'] == 0}>指定玩家<{elseif $v['type'] == 1}>全服邮件<{else}>条件发送<{/if}></th>
+                    <th><{echo str_replace("\n",', ',$v['players']);}></th>
+                    <th>{$v['title']}</th>
+                    <th>{$v['content']}</th>
+                    <th>{$v['goodslist']}</th>
+                    <th><{echo date('Y-m-d H:i:s',$v['time']);}></th>
+                    <th><{if $v['state'] == 2}><a style="color:green">处理完毕</a><{elseif $v['state'] == 0}>未审核 <{else}> <a style="color:red">发送中.. </a><{/if}></th>
+                    <th><{if isAdmin() || $v['state'] == '0'}><a onclick="return confirm('确认要删除吗? ')" href="?m=SMP_GM_Mail&act=del&mid={$v['id']}">删除</a><{/if}></th>
+                </tr>
+                <{/foreach}>
+                </tbody>
+            </table>
+            {$page}
+        </div>
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>
+<script language="javascript">
+    function add_item(){
+        var reson_html = '原因: <input name="reason" type="text" /><br>'
+        if(!$('input[name=reason]')[0]) $("#goodslist").append(reson_html);
+        var dychtml = 'ID:　 <input type=text name=goods[] /> 数量 <input type=text name=nums[] /></br>';
+        $("#goodslist").append(dychtml);
+    }
+    function clear_item(){
+        $("#goodslist").html("");
+    }
+
+    $(document).ready(function(){
+        $("input[name='items[type]']").each(function(){
+           if(this.value == 2){
+              $(this).attr('checked',true);
+           }else{
+              $(this).attr('checked',false);
+           }
+        });
+        $("#searchBtn").click(function(){
+            var search = $('#search').val();
+            if(!search)
+                return alert('请输入物品名称/物品ID！');
+
+            $.get('?m=SMP_GM_Mail&act=search', {'search':search}
+                    ,function(d){
+                        $('#searchRet').val(d);
+                    });
+        });
+
+    });
+
+    $("input[name='items[type]']").click(function(){
+            switch(this.value) {
+                case '0':
+                     $('.jq_search').each(function(){$(this).hide();});
+                     $('#role_name_textarea').show();
+                     break;
+                case '1':
+                     $('.jq_search').each(function(){$(this).hide();});
+                     $('#role_name_textarea').hide();
+                     $("textarea[name='items[role_name]']").val('');
+                     break;
+                case '2':
+                     $('.jq_search').each(function(){$(this).show();});
+                     $('#role_name_textarea').hide();
+                     $("textarea[name='items[role_name]']").val('');
+                     break;
+            }
+    });
+
+</script>

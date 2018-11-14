@@ -1,0 +1,61 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>战场ID</th>
+                <th>阵营</th>
+                <th>服务器ID</th>
+                <th>玩家ID</th>
+                <th>玩家名称</th>
+                <th>排名</th>
+                <th>积分</th>
+                <th>击杀人数</th>
+                <th>助攻</th>
+                <th>攻击塔数</th>
+                <th>是否胜利(0失败，1胜利，2平局)</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['room_key']}</td>
+                <td>{$d['group']}</td>
+                <td>{$d['sn']}</td>
+                <td>{$d['pkey']}</td>
+                <td>{$d['nickname']}</td>
+                <td>{$d['rank']}</td>
+                <td>{$d['score']}</td>
+                <td>{$d['kill']}</td>
+                <td>{$d['assist']}</td>
+                <td>{$d['att_tower']}</td>
+                <td>{$d['is_win']}</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

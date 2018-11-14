@@ -1,0 +1,66 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" name="kw_rname" value="" style="width:80px;" class="txtinput"/>
+                玩家key：<input type="text" name="kw_pkey" value="" style="width:150px;" class="txtinput"/>
+                邮件状态：
+                <select name='kw_status' >
+                <option value='0' <{if $kw_status == '0'}>selected<{/if}> >未读</option>
+                <option value='1' <{if $kw_status == '1'}>selected<{/if}> >已读</option>
+                <option value='2' <{if $kw_status == '2'}>selected<{/if}> >已提取</option>
+                <option value='3' <{if $kw_status == '3'}>selected<{/if}> >已删除</option>
+                <option value='4' <{if $kw_status == '4'}>selected<{/if}> >已失效</option>
+                <option value='99' <{if $kw_status == '99'}>selected<{/if}> >邮箱邮件</option>
+            	</select>
+                <{include file="Views/Widget/SearchButton.html"}>
+
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>玩家key</th>
+                <th>角色名</th>
+                <th>标题</th>
+                <th>物品列表</th>
+                <th>生成时间</th>
+                <th>失效时间</th>     
+                <th>附件领取时间</th>
+                <th>状态</th>
+                <th>来源</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['pkey']}</td>
+                <td>{$g['nickname']}</td>
+                <td>{$g['title']}</td>
+                <td>{$g['goodslist']}</td>         
+                <td><{echo getDateStr($g['time'])}></td>
+                <td><{echo getDateStr($g['overtime'])}></td>         
+                <td><{echo getDateStr($g['gettime'])}></td>
+                <td>{$g['state']}</td>
+                <td><{echo $this->consume_type[$g['from']]}></td>
+                <td><a onclick="if(confirm('确定删除邮件将无法恢复？')){this.href='?m=SMP_Player_MailList&act=del&mkey={$g[mkey]}'}">删除</a></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

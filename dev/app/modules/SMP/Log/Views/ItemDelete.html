@@ -1,0 +1,117 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header" style="height:60px;">
+  <div class="overview">
+  </div>
+  <div class="search" >
+    <form method="post" >
+      <{include file="Views/Widget/ServersId.html"}>
+             玩家key：<input type="text" name="kw_rid" value="" style="width:80px;" class="txtinput"/>
+             角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+             物品ID：<input type="text" name="kw_itemId" value="" style="width:80px;" class="txtinput"/>
+             物品位置：<select name='kw_pos' >
+                <option value=''>--</option>
+                <option value='背包'>背包</option>
+                <option value='仓库'>仓库</option>
+                <option value='装备'>装备</option>
+              </select>    
+             时间：<{include file="Views/Widget/SearchTime.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+
+<form id="mainForm" method="post">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+	<th style="width:20px;"></th>
+    <th>编号</th>
+    <th>玩家key</th>
+    <th>角色名</th>
+    <th>服务器标识</th>                    
+    <th>物品ID</th>
+    <th>物品名</th>
+    <th>绑定类型</th>
+    <th>物品位置</th>
+    <th>删除方式</th>                    
+    <th>删除时间</th>
+    <th>是否恢复</th>
+</tr>
+</thead>
+<tbody>
+
+
+<tr>
+	<td style="text-align:center;"><input name="id[]" type="checkbox" value="15678138"></td>
+    <td>15678138</td>
+    <td>331273</td>
+    <td>杜若曼</td>
+    <td>4399_mhfx_1</td>
+    <td>24121</td>
+    <td>大气血包</td>
+    <td>非绑定</td>
+    <td>背包</td>
+    <td>使用消耗</td>                    
+    <td>2012-08-25 11:11:15</td>
+    <td>未操作</td>
+</tr>
+
+<tr>
+	<td style="text-align:center;"><input name="id[]" type="checkbox" value="15678137"></td>
+	<td>15678137</td>
+	<td>331017</td>
+	<td>陈怜薇</td>
+	<td>4399_mhfx_1</td>
+	<td>24121</td>
+	<td>大气血包</td>
+	<td>非绑定</td>
+	<td>背包</td>
+	<td>使用消耗</td>                    
+	<td>2012-08-25 11:11:18</td>
+	<td>未操作</td>
+</tr>
+
+</tbody>
+<tfoot>
+<tr>
+    <td colspan="12">
+    <input name="check" type="button" id="check" value="反选"/>
+    <input name="uncheck" type="button" id="uncheck" value="取消选中"/>
+    <select onchange="op(this.value);">
+		<option value=''>对选中项进行批量处理</option>
+		<option value='' disabled='disabled'>---------</option>
+		<option value='o_1'>恢复物品</option>
+    </select>                    
+    </td>
+</tr>
+</tfoot>
+</table>
+{$page}
+</form>
+
+<script language='javascript'>
+        var f = document.getElementById('mainForm');
+        function op(act){
+            if('o_1' == act){if(confirm('你确定要恢复选中玩家的物品吗？')){f.action='#'; f.method='post'; $(f).submit();}}
+
+        }
+        
+        $(function () {  
+            $("#uncheck").click(function () {//全不选  
+                $("#mainForm :checkbox").attr("checked", false);  
+            });  
+
+            $("#check").click(function () {//反选  
+                $("#mainForm :checkbox").each(function () {  
+                    $(this).attr("checked", !$(this).attr("checked"));  
+                });  
+            });  
+        }); 
+    </script>
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

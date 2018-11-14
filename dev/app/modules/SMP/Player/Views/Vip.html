@@ -1,0 +1,66 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" name="kw_rname" value="" style="width:80px;" class="txtinput"/>
+                角色pkey：<input type="text" name="kw_gkey" value="" style="width:80px;" class="txtinput"/>
+                <{include file="Views/Widget/SearchButton.html"}>
+
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>玩家key</th>
+                <th>角色名字</th>
+                <th>vip状态 0 未激活 1 体验vip 2 正式vip</th>
+                <th>vip等级</th>
+                <th>体验vip等级</th>
+                <th>vip成长值</th>
+                <th>vip过期时间</th>
+                <th>vip过期时间(秒)</th>
+                <th>体验vip过期时间</th>
+                <th>体验vip过期时间(秒)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['pkey']}</td>
+                <td>{$g['nickname']}</td>
+                <td>{$g['vip_state']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','vip_state')}">修改</a> </td>
+                <td>{$g['vip_lv']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','vip_lv')}">修改</a> </td>
+                <td>{$g['vip_tem_lv']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','vip_tem_lv')}">修改</a> </td>
+                <td>{$g['vip_up_value']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','vip_up_value')}">修改</a> </td>
+                <td><{echo getDateStr($g['vip_expire_time'])}></td>
+                <td>{$g['vip_expire_time']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','vip_expire_time')}">修改</a> </td>
+                <td><{echo getDateStr($g['vip_tem_expire_time'])}></td>
+                <td>{$g['vip_tem_expire_time']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','vip_tem_expire_time')}">修改</a> </td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+        <script type="text/javascript">
+            function setval(a, pkey,file) {
+                var t = prompt('请输入');
+                if (t === null)return false;
+                a.href='?m=SMP_Player_Vip&act=update&file=' + file+ '&value=' + t + '&pkey=' + pkey;
+                return true;
+            }
+        </script>
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

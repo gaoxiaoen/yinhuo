@@ -1,0 +1,68 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家pkey: <input type="text" name="kw_pkey" value="{$params['pkey']}" style="width:100px;" class="txtinput"/>&nbsp;
+                角色名称：<input type="text" name="kw_rname" value="{$params['nickname']}" style="width:80px;" class="txtinput"/>&nbsp;
+                物品gkey：<input type="text" name="kw_gkey" value="{$params['gkey']}" style="width:180px;" class="txtinput"/>&nbsp;
+            </select>
+                <{include file="Views/Widget/SearchButton.html"}>
+
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>玩家key</th>
+                <th>角色名</th>
+                <th>类型ID</th>
+                <th>gkey</th>
+                <th>物品名称</th>
+                <th>强化级别</th>
+                <th>装备星级</th>
+                <th>洗练属性</th>
+                <th>镶嵌属性</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['pkey']}</td>
+                <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$g['pkey']}">{$g['nickname']}</a></td>
+                <td>{$g['goods_id']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[gkey]}','goods_id')}">修改</a> </td>
+                <td>{$g['gkey']}</td>
+                <td>{$g['goodsname']}</td>
+                <td>{$g['stren']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[gkey]}','stren')}">修改</a>  </td>
+                <td>{$g['star']}  <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[gkey]}','star')}">修改</a>  </td>
+                <td>{$g['wash_attrs']}
+                    <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[gkey]}','wash_attrs')}">修改</a></td>
+                <td>{$g['gemstone_groove']}
+                    <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[gkey]}','gemstone_groove')}">修改</a> </td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+        <script type="text/javascript">
+            function setval(a, gkey,file) {
+                var t = prompt('请输入');
+                if (t === null)return false;
+                a.href='?m=SMP_Player_Equip&act=update&file=' + file+ '&value=' + t + '&gkey=' + gkey;
+                return true;
+            }
+        </script>
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

@@ -1,0 +1,41 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+
+        </div>
+    </div>
+    <div id="content">
+        <{include file="Views/Widget/Tab.html"}>
+        <div id="js_tab_currentChart_body" style="width:100%">
+            <p>{$chart_lv}</p>
+        </div>
+
+        <table class="dtable tablesorter" style="width:85%;">
+            <thead>
+            <tr>
+                <th>等级</th>
+                <th>等级人数</th>
+                <th>当前等级分布比率<img src="imgs/q.gif" title="当前等级人数 / 所有玩家人数"/></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['lv']}</td>
+                <td>{$d['num']}</td>
+                <td>{$d['rate']}%</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

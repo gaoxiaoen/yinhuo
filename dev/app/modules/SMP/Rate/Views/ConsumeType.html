@@ -1,0 +1,120 @@
+<{include file="Views/Header.html"}>
+<style type="text/css">
+	.table_row {
+		height:30px;
+	}
+</style>
+<div id='center_col'>
+	<div id='sections-header'>
+		<div class="overview">
+		</div>
+		<div class="search">
+			<form method="post">
+			 分类 : <select name="type" class='btn2' style="margin-top:0px;">  
+			        		<option value=''>全部</option>
+			            <{foreach $type as $k=>$v}>
+			             	<option value="{$k}" <{if $k == $params['select_type']}>selected<{/if}> >{$v}</option>
+			            <{/foreach}>
+			        </select> 　
+			时间 :  <{include file="Views/Widget/SearchTime.html"}>
+			</form>
+		</div>
+	</div>
+	<div id='content' style="overflow-x:auto;">
+		<{if isset($count_data) && !empty($count_data)}>
+			<div style="width:9999px;">
+			<{foreach $count_data as $t=>$list}>
+				<table style="border:1px solid #ddd;width:500px;float:left;margin-right:15px;">
+					<thead>
+						<tr class="table_row"><th colspan="5">{$t}(<{echo getWeekDate($t);}>)消费项目统计</th></tr>
+						<tr class="pinkbg table_row">
+							<th>消费项目</td>
+							<th>消费人数</td>
+							<th>消费次数</td>
+							<th>消费金额</td>
+							<th>消费比例</td>
+						</tr>
+					</thead>
+					<tbody>
+						<{if !empty($list)}>
+							<{foreach $list as $cid=>$v}>
+								<tr class="table_row jq_tbody_row" cate_id="{$v['cid']}">
+									<td style="text-decoration:underline;font-weight:800;"><span  onclick="show_consume_detail(this)">{$v['cate_name']}</span></td>
+									<td class="hl0">{$v['account']}</td>
+									<td class="hl0">{$v['num']}</td>
+									<td class="hl0">{$v['currency']}</td>
+									<td class="hl1"><{echo $v['currency'] > 0 ? round($v['currency'] / $total_data[$t]['currency'],4) * 100 : 0; }> % </td>
+								</tr>
+								<!-- <{if is_array($v['detail']) && !empty($v['detail'])}>-->
+				                    <{foreach $v['detail'] as $d}>
+				                    <tr style="display:none;color:grey;" class="jq_detail_rows" cate_id="{$v['cid']}" addreason="{$d['addreason']}">
+				                        <td><{echo $consume_type_data[$d['addreason']] ? $consume_type_data[$d['addreason']] : '未定义类型_'.$d['addreason']}></td>
+				                        <td>{$d['account']}</td>
+				                        <td>{$d['num']}</td>
+				                        <td>{$d['currency']}</td>
+				                        <td><{echo $d['currency'] ? round($d['currency'] / $total_data[$t]['currency'],4) * 100 : 0; }> %</td>
+				                    </tr>
+				                    <{/foreach}>
+				                    <!--<{/if}>-->
+							<{/foreach}>
+						<{else}>
+							<tr class="table_row hl0"><td colspan="5">暂无数据...</td></tr>
+						<{/if}>
+					</tbody>
+				</table>
+			<{/foreach}>
+		<{else}>
+			<div class="hl0">暂无数据...</div>
+		<{/if}>
+		</div>
+	</div>
+</div>
+<{include file="Views/Footer.html"}>
+<script type="text/javascript">
+	// 消费点分类移入移出效果
+	$('.jq_tbody_row').hover(function(){
+		var obj = $(this);
+		$('.jq_tbody_row').each(function(){
+			if($(this).attr('cate_id') == obj.attr('cate_id'))
+				$(this).css('background-color','yellow');
+		});
+	},function(){
+		var obj = $(this);
+		$('.jq_tbody_row').each(function(){
+			if($(this).attr('cate_id') == obj.attr('cate_id'))
+				$(this).css('background-color','');
+		});
+	});
+
+	// 消费点详情移入移出背景效果
+    $('.jq_detail_rows').hover(function(){
+        var obj = $(this);
+        $('.jq_detail_rows').each(function(){
+            if($(this).attr('addreason') == obj.attr('addreason'))
+                $(this).css('background-color','#33CCFF');
+        });
+    },function(){
+        var obj = $(this);
+        $('.jq_detail_rows').each(function(){
+            if($(this).attr('addreason') == obj.attr('addreason'))
+                $(this).css('background-color','');
+        });
+    });
+    //  消费点详情点击显示和隐藏效果
+    function show_consume_detail (obj) {
+        var cid = $(obj).parent().parent().attr("cate_id");
+        $('.jq_detail_rows').each(function(){
+            var cate_id = $(this).attr('cate_id');
+            if(cid == cate_id) {
+                var display_state = $(this).css('display');
+                if(display_state == 'none') {
+                    $(this).css('display','');
+                }else{
+                    $(this).css('display','none');
+                }
+            }/*else{
+                $(this).css('display','none'); //开启则只能同时打开一个消费点详情
+            }*/
+        });
+    }
+</script>

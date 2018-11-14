@@ -1,0 +1,87 @@
+<{include file="Views/Header.html"}>
+<script type="text/javascript" src="js/jquery.extend.js?v={$CONFIG['ver']}"></script>
+<div id="center_col">
+    <div class="overview">
+        <input class="redbtn" style="padding: 6px; width:100px " type="button" name="add_activity" value="所有活动类型" onclick="location.href='?m=SMP_Act_Activity&do=allActivityType';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input class="redbtn" style="padding: 6px; width:100px " type="button" name="add_sub_activity" value="添加子活动" onclick="location.href='?m=SMP_Act_Activity&do=addActivity&type={$selecttype}';">
+        <input class="btn" style="padding: 6px; width:100px " type="button" name="reload_activity" value="重载活动" onclick="location.href='?m=SMP_Act_Activity&do=reloadActivity&type={$selecttype}';">
+    </div>
+    <div class="search">
+        <form method="post" action="?m=SMP_Act_Activity&do=Activity">
+            类型：
+            <input type="text" id="makeupCo" class="txtinput" onfocus="setfocus(this)" oninput="setinput(this);" placeholder="请选择或输入" value="{$selectname}" /> 
+            <select name="type" id="typenum" class="select_search" onchange="changeF(this)" size="10">  
+                <{foreach $alltype as $info}>
+                    <option value="{$info['type']}" <{if $info['type'] == $selecttype}>selected<{/if}>>{$info['name']}</option>
+                <{/foreach}>
+            </select>
+            活动子ID：
+            <select name='act_id' style="width:120px;" >
+                <option value="{$selectactid}">{$selectactidname}</option>
+                <option value="0">全部</option>
+                <{foreach $allactid as $actid}>
+                <option value="{$actid['act_id']}">{$actid['act_id']}</option>
+                <{/foreach}>
+            </select>
+            <td>
+                <input type="submit" name="submit" class="btn" value="查询" />
+            </td>
+        </form>
+    </div>
+    <div id="sections-header">
+    </div>
+
+<div id="js_tab_allNotice_body" style="width:100%;display:block">
+    <form id="mainForm" method="post" >
+        <table class="dtable tablesorter" style="width:100%;table-layout:fixed;word-break:break-all">
+            <thead>
+            <tr>
+                <th style="width:80px;">子活动名称</th>
+                <th style="width:40px;">活动子ID</th>
+                <th width="10%">服务器组</th>
+                <th style="width:15%;white-space:nowrap">单服</th>
+                <th style="width:30%;white-space:nowrap">内容格式</th>
+                <th width="5%">开服第几天开始</th>
+                <th width="5%">开服第几天结束</th>
+                <th width="8%">开始时间</th>
+                <th width="8%">结束时间</th>
+                <th >操作</th>
+            </tr>
+            </thead>
+            <tbody valign="top">
+            <{foreach $act_data['data'] as $act}>
+            <tr>
+                <td>{$act['id_desc']}</td>
+                <td>{$act['act_id']}</td>
+                <td>
+                    <{foreach $act['gp_id'] as $key}>
+                    <input type="checkbox" name="gpcheckbox[]" value="{$key}" checked >{$group[$key]['name']}
+                    <{/foreach}>
+                </td>
+                <td><?php echo implode('|',$act['gs_id']);?></td>
+                <td>{$act['content']}</td>
+                <td>{$act['open_day']}</td>
+                <td>{$act['end_day']}</td>
+                <td>{$act['start_time']}</td>
+                <td>{$act['end_time']}</td>
+                <td>
+                    <a href="?m=SMP_Act_Activity&do=editActivity&type={$act['type']}&act_id={$act['act_id']}">编辑</a>&nbsp;|
+                    <a href="?m=SMP_Act_Activity&do=delActivity&type={$act['type']}&act_id={$act['act_id']}" onclick="return confirm('确认要删除这个活动吗？');">删除</a>&nbsp;|
+                </td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="11">
+                    注：新加、修改过的活动需要点击重载后才能生效
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        {$page}
+    </form>
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

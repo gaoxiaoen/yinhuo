@@ -1,0 +1,81 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" style="width:90px;" name="role_name" class="txtinput"/>
+                备注：<input type="text" style="width:200px;" name="meno" class="txtinput"/>
+      <input class="redbtn" style="padding: 6px " type="button" name="add" value="增加 " onclick="location.href='?m=SMP_Player_Staff';">
+      <input class="btn" style="padding: 6px " type="button" name="delete" value="删除 " onclick="location.href='?m=SMP_Player_Staff';">
+      <span style="color:red"> ×角色名称和备注，每行一个，并一一对应</span>    
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+
+<tr>
+  <th>玩家key</th>
+  <th>角色名</th>
+  <th>服标识</th>
+  <th>当前等级</th>
+  <th>后台邮件发送元宝</th>
+  <th>当前身上元宝</th>
+  <th>市场挂售消耗元宝</th>
+  <th>市场挂售获得元宝</th>
+  <th>邮件发送元宝</th>
+  <th>转移元宝总额</th>
+  <th>充值</th>
+  <th>监控时间</th>
+  <th>备注</th>
+</tr>
+</thead>
+<tbody>
+
+<tr >
+  <td>28860</td>
+  <td><a href="?m=SMP_Player_List">轩辕真败</a></td>
+  <td>4399_mhfx_1</td>
+  <td>70</td>
+  <td><a href="?m=SMP_Log_Mail">20</a></td>
+  <td>1</td>
+  <td><a href="?m=SMP_Log_Sell">49912</a></td>
+  <td>13296</td>
+  <td><a href="?m=SMP_Log_Mail">0</a></td>
+  <td>49912</td>
+  <td><a href="?m=SMP_Charge_List">19329</a></td>
+  <td>2012-08-16 19:05:15</td>
+  <td></td>
+</tr>
+
+<tr >
+  <td>330693</td>
+  <td><a href="?m=SMP_Player_List">王昌斐</a></td>
+  <td>4399_mhfx_1</td>
+  <td>70</td>
+  <td><a href="?m=SMP_Log_Mail">40</a></td>
+  <td>995191</td>
+  <td><a href="?m=SMP_Log_Sell">0</a></td>
+  <td>0</td>
+  <td><a href="?m=SMP_Log_Mail">0</a></td>
+  <td>0</td>
+  <td><a href="?m=SMP_Charge_List">0</a></td>
+  <td>2012-08-16 19:05:15</td>
+  <td></td>
+</tr>
+
+
+</tbody>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

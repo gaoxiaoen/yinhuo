@@ -1,0 +1,57 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家KEY</th>
+                <th>玩家昵称</th>
+                <th>操作类型 1 购买 2 免费刷新 3 消费刷新 4 登陆过期刷新 5 凌晨5点刷新</th>
+                <th>幸运值</th>
+                <th>购买次数列表</th>
+                <th>当前商品列表</th>
+                <th>免费刷新次数（已使用）</th>
+                <th>消耗刷新次数（已使用）</th>
+                <th>上次刷新时间</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['pname']}</td>
+                <td>{$d['type']}</td>
+                <td>{$d['lucky']}</td>
+                <td>{$d['buy_times_list']}</td>
+                <td>{$d['cur_id_list']}</td>
+                <td>{$d['free_refresh_times']}</td>
+                <td>{$d['cost_refresh_times']}</td>
+                <td><{echo getDateStr($d['refresh_time'])}></td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

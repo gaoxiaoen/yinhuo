@@ -1,0 +1,172 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+      日期：<{include file="Views/Widget/SearchTime.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<{include file="Views/Widget/Tab.html"}>
+
+<div id="js_tab_goodStatistics_body">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+  <th>物品ID</th>
+  <th>物品名称</th>
+  <th>总出售(数量)</th>
+  <th>总出售(元宝)</th>
+  <th>今日出售(数量)</th>
+  <th>昨天出售(数量)</th>
+  <th>今日出售(元宝)</th>
+  <th>昨天出售(元宝)</th>
+</tr>
+</thead>
+<tbody>
+
+
+<tr>
+
+  <td>32524</td>
+  <td>中级灵力丹</td>
+  <td>94 (0%)</td>
+  <td>1880 (0%)</td>
+  <td>0 (0%)</td>
+  <td>0 (0%)</td>
+  <td>0 (0%)</td>
+  <td>0 (0%)</td>
+  
+</tr>
+<tr>
+
+  <td>32403</td>
+  <td>VIP半年卡</td>
+  <td>91782 (1.35%)</td>
+  <td>1282696 (3.35%)</td>
+  <td>0 (0%)</td>
+  <td>0 (0%)</td>
+  <td>0 (0%)</td>
+  <td>0 (0%)</td>
+</tr>
+
+</tbody>
+</table>
+{$page}
+</div>
+
+<div id="js_tab_goldStatistics_body" style="display:none">
+
+<table class="dtable tablesorter" width="50%">
+    <tr >
+      <td style="font-weight:bold;" colspan="5">总物品统计</td>
+    </tr>
+    <tr >
+      <td style="font-weight:bold;">总购买玩家数</td>
+      <td style="font-weight:bold;">商城总购买次数</td>
+      <td style="font-weight:bold;">商城购买总元宝数</td>
+      <td style="font-weight:bold;">平均每人购买次数</td>
+      <td style="font-weight:bold;">平均每人购买元宝</td>
+    </tr>
+    <tr>
+      <td>19230</td>
+      <td>634747</td>
+      <td>39200903</td>
+      <td>33.01</td>
+      <td>2038.53</td>
+    </tr>
+  </table>
+
+<table style="width:100%">
+  <tr>
+    <td valign="top"> 
+      <table class="dtable tablesorter" style="width:100%">
+          <tr><td style="font-weight:bold;" colspan="6">单个物品统计</td></tr>
+            <tr>
+             <td style="font-weight:bold;">物品名称</td>
+             <td style="font-weight:bold;">购买玩家数</td>
+             <td style="font-weight:bold;">购买数量</td>
+             <td style="font-weight:bold;">购买次数</td>
+             <td style="font-weight:bold;">购买元宝数（百分比）</td>
+             <td style="font-weight:bold;">平均购买元宝数</td>
+           </tr>
+       <tbody>
+    <tr >
+      <td onclick="shoplog(16001)" style="cursor:pointer;" id="item_16001">月夕时装·真武女</td>
+      <td>21</td>
+      <td>21</td>
+      <td>21</td>
+      <td>18648&nbsp;（0.05%）</td>
+      <td>888</td>
+    </tr>
+    <tr>
+      <td onclick="shoplog(16000)" style="cursor:pointer;" id="item_16000">龙骧时装·真武男</td>
+      <td>41</td>
+      <td>42</td>
+      <td>42</td>
+      <td>37296&nbsp;（0.1%）</td>
+      <td>909.66</td>
+    </tr>
+  </tbody>
+</table>
+</td>
+  <td valign="top">
+    <table class="dtable tablesorter" style="width:100%">
+        <tr >
+          <td style="font-weight:bold;" colspan="4"><span style="color:red">+6强化保护符</span> <span style="color:#369">2012-08</span> 每日统计</td>
+        </tr>
+        <tr >
+          <th style="font-weight:bold;">日期</th>
+          <th style="font-weight:bold;">购买玩家数</th>
+          <th style="font-weight:bold;">购买次数</th>
+          <th style="font-weight:bold;">购买总元宝数</th>
+        </tr>
+      <tbody id="shoplog">
+        <tr>
+          <td>2012-08-20</td>
+          <td>1</td>
+          <td>7</td>
+          <td>105</td>
+        </tr>
+        <tr>
+          <td>2012-08-15</td>
+          <td>2</td>
+          <td>2</td>
+          <td>30</td>
+        </tr>
+      </tbody>
+     </table>
+    </td>
+  </tr>
+</table>
+</div>
+
+<script language="javascript">
+$(document).ready(function() {
+/*
+*获取物品的统计信息
+*/
+function shoplog(item_id){
+    $('#itemone').text($("#item_"+item_id).text());
+    $('#shoplog').empty();
+    $.getJSON('#',{'item_id':item_id},function(data){
+        var str = '';
+        $.each(data,function(i,item){
+            str = ' <tr> <td>'+item['days']+'</td> <td>'+item['rid_num']+'</td> <td>'+item['times']+'</td><td>'+item['gold_item']+'</td></tr>';
+            $('#shoplog').append(str);
+        });
+    });
+}
+});
+</script>
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

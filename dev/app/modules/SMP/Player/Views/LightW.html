@@ -1,0 +1,57 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" name="kw_rname" value="" style="width:80px;" class="txtinput"/>
+                角色pkey：<input type="text" name="kw_pkey" value="" style="width:80px;" class="txtinput"/
+            </select>
+                <{include file="Views/Widget/SearchButton.html"}>
+
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>角色名字</th>
+                <th>玩家key</th>
+                <th>光武id</th>
+                <th>当前等级</th>
+                <th>当前经验</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['nickname']}</td>
+                <td>{$g['pkey']}</td>
+                <td>{$g['light_weapon_id']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','{$g[light_weapon_id]}','light_weapon_id')}">修改</a> </td>
+                <td>{$g['level']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','{$g[light_weapon_id]}','level')}">修改</a>  </td>
+                <td>{$g['exp']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','{$g[light_weapon_id]}','exp')}">修改</a> </td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+        <script type="text/javascript">
+            function setval(a, pkey,light_weapon_id,file) {
+                var t = prompt('请输入');
+                if (t === null)return false;
+                a.href='?m=SMP_Player_LightW&act=update&file='+file + '&light_weapon_id=' + light_weapon_id +'&value=' + t + '&pkey=' + pkey;
+                return true;
+            }
+        </script>
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

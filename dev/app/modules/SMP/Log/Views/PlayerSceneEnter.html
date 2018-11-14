@@ -1,0 +1,70 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                场景名称：<select style='height:25px;width:150px;' name='kw_scene_id'>
+                                <option value=''>全部</option>
+                            <{foreach $scene_info as $sid=>$sname}>
+                                <option value="{$sid}" <{if $sid == $req_params['kw_scene_id']}>selected<{/if}>>{$sname}</option>
+                            <{/foreach}>
+                          </select>
+                副本类型：<input type="text" name="kw_dun_type" value="{$req_params['kw_dun_type']}" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>场景ID</th>
+                <th>场景名称</th>
+                <th>当日进入次数</th>
+                <th>玩家名</th>
+                <th>玩家key</th>
+                <th>玩家区服</th>
+                <th>注册渠道</th>
+                <th>注册时间</th>
+                <th>当日充值额</th>
+                <th>当日等级</th>
+                <th>当日战力</th>
+                <th>当日为止累计充值额度</th>
+                <th>当日VIP等级</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['time']}</td>
+                <td>{$d['scene_id']}</td>
+                <td>{$d['scene_name']}</td>
+                <td>{$d['cnt']}</td>
+                <td>{$d['pname']}</td>
+                <td>{$d['pkey']}</td>
+                <td>{$d['sn']}</td>
+                <td>{$d['pf']}</td>
+                <td>{$d['reg_time']}</td>
+                <td>{$d['today_recharge']}</td>
+                <td>{$d['lv']}</td>
+                <td>{$d['cbp']}</td>
+                <td>{$d['recharge']}</td>
+                <td>{$d['vip_lv']}</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

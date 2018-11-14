@@ -1,0 +1,86 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+        向指定玩家发送邮件
+  </div>
+  <div class="search">
+    
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+     <tr>
+        <td>温馨提示：</td>
+        <td><font color="red">平台内部玩家资产申请请移步到平台内部邮件操作，否则不予审核并封号</font></td>
+      </tr>
+      <tr>
+        <td>指定玩家：<Br>（每行一个玩家）</td>
+        <td>
+            角色名称：<textarea name="items[role_name]" cols="15" rows="5" class="txtinput"></textarea>                         
+        </td>
+      </tr>
+      <tr>
+        <td>邮件标题：</td>
+        <td>
+            <input name="items[subject]" value="" size="50" maxlength="100" class="txtinput"/>        </td>
+      </tr>
+      <tr>
+        <td>邮件内容：</td>
+        <td>
+            <textarea name="items[text]" cols="50" rows="3" class="txtinput"></textarea> <br/>注:如需要添加链接,可参考内容: <strong>GM邀请你参加元旦活动,详情请见:&lt;u&gt;&lt;a href="http://g.cn" target="_blank"&gt;http://g.cn&lt;/a&gt;&lt;/u&gt;</strong>
+                    </td>
+      </tr>      
+      <tr>
+        <td>铜钱：</td>
+        <td>
+            <input name="items[coin]" value="0" size="10" maxlength="10" class="txtinput"/>        </td>
+      </tr>           
+      <tr>
+        <td>元宝：</td>
+        <td>
+            <input name="items[gold]" value="0" size="10" maxlength="10" class="txtinput"/>
+        </td>
+      </tr>
+      <tr>
+        <td>绑定铜钱：</td>
+        <td>
+            <input name="items[bind_coin]" value="0" size="10" maxlength="10" class="txtinput"/>
+        </td>
+      </tr>           
+      <tr>
+        <td>绑定元宝：</td>
+        <td>
+          <input name="items[bind_gold]" value="0" size="10" maxlength="10" class="txtinput"/>
+        </td>
+      </tr>      
+      <tr>
+        <td>物品列表：</td>
+        <td>
+         <div>物品名称：<input type="text" id="js_itemname" onkeydown="if(event.keyCode == 13)return false;" class="txtinput"/>
+           <input type="button" value="查询物品信息" onclick="query_item();" class="txtinput"/> &nbsp;<span id="js_qr" style="color:blue;"></span></div>
+           <textarea name="items[item_id]" cols="20" rows="5" class="txtinput"></textarea>
+          &nbsp;格式：物品ID:数量:是否绑定(1:绑定,0:非绑定)，如: 10001:1:1，每行一条数据，用英文格式输入       <br>
+          <font color="red">注意：邮件附件最大数为50件</font>
+        </td>
+      </tr>      
+      <tr>
+        <td>您的真实名称：</td>
+        <td>
+            <input maxlength="25" name="items[real_name]" value="" class="txtinput"/> 请填写您身份证上的姓名，否则不能通过审核，格式如：张三 或 公司简称-张三                    </td>
+      </tr>     
+           <tr>
+       <td></td>
+       <td><input type="submit" name="submit" class="btn" value="提交"  disabled="disabled" />
+         <input type="button" class="btn" value="返回" onclick="location.replace('?m=SMP_GM_Mail');" />
+         <input type="hidden" name="items[id]" value="4802"></td>
+     </tr>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

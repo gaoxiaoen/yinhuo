@@ -1,0 +1,54 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+            共 {$total['num']} 条记录, 总共消耗: <{echo isset($total['total']) ? $total['total'] : 0;}>
+        </div>
+        <div class="search">
+            <form method="post">
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>商城类型</th>
+                <th>物品ID</th>
+                <th>名称</th>
+                <th>数量</th>
+                <th>货币类型</th>
+                <th>单价</th>
+                <th>总消耗</th>
+                <th>占比</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{if $total['num'] > 0 }>
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$shop_type[$d['shop_type']]}</td>
+                <td>{$d['goods_id']}</td>
+                <td>{$goods[$d['goods_id']]}</td>
+                <td>{$d['gnum']}</td>
+                <td>{$money_type[$d['money_type']]}</td>
+                <td>{$d['one_money']}</td>
+                <td>{$d['total']}</td>
+                <td><{echo $total['total'] > 0 ? round($d['total'] / $total['total'], 4)*100 : 0;}>%</td>
+            </tr>
+            <{/foreach}>
+            <{else}>
+            <tr>
+                <td colspan='8'>暂无数据</td>
+            </tr>
+            </tbody>
+            <{/if}>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

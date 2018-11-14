@@ -1,0 +1,81 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  邮件编辑
+  </div>
+  <div class="search">
+  </div>
+</div>
+
+<div id="content">
+<form action="" method="post">
+<table class="dtable tablesorter" style="width:100%;">
+<tbody>
+<tr>
+        <td>温馨提示：</td>
+        <td><span style="color:red">此限发送平台内部邮件，严禁给非内部玩家发送带资产邮件，否则不予审核并封号</span></td>
+      </tr>
+      <tr>
+        <td>指定玩家：<Br>（每行一个玩家）</td>
+        <td>
+                                角色名称：<textarea name="items[role_name]" cols="15" rows="6" class="txtinput"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>邮件标题：</td>
+        <td>
+            <input name="items[subject]" value="内部邮件" readonly="readonly" size="40" maxlength="100" class="txtinput"/>        </td>
+      </tr>
+      <tr>
+        <td>邮件内容：</td>
+        <td>
+            <textarea name="items[text]" cols="40" rows="1" readonly="readonly" class="txtinput">内部邮件</textarea>
+                    </td>
+      </tr>
+      <tr>
+        <td>铜钱：</td>
+        <td><input name="items[coin]" value="0" size="10" maxlength="10" class="txtinput"/></td>
+      </tr>         
+      <tr>
+        <td>元宝：</td>
+        <td><input name="items[gold]" value="0" size="10" maxlength="10" class="txtinput"/></td>
+      </tr>
+      <tr>
+        <td>绑定铜钱：</td>
+        <td><input name="items[bind_coin]" value="0" size="10" maxlength="10" class="txtinput"/></td>
+      </tr>           
+      <tr>
+        <td>绑定元宝：</td>
+        <td><input name="items[bind_gold]" value="0" size="10" maxlength="10" class="txtinput"/></td>
+      </tr>      
+      <tr>
+        <td>物品列表：</td>
+        <td>
+         <div>物品名称：<input type="text" id="js_itemname" onkeydown="if(event.keyCode == 13)return false;" class="txtinput"/>
+           <input type="button" value="查询物品信息" onclick="query_item();" class="btn"/> &nbsp;<span id="js_qr" style="color:blue;"></span></div>
+           <textarea name="items[item_id]" cols="20" rows="5" class="txtinput"></textarea>
+          &nbsp;格式：物品ID:数量:是否绑定(1:绑定,0:非绑定)，如: 10001:1:1，每行一条数据，用英文格式输入       <br>
+          <span style="color:red">注意：邮件附件最大数为50件</span>
+        </td>
+      </tr>      
+      <tr>
+        <td>您的真实名称：</td>
+        <td>
+            <input maxlength="25" name="items[real_name]" value="" class="txtinput"/> 请填写您身份证上的姓名，否则不能通过审核，格式如：张三 或 公司简称-张三                    </td>
+      </tr>     
+      <tr>
+        <td></td>
+        <td><input type="submit" name="submit" class="btn" value="发送" />
+          <input type="button" class="btn" value="返回" onclick="location.replace('#');" />          
+        </td>
+      </tr>   
+</tbody>
+</table>
+</form>
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

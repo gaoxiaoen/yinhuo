@@ -1,0 +1,129 @@
+<{include file="Views/Header.html"}>
+<script type="text/javascript" src="js/jquery.extend.js?v={$CONFIG['ver']}"></script>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                玩家key：<input type="text" name="role_id" value="{$req_params['pkey']}" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="role_name" value="{$req_params['name']}" style="width:80px;" class="txtinput"/>
+                类型：
+                <input type="text" id="makeupCo" class="txtinput" onfocus="setfocus(this)" oninput="setinput(this);" placeholder="请选择或输入" value="<{echo $this->consume_type[$req_params['useType']];}>" /> 
+                <select name="use_type" class="select_search" id="typenum" onchange="changeF(this)" size="10">
+                    <{foreach $this->consume_type as $id =>$name}>
+                    <option value="{$id}" <{if $id === $req_params['useType']}> selected<{/if}>>{$name}</option>
+                    <{/foreach}>
+                </select>  
+                自定义类型：<input type="text" name="use_type2" value="{$req_params['useType2']}" style="width:80px;" class="txtinput"/>
+                日期：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出Excel">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <{include file="Views/Widget/Tab.html"}>
+
+        <table class="dtable tablesorter" style="width:100%;" id="js_tab_gold_log_body">
+            <thead>
+            <tr>
+                <th>玩家key</th>
+                <th>角色名</th>
+                <th>服号</th>
+                <th>平台号</th>
+                <th>涉及元宝</th>
+                <th>操作前绑定元宝</th>
+                <th>操作后绑定元宝</th>
+                <th>操作前元宝</th>
+                <th>操作后元宝</th>
+                <th>备注</th>
+                <th>类型</th>
+                <th>时间</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <{foreach $goldlog as $val}>
+            <tr>
+                <td>{$val['pkey']}</td>
+                <td>{$val['nickname']}</td>
+                <td>{$val['sn']}</td>
+                <td>{$val['pf']}</td>
+                <td>{$val['addgold']} <?php if($val['newbgold'] != $val['oldbgold']) echo "绑定" ?></td>
+                <td>{$val['oldbgold']}</td>
+                <td>{$val['newbgold']}</td>
+                <td>{$val['oldgold']}</td>
+                <td>{$val['newgold']}</td>
+                <td><{echo $this->consume_type[$val['addreason']]}></td>
+                <td>{$val['addreason']}</td>
+                <td><{echo date("Y-m-d H:i:s",$val['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+
+
+        <table class="dtable tablesorter" style="width:100%;display:none;" id="js_tab_bgold_log_body">
+            <thead>
+            <tr>
+                <th>玩家key</th>
+                <th>角色名</th>
+                <th>帐号名</th>
+                <th>服务器标识</th>
+                <th>平台标识</th>
+                <th>等级</th>
+                <th>类型</th>
+                <th>涉及绑定元宝</th>
+                <th>操作前绑定元宝</th>
+                <th>操作后绑定元宝</th>
+                <th>备注</th>
+                <th>时间</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr>
+
+                <td>331259</td>
+                <td>梁痴芹</td>
+                <td>b082019</td>
+                <td>4399_mhfx_1</td>
+                <td>55</td>
+                <td>商城购买</td>
+                <td>-30</td>
+                <td>5450075</td>
+                <td>5450045</td>
+                <td>购买:建帮令x1</td>
+                <td>2012-08-23 10:40:08</td>
+
+            </tr>
+            <tr>
+
+                <td>331015</td>
+                <td>梅一斌</td>
+                <td>lzx</td>
+                <td>4399_mhfx_1</td>
+                <td>60</td>
+                <td>商城购买</td>
+                <td>-999</td>
+                <td>500000</td>
+                <td>499001</td>
+                <td>购买:阴阳造化丹x1</td>
+                <td>2012-08-23 10:15:46</td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

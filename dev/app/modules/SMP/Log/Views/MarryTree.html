@@ -1,0 +1,50 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家KEY</th>
+                <th>玩家昵称</th>
+                <th>升级前等级</th>
+                <th>升级后等级</th>
+                <th>消耗物品ID</th>
+                <th>消耗物品描述</th>
+                <th>消耗物品数量</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['nickname']}</td>
+                <td>{$d['befor_lv']}</td>
+                <td>{$d['after_lv']}</td>
+                <td>{$d['goods_id']}</td>
+                <td>{$d['goods_name']}</td>
+                <td>{$d['goods_num']}</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->

@@ -1,0 +1,61 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家KEY</th>
+                <th>玩家昵称</th>
+                <th>类型</th>
+                <th>使用挂机时间</th>
+                <th>旧等级</th>
+                <th>新等级</th>
+                <th>增加经验</th>
+                <th>增加坐骑经验</th>
+                <th>旧挂机时间</th>
+                <th>新挂机时间</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['nickname']}</td>
+                <td>{$d['state']}</td>
+                <td>{$d['use_time']}</td>
+                <td>{$d['old_lv']}</td>
+                <td>{$d['new_lv']}</td>
+                <td>{$d['add_exp']}</td>
+                <td>{$d['add_mount_exp']}</td>
+                <td>{$d['old_onhook_time']}</td>
+                <td>{$d['new_onhook_time']}</td>
+                <td><{echo getDateStr($d['start_time'])}></td>
+                <td><{echo getDateStr($d['end_time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

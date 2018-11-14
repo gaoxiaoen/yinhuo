@@ -1,0 +1,60 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" name="kw_rname" value="{$params['nickname']}" style="width:80px;" class="txtinput"/>
+                玩家key：<input type="text" name="kw_gkey" value="{$params['gkey']}" style="width:80px;" class="txtinput"/>
+                <{include file="Views/Widget/SearchButton.html"}>
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>玩家key</th>
+                <th>角色名字</th>
+                <th>坐骑key</th>
+                <th>坐骑id</th>
+                <th>星级</th>
+                <th>强化等级</th>
+                <th>骑乘状态</th>
+                <th>战力</th>
+                <th>技能列表</th>
+                <th>属性</th>
+                <th>创建时间</th>
+                <th>来源</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['pkey']}</td>
+                <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$g['pkey']}">{$g['nickname']}</a></td>
+            	<td>{$g['petkey']}</td>
+            	<td>{$g['petid']}</td>
+            	<td>{$g['star']}</td>
+            	<td>{$g['stren']}</td>
+            	<td>{$g['state']}</td>
+            	<td>{$g['cbp']}</td>
+            	<td>{$g['skill_list']}</td>
+            	<td>{$g['attribute']}</td>
+            	<td><{echo getDateStr($g['time'])}></td>
+            	<td><{echo $this->consume_type[$g['res']]}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

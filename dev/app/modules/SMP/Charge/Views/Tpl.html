@@ -1,0 +1,52 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <form method="post">
+    <div id="sections-header">
+        <div class="overview">
+            总充值<img src="imgs/q.gif" title="所有服开服到现在的总充值(RMB)"/>：{$total['charge']}
+        </div>
+        <div class="search">
+            <{include file="Views/Widget/DateType.html"}>
+            最后登录时间：<{include file="Views/Widget/SearchTime.html"}>
+        </div>
+    </div>
+
+    </form>
+    <div id="content">
+        <{include file="Views/Widget/Tab.html"}>
+        <table id="js_tab_data_body" class="dtable tablesorter sortd {sortlist:[[0,1]]}" width="100%">
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>充值人数</th>
+                <th>充值次数</th>
+                <th>ARPU值<img src="imgs/q.gif" title="人民币/充值人数"/></th>
+            </tr>
+            <tr style="font-weight: bold;">
+                <td height="25">总计</td>
+                <td><{echo formatNumber($total['role_num'])}></td>
+                <td><{echo formatNumber($total['c_num'])}></td>
+                <td><{echo $this->getARPU($total['cny'],$total['role_num'])}></td>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $val}>
+            <tr>
+                <td>{$val['ts']}</td>
+                <td><{echo formatNumber($val['role_num'])}></td>
+                <td><{echo formatNumber($val['c_num'])}></td>
+                <td><{echo $this->getARPU($val['cny'],$val['role_num'])}></td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        <div id="js_tab_chart_body" style="display: none;">
+            <p>{$chart1}</p>
+            <p>{$chart3}</p>
+            <p>{$chart2}</p>
+        </div>
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

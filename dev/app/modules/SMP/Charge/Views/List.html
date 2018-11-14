@@ -1,0 +1,151 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                GCID：<input type="text" style="width:90px;" value="{$params['game_channel_id']}" name="game_channel_id" class="txtinput"/>
+                玩家key：<input type="text" style="width:90px;" value="{$params['roleId']}" name="role_id" class="txtinput"/>
+                角色名称：<input type="text" style="width:90px;" value="{$params['roleName']}" name="role_name" class="txtinput"/>
+                账号名称：<input type="text" style="width:90px;" value="{$params['accName']}" name="account_name" class="txtinput"/>
+                单号：<input type="text" style="width:90px;" value="{$params['order']}" name="odd" class="txtinput"/>
+                日期：<{include file="Views/Widget/SearchTime.html"}>
+
+            </form>
+        </div>
+    </div>
+    <div id="content">
+
+        <div style="border-bottom: 1px solid #EBEBEB;margin-bottom: 1.5em;">
+            单服总充值：{$totalfee/100} 总充值人数：{$totalusers} 总充值次数：{$totaltimes} ARPU值：<{if $totalusers > 0}><{echo round($totalfee/10/$totalusers)}><{else}> 0 <{/if}>
+        </div>
+        <{include file="Views/Widget/Tab.html"}>
+
+        <div id="js_tab_charge_body" style='display:{$disp1}'>
+            <table class="dtable tablesorter" style="width:100%">
+                <thead>
+                <tr><td style="font-weight:bold;" colspan="17">充值统计（本列表充值总额：{$calctotalfee/100}，总钻石：{$calctotalfee/10}，总人数：{$calctotalusers}，总次数：{$calctotaltimes}）</td></tr>
+                <tr>
+                    <th class="greybg">统计日期</th>
+                    <th class="pinkbg">当日充值金额</th>
+                    <th class="pinkbg">当日充值钻石数</th>
+                    <th class="pinkbg">当日充值人数</th>
+                    <th class="pinkbg">当日充值次数</th>
+                    <th class="pinkbg">ARPU值</th>
+                    <th class="orangebg">新玩家数</th>
+                    <th class="orangebg">新玩家付费率</th>
+                    <th class="bluebg">老玩家数</th>
+                    <th class="bluebg">老玩家付费率</th>
+                    <th class="greybg">充值日志</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 加上今天的数据-->
+                <tr style="color: #dd4b39">
+                    <td><{echo date("Y-m-d",time())}></td>
+                    <td>{$calctodaydata['total_fee']/100}</td>
+                    <td>{$calctodaydata['total_gold']}</td>
+                    <td>{$calctodaydata['users']}</td>
+                    <td>{$calctodaydata['times']}</td>
+                    <td><{if $calctodaydata['users'] > 0}><{echo round($calctodaydata['total_fee']/100/$calctodaydata['users'],2)}><{else}> 0 <{/if}></td>
+                    <td>{$calctodaydata['chargeNewUsers']}</td>
+                    <td><{echo $calctodaydata['chargeNewRate'] * 100}>%</td>
+                    <td>{$calctodaydata['chargeActUsers']}</td>
+                    <td><{echo $calctodaydata['chargeActRate'] * 100}>%</td>
+                    <td><a href="?m=SMP_Charge_List&detail=1&st=<{echo date("Y-m-d",time())}>&et=<{echo date("Y-m-d",time()+86400)}>" onclick="">查看</a></td>
+                </tr>
+                <{foreach $chargecalc as $val}>
+                <tr >
+                    <td><{echo date("Y-m-d",$val['time'])}></td>
+                    <td>{$val['total_fee']/100}</td>
+                    <td>{$val['total_fee']/10}</td>
+                    <td>{$val['charge_users']}</td>
+                    <td>{$val['charge_times']}</td>
+                    <td><{if $val['charge_users'] > 0}><{echo round($val['total_fee']/100/$val['charge_users'],2)}><{else}> 0 <{/if}></td>
+                    <td>{$val['charge_new_users']}</td>
+                    <td><{echo $val['charge_new_rate']*100}>%</td>
+                    <td>{$val['charge_act_users']}</td>
+                    <td><{echo $val['charge_act_rate']*100}>%</td>
+                    <td><a href="?m=SMP_Charge_List&detail=1&st=<{echo date("Y-m-d",$val['time'])}>&et=<{echo date("Y-m-d",$val['time']+86400)}>" onclick="">查看</a></td>
+                </tr>
+                <{/foreach}>
+
+                </tbody>
+            </table>
+        </div>
+        <div id="js_tab_charge_detail_body" style='display:{$disp2}'>
+            {$charts_charge}
+            <table class="dtable tablesorter" style="width:100%">
+                <thead>
+                <tr >
+                    <td style="font-weight:bold;" colspan="20">充值订单信息(充值订单号:0-8钻石90月卡91终身卡92、93投资计划) <a onclick="change_view()"><span class="greenbg">【收/展】</span></a></td>
+
+                </tr>
+                <tr >
+                    <th style="font-weight:bold;width: 15%">时间</th>
+                    <th style="font-weight:bold;">充值金额</th>
+                    <th style="font-weight:bold;">获得钻石</th>
+                    <th style="font-weight:bold;">角色名</th>
+                    <th style="font-weight:bold;">等级</th>
+                    <th style="font-weight:bold;">状态</th>
+                    <th style="font-weight:bold;">玩家key</th>
+                    <th style="font-weight:bold;">账号名</th>
+                    <th style="font-weight:bold;display: none" class="data_display">CID</th>
+                    <th style="font-weight:bold;display: none" class="data_display">GCID</th>
+                    <th style="font-weight:bold;display: none" class="data_display">服号</th>
+                    <th style="font-weight:bold;display: none" class="data_display">订单号</th>
+                    <th style="font-weight:bold;display: none" class="data_display">充值号</th>
+                    <th style="font-weight:bold;display: none" class="data_display">Gtype</th>
+                    <th style="font-weight:bold;display: none" class="data_display">PID</th>
+                    <th style="font-weight:bold;display: none" class="data_display">FPID</th>
+
+
+
+                </tr>
+                </thead>
+                <tbody id="logcharge">
+                <{foreach $chargelog as $val}>
+                <tr>
+                    <td><{echo date("Y-m-d H:i:s",$val['time'])}></td>
+                    <td>{$val['total_fee']/100}</td>
+                    <td>{$val['total_gold']}</td>
+                    <td>{$val['nickname']}</td>
+                    <td>{$val['lv']}</td>
+                    <td><{if $val['state'] == 0}>已领<{else}><span style="color:red">未领</span><{/if}></td>
+                    <td>{$val['app_role_id']}</td>
+                    <td>{$val['user_id']}</td>
+                    <td style="display: none" class="data_display">{$val['channel_id']}</td>
+                    <td style="display: none" class="data_display">{$val['game_channel_id']}</td>
+                    <td style="display: none" class="data_display">{$val['server_id']}</td>
+                    <td style="display: none" class="data_display">{$val['jh_order_id']}</td>
+                    <td style="display: none" class="data_display">{$val['app_order_id']}</td>
+                    <td style="display: none" class="data_display">{$val['goods_type']}</td>
+                    <td style="display: none" class="data_display">{$val['product_id']}</td>
+                    <td style="display: none" class="data_display">{$val['res_product_id']}</td>
+                </tr>
+                <{/foreach}>
+                <tr><td colspan="20">{$page}</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+
+            function change_view(){
+                $("table th.data_display").toggle();
+                $("table td.data_display").toggle();
+            }
+
+            function chargelog(data){
+                var logdate = data;
+                $.getJSON('?m=SMP_Charge_List&ac=logdate', {'st':logdate}
+                        ,function(f){
+                            $('#logcharge').html(f.msg);
+                        });
+            }
+        </script>
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

@@ -1,0 +1,71 @@
+<{include file="/Views/Header.html"}>
+<div id="center_col">
+  <div id="sections-header">
+    <div class="overview">服务器信息</div>
+  </div>
+  <div id="content">
+    <table cellspacing="0" cellpadding="0" class="datainfo">
+        <tr>
+            <td align="right" width="10%">服号：</td>
+            <td><{echo $CONFIG['game']['sn']}></td>
+        </tr>
+        <tr>
+            <td align="right" width="10%">开服时间：</td>
+            <td><{echo getDateStr($CONFIG['game']['opentime'])}></td>
+        </tr>
+      <tr>
+        <td align="right" width="10%">服务器时间：</td>
+        <td><{echo getDateStr()}></td>
+      </tr>
+        <tr>
+            <td align="right" width="10%">游戏服IP：</td>
+            <td><{echo $CONFIG['game']['ip']}></td>
+        </tr>
+        <tr>
+            <td align="right" width="10%">游戏服端口：</td>
+            <td><{echo $CONFIG['game']['port']}></td>
+        </tr>
+        <tr>
+            <td align="right" width="10%">游戏服通讯：</td>
+            <td><{echo Net::rpc_game_server(gm,update_notice,array()) ? '<strong style="color: red">成功</strong>':'失败'}></td>
+        </tr>
+      <tr>
+        <td align="right" width="10%">时区：</td>
+        <td><{echo $CONFIG['timezone']}></td>
+      </tr>
+      <tr>
+        <td align="right" width="10%">版本号：</td>
+        <td><{echo $CONFIG['ver']}></td>
+      </tr>
+      <tr>
+        <td align="right" width="10%">调试状态：</td>
+        <td><{echo $CONFIG['debug']?'<strong style="color: red">开启</strong>':'关闭'}></td>
+      </tr>
+      <tr>
+        <td align="right">脚本超时时间：</td>
+        <td><{echo ini_get('max_execution_time')}></td>
+      </tr>
+      <tr>
+        <td align="right">显示错误信息：</td>
+        <td><{echo ini_get('display_errors')?'yes':'no'}></td>
+      </tr>
+      <tr>
+        <td align="right">打开远程文件：</td>
+        <td><{echo ini_get('allow_url_fopen')?'yes':'no'}></td>
+      </tr>
+      <tr>
+        <td align="right">自动字符串转义：</td>
+        <td><{echo ini_get('mag ic_quotes_gpc')?'yes':'no'}></td>
+      </tr>
+      <tr>
+        <td align="right">实时字符串转义：</td>
+        <td><{echo ini_get('magic_quotes_runtime')?'yes':'no'}></td>
+      </tr>
+      <tr>
+        <td align="right">磁盘使用：</td>
+        <td>可用空间：<{echo round(@disk_free_space(".")/(1024*1024*1024),2)}>G, 总空间：<{echo round(@disk_total_space(".")/(1024*1024*1024),2)}>G</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<{include file="/Views/Footer.html"}>

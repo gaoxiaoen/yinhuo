@@ -1,0 +1,78 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <script>
+    function check_banip(){
+        if(! (new RegExp('^\\d+\\.\\d+\\.\\d+\\.\\d+$')).test($('#js_ip').val())){
+            alert('IP填写错误');
+            return false;
+        }
+        if($('#js_memo').val().length < 3){
+            alert('原因必需3个字以上');
+            return false;
+        }
+        return true;
+    }
+    </script>
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+      IP: <input type="text" style="width:110px" id="js_ip" name="ip" class="txtinput"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                原因(必填)：<input id="js_memo" type="text" value="" style="width:110px" name="memo" class="txtinput"/>
+      <input class="redbtn" style="padding: 6px; width:80px " type="button" name="refresh" value="添加" onclick="location.href='#';">
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+    <th style="width:20px;"></th>
+    <th style="width:50px;">管理员</th>
+    <th>IP</th>
+    <th>原因</th>
+    <th>封锁时间</th>
+    <th>操作</th> 
+</tr>
+</thead>
+<tbody>
+
+
+<tr >
+    <td><input name="id[]" class="js_ban_id" type="checkbox" value="1"/></td>
+    <td>4399yc</td>
+    <td>180.143.246.56</td>
+    <td>打金工作室，连续创号300个，平均每分钟创号30个以上</td>
+    <td>2012-04-30 14:16:24</td>
+    <td><a href="#">解除</a></td>
+</tr>
+
+<tr >
+    <td><input name="id[]" class="js_ban_id" type="checkbox" value="2"/></td>
+    <td>4399yc</td>
+    <td>123.139.72.229</td>
+    <td>打金工作室</td>
+    <td>2012-04-30 14:21:01</td>
+    <td><a href="#">解除</a></td>
+</tr>
+
+</tbody>
+<tfoot>
+    <tr>
+        <td colspan="6">
+          <input name="sync_del" type="button" onclick="location.href='?mod=sync&act=sync&tab=lockaddr&do=del&'+$('.js_ban_id').serialize().replace(/%5B%5D/, '[]');" value="同步删除" />
+          <input name="sync_edit" type="button" onclick="location.href='?mod=sync&act=sync&tab=lockaddr&do=edit&'+$('.js_ban_id').serialize().replace(/%5B%5D/, '[]');" value="同步添加/编辑" />
+        </td>
+    </tr>
+</tfoot>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

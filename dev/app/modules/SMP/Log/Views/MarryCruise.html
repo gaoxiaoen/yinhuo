@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><{include file="Views/Header.html"}>
+
+        <div id="center_col">
+            <div id="sections-header">
+                <div class="overview">
+                </div>
+                <div class="search">
+                    <form method="post">
+                        <{include file="Views/Widget/ServersId.html"}>
+                        玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                        角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                        时间：<{include file="Views/Widget/SearchTime.html"}>
+                        <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+                    </form>
+                </div>
+            </div>
+            <div id="content">
+                <table class="dtable tablesorter" style="width:100%;">
+                    <thead>
+                    <tr>
+                        <th>男方KEY</th>
+                        <th>男方昵称</th>
+                        <th>女方KEY</th>
+                        <th>女方昵称</th>
+                        <th>婚姻key</th>
+                        <th>唯一key</th>
+                        <th>预约时间</th>
+                        <th>时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <{foreach $data as $d}>
+                    <tr>
+                        <td>{$d['key_boy']}</td>
+                        <td>{$d['nickname_boy']}</td>
+                        <td>{$d['key_girl']}</td>
+                        <td>{$d['nickname_girl']}</td>
+                        <td>{$d['mkey']}</td>
+                        <td>{$d['akey']}</td>
+                        <td>{$d['date']}</td>
+                        <td><{echo getDateStr($d['time'])}></td>
+                    </tr>
+                    <{/foreach}>
+
+                    </tbody>
+                </table>
+                {$page}
+
+            </div>
+        </div>
+        <!-- end center_col  -->
+        <{include file="Views/Footer.html"}></title>
+</head>
+<body>
+
+</body>
+</html>

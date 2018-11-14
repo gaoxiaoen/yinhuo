@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><{include file="Views/Header.html"}>
+
+        <div id="center_col">
+            <div id="sections-header">
+                <div class="overview">
+                </div>
+                <div class="search">
+                    <form method="post">
+                        <{include file="Views/Widget/ServersId.html"}>
+                        玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                        角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                        时间：<{include file="Views/Widget/SearchTime.html"}>
+                        <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+                    </form>
+                </div>
+            </div>
+            <div id="content">
+                <table class="dtable tablesorter" style="width:100%;">
+                    <thead>
+                    <tr>
+                        <th>数据日期</th>
+                        <th>玩家名</th>
+                        <th>玩家KEY</th>
+                        <th>玩家区服</th>
+                        <th>注册渠道</th>
+                        <th>注册时间</th>
+                        <th>等级</th>
+                        <th>战力</th>
+                        <th>当前充值额度</th>
+                        <th>渠道ID/平台ID</th>
+                        <th>当前VIP等级</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <{foreach $data as $d}>
+                    <tr>
+                        <th>{$d['localtime']}</th>
+                        <td>{$d['pname']}</td>
+                        <td>{$d['pkey']}</td>
+                        <td>{$d['sn']}</td>
+                        <td>{$d['pf']}</td>
+                        <td>{$d['reg_time']}</td>
+                        <td>{$d['lv']}</td>
+                        <td>{$d['cbp']}</td>
+                        <td>{$d['money']}</td>
+                        <td>{$d['channel_id']}</td>
+                        <td>{$d['vip_lv']}</td>
+                    </tr>
+                    <{/foreach}>
+
+                    </tbody>
+                </table>
+                {$page}
+
+            </div>
+        </div>
+        <!-- end center_col  -->
+        <{include file="Views/Footer.html"}>
+    </title>
+</head>
+<body>
+
+</body>
+</html>

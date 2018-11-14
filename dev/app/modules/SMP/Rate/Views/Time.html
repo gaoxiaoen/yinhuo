@@ -1,0 +1,23 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+    	<span style="color:red;font-size:10px;">（*请选择日期，今天只能查看到昨天之前的数据，且开服第3天才能计算出流失率）</span>
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+      日期：<{include file="Views/Widget/SearchTimeOne.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+
+{$chart}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

@@ -1,0 +1,85 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header" style="height:60px;">
+  
+    <form method="post" ">
+      <{include file="Views/Widget/ServersId.html"}>
+              玩家key：<input type="text" name="kw_rid" value="" style="width:60px;" class="txtinput"/>
+              角色名：<input type="text" name="kw_username" value="" style="width:80px;" class="txtinput"/>
+              物品ID：<input type="text" name="kw_itemid" value="" style="width:80px;" class="txtinput"/>
+              怪物ID：<input type="text" name="kw_npcid" value="" style="width:250px;" class="txtinput"/>（多个怪物ID搜索，请用英文逗号隔开）
+              品质：<select name='kw_quality' >
+              <option value=''>--</option>
+              <option value='白色'>白色</option>
+              <option value='绿色'>绿色</option>
+              <option value='蓝色'>蓝色</option>
+              <option value='紫色'>紫色</option>
+              <option value='橙色'>橙色</option>
+           </select><br>
+               时间：<{include file="Views/Widget/SearchTime.html"}>
+    </form>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+	<th style="width:20px;"></th>
+	<th>日志编号</th>
+	<th>怪物ID</th>
+	<th>怪物名</th>
+	<th>怪物类型</th>
+	<th>物品ID</th>
+	<th>物品名称</th>
+	<th>物品品质</th>
+	<th>物品种类</th>
+	<th>获得物品玩家key</th>
+	<th>获得物品角色名</th>
+	<th>服务器标识</th>
+	<th>获得时间</th>
+</tr>
+</thead>
+<tbody>
+
+
+<tr>
+	<td><input name="id[]" type="checkbox" style="display:none;"></td>
+	<td>25056651</td>
+	<td>30012</td>
+	<td>玉郞君</td>
+	<td>副本小怪</td>
+	<td>33028</td>
+	<td>许愿币</td>
+	<td><font color='#0066FF'>蓝色</font></td>
+	<td>其它类</td>
+	<td>331264</td>
+	<td>雷辉怡</td>
+	<td>4399_mhfx_1</td>
+	<td>2012-08-25 11:33:44</td>
+</tr>
+
+<tr>
+	<td><input name="id[]" type="checkbox" style="display:none;"></td>
+	<td>25056650</td>
+	<td>30056</td>
+	<td>流萤雪</td>
+	<td>普通BOSS</td>
+	<td>26003</td>
+	<td>一级防御石</td>
+	<td><font color='#00FF00'>绿色</font></td>
+	<td>镶嵌道具</td>
+	<td>331273</td>
+	<td>杜若曼</td>
+	<td>4399_mhfx_1</td>
+	<td>2012-08-25 11:08:00</td>
+</tr>
+
+</tbody>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

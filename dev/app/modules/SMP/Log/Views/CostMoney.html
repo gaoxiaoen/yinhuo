@@ -1,0 +1,49 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                类型：
+                <select name='money_type' >
+                    <option value=''>--</option>
+                    <{foreach $money_type as $id=>$name}>
+                    <option value="{$id}">{$name}</option>
+                    <{/foreach}>
+                </select>
+                <{include file="Views/Widget/ServersId.html"}>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>功能名称</th>
+                <th>消耗的总数</th>
+                <th>消耗比例</th>
+                <th>使用人数</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td><{echo $this->consume_type[$d['addreason']]}></td>
+                <td>{$d['cost']}</td>
+                <td>{$d['cost_pro']}</td>
+                <td>{$d['player']}</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

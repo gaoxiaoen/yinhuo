@@ -1,0 +1,95 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <{include file="Views/Widget/Message.html"}>
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>邮件编号</th>
+                <th>发信人真实姓名</th>
+                <th>邮件类型</th>
+                <th>邮件标题</th>
+                <th>邮件内容</th>
+                <th width="30%">玩家列表</th>
+                <th width="20%">物品列表</th>
+                <th>时间</th>
+                <th>操作</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $d}>
+            <tr class="<{if $d['type'] == 1}> pinkbg <{elseif $d['type'] == 2}> bluebg <{/if}>">
+                <td>{$d['id']}</td>
+                <td>{$d['user']}</td>
+                <td>
+                    <{if '0' === $d['type']}>
+                        <span class='hl3'>指定玩家</span>
+                    <{elseif '1' ===  $d['type']}>
+                        <span class='hl2'>全服邮件</span>
+                    <{else}>
+                        <span class='hl0'>按搜索条件</span>
+                    <{/if}>
+                </td>
+                <td>{$d['title']}</td>
+                <td>{$d['content']}</td>
+                <td>{$d['players']}</td>
+                <td class='goodslist' reason="{$d['reason']}">{$d['goodslist']}</td>
+                <td><{echo date('Y-m-d H:i:s',$d['time']);}></td>
+                <td><span style="color:blue">
+                    <span style="text-decoration:underline;color:red;" onclick="passConfirm({$d['type']},{$d['id']})">通过</span>
+                    &nbsp;|&nbsp;
+                    <a href="?m=SMP_GM_MailReview&act=del&id={$d['id']}" onclick="if(confirm('拒绝将删除当前发送记录')) return true;else return false;">拒绝</a>
+                </span></td>
+            </tr>
+            <{/foreach}>
+
+
+
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>
+<script type="text/javascript">
+$('.goodslist').hover(function(){
+    var reason = $(this).attr('reason');
+    if(reason.length < 1) reason = '未知';
+    layer.tips('原因: '+reason, $(this));
+},function(){
+    layer.closeAll();
+});
+
+function passConfirm(type,id) {
+    layer.confirm('确定通过?',function(){
+        if (1 === type || 2 === type) {
+            layer.closeAll();
+            var num1 =Math.floor(Math.random()*10+1);
+            var num2 =Math.floor(Math.random()*10+1);
+            var total_num = num1 + num2;
+            var num = prompt(num1 +  ' + ' + num2 + ' = ? ')
+            if (num == total_num) {
+                location.href = "?m=SMP_GM_MailReview&act=send&id="+id;
+            }else{
+                layer.msg('验证错误,请重试.');
+            }
+        }else{
+            location.href = "?m=SMP_GM_MailReview&act=send&id="+id;
+        }
+    })
+}
+</script>

@@ -1,0 +1,54 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                日期：<{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th style="width:5%;text-align: center;">日期</th>
+                <th style="text-align: center;">1日</th>
+                <th style="text-align: center;">2日</th>
+                <th style="text-align: center;">3日</th>
+                <th style="text-align: center;">4日</th>
+                <th style="text-align: center;">5日</th>
+                <th style="text-align: center;">6日</th>
+                <th style="text-align: center;">7日</th>
+                <th style="text-align: center;">10日</th>
+                <th style="text-align: center;">15日</th>
+                <th style="text-align: center;">30日</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $day}>
+            <tr>
+                <td><{echo date('Y-m-d',$day['date'])}></td>
+                <td style="text-align: center;">{$day['d1']}</td>
+                <td style="text-align: center;">{$day['d2']}</td>
+                <td style="text-align: center;">{$day['d3']}</td>
+                <td style="text-align: center;">{$day['d4']}</td>
+                <td style="text-align: center;">{$day['d5']}</td>
+                <td style="text-align: center;">{$day['d6']}</td>
+                <td style="text-align: center;">{$day['d7']}</td>
+                <td style="text-align: center;">{$day['d10']}</td>
+                <td style="text-align: center;">{$day['d15']}</td>
+                <td style="text-align: center;">{$day['d30']}</td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        {$page}
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

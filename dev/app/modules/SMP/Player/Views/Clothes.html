@@ -1,0 +1,83 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" name="kw_rname" value="{$params['nickname']}" style="width:80px;" class="txtinput"/>
+                玩家key：<input type="text" name="kw_gkey" value="{$params['gkey']}" style="width:80px;" class="txtinput"/>
+                <{include file="Views/Widget/SearchButton.html"}>
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>玩家key</th>
+                <th>角色名字</th>
+                <th>外观ID</th>
+                <th>是否激活 （0 未激活 1 已激活）</th>
+                <th>是否使用 （0 未使用 1 已使用）</th>
+                <th>强化次数</th>
+                <th>属性</th>
+                <th>过期时间 （秒）</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['pkey']}</td>
+                <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$g['pkey']}">{$g['nickname']}</a></td>
+                <td>{$g['cloth_id']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','cloth_id')}">修改</a> </td>
+                <td><?php
+                    if($g['is_active']  == "1"){
+                        echo "已激活";
+                    }else{
+                        echo "未激活";
+                    }
+                 ?><a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','is_use')}">     修改</a> </td>
+                <td><?php
+                    if($g['is_use']  == "1"){
+                        echo "已使用";
+                    }else{
+                        echo "未使用";
+                    }
+                 ?><a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','is_use')}">     修改</a> </td>
+
+                <td>{$g['boost_times']} <a onclick="if(confirm('确定修改，无法恢复？')){return setval(this, '{$g[pkey]}','boost_times')}">      修改</a> </td>
+                <td>{$g['attrs']}  </td>
+                <td>
+                    <?php
+                    if($g['is_active']== "1" and $g['fade_time']== "0"){
+                        echo "永久";
+                    }else if($g['is_active']== "1"){
+                        echo getDateStr($d['fade_time']);
+                    }else {
+                        echo $d['fade_time'];
+                    }
+                 ?> </td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+        <script type="text/javascript">
+            function setval(a, pkey,file) {
+                var t = prompt('请输入');
+                if (t === null)return false;
+                a.href='?m=SMP_Player_Mount&act=update&file=' + file+ '&value=' + t + '&pkey=' + pkey;
+                return true;
+            }
+        </script>
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

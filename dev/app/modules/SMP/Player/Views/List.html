@@ -1,0 +1,280 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class='overview'>
+            
+        </div>
+        <div class="search">
+            <form method="post">
+                 排序规则: 
+                 <select name='kw[order_sort]' class='btn2' style="margin:0px;">
+                     <option value='1'>降序</option>
+                     <option value='2' <{if $kw['order_sort'] == 2}>selected<{/if}>>升序</option>
+                 </select>
+                 <select name='kw[order_column]' class='btn2' style="margin:0px;">
+                     <option value='1'>注册时间</option>
+                     <option value='2' <{if $kw['order_column'] == 2}>selected<{/if}>>等级</option>
+                     <option value='3' <{if $kw['order_column'] == 3}>selected<{/if}>>VIP等级</option>
+                     <option value='4' <{if $kw['order_column'] == 4}>selected<{/if}>>钻石</option>
+                     <option value='5' <{if $kw['order_column'] == 5}>selected<{/if}>>金币</option>
+                     <option value='6' <{if $kw['order_column'] == 6}>selected<{/if}>>在线时间</option>
+                     <option value='7' <{if $kw['order_column'] == 7}>selected<{/if}>>最后登陆时间</option>
+                 </select>
+                玩家key：<input type="text" name="kw[id]" value="{$kw[id]}" style="width:100px;" class="txtinput"/>
+                角色名称：<input type="text" name="kw[name]" value="{$kw[name]}" style="width:70px;" class="txtinput"/>
+                帐号名称：<input type="text" name="kw[account]" value="{$kw[account]}" style="width:170px;" class="txtinput"/>
+                日期 [ 日在线时长 ] : <input name="kw[online_ts]" type="text" class="txtinput js_ts" id="js_st" value="<{echo getDateStr($kw['online_ts'],'Y-m-d 00:00:00')}>" />
+                状态：
+                <select name='kw[status]' >
+                <option value=''></option>
+                <option value='0' <{if $kw[status] === '0'}> selected='selected' <{/if}>>正常</option>
+                <option value='1' <{if $kw[status] === '1'}> selected='selected' <{/if}>>封号</option>
+                <option value='2' <{if $kw[status] === '2'}> selected='selected' <{/if}>>禁言</option>
+                </select>
+                <select name='kw[stime]'>
+                    <option value='0' <{if $kw[stime] === '0'}> selected='selected' <{/if}>> -- </option>
+                    <option value='1' <{if $kw[stime] === '1'}> selected='selected' <{/if}>>注册时间:</option>
+                    <option value='2' <{if $kw[stime] === '2'}> selected='selected' <{/if}>>登陆时间:</option>
+                </select>
+                <{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出Excel">
+            </form>
+        </div>
+    </div>
+    <{if isset($columnsArr) && !empty($columnsArr)}>
+    <div class="overview" style="border-bottom: 1px solid #dcdcdc;width:98.5%;padding-bottom:13px;">
+            <div><input type="button" value="全选/全空" id="checkall" isChecked="0">　<input type="button" value="已选数量" id="count">　<input type="button" value="收/展" id="folder"></div>
+            <div style="display: none;" id="selectcheck" isShow='0'>
+            可选字段 :
+            <{foreach $columnsArr as $v}>
+            <label><input name="{$v['id']}" type="checkbox" <{if in_array($v['id'],$columnInfoArr['id'])}> checked <{/if}>></label>{$v['name']}&nbsp;&nbsp;
+            <{/foreach}>
+            <input type="button" id='submit' class="btn" value="生成新方案">
+            </div>
+    </div>
+    <{/if}>
+    <div id="content">
+        <{if isset($msg) && $msg['msg']}>
+        <div class="<{echo $msg['error']?'error':'success'}>" style="margin-top:6%;">
+            <pre><{echo is_array($msg['msg']) ? implode("\n",$msg['msg']) : $msg['msg']}></pre>
+        </div>
+        <script type="text/javascript">
+            setTimeout(function(){
+                $('.success').remove();
+                $('.error').remove();
+            },3000);
+        </script>
+        <{/if}>
+        <form id="mainForm" method="post">
+            <table class="dtable tablesorter" style="width:100%; word-break:break-all; word-wrap:break-word;">
+                <thead>
+                <tr>
+                    <th style="width:20px;"></th>
+                    <th>玩家key</th>
+                   <{foreach $columnInfoArr['name'] as $v}>
+                       <{if $v == '帐号名称'}>
+                            <th id="roleAccount" pf_gpid='{$pf[0]}' pf_name="{$pf[1]}">{$v}</th>
+                       <{else}>
+                            <th>{$v}</th>
+                        <{/if}>
+                   <{/foreach}>
+                    <th>注册时间</th>
+                    <th>最后登录时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <{foreach $list as $v}>
+                <tr>
+                    <td><input name="id[]" type="checkbox" value="{$v['pkey']}" style="margin: 3px 3px 3px 8px;"></td>
+                    <td>{$v['pkey']}</td>
+                    <{if in_array($columnsArr[0]['id'],$columnInfoArr['id'])}><td><a target="_blank" href="?m=SMP_Player_Info&pkey={$v['pkey']}">{$v['nickname']}</td></a><{/if}>
+                    <{if in_array($columnsArr[1]['id'],$columnInfoArr['id'])}><td><{if $gcInfo[$v['game_channel_id']]}>{$gcInfo[$v['game_channel_id']]} | {$v['game_channel_id']}<{else}>未知 | {$v['game_channel_id']}<{/if}></td><{/if}>
+                    <{if in_array($columnsArr[2]['id'],$columnInfoArr['id'])}><td><{if $v['online'] == 1}>是<{else}>否<{/if}></td><{/if}>
+                    <{if in_array($columnsArr[3]['id'],$columnInfoArr['id'])}><td>{$v['sn']}</td><{/if}>
+                    <!--<{if in_array($columnsArr[4]['id'],$columnInfoArr['id'])}><td>{$v['pf']}</td><{/if}>-->
+                    <{if in_array($columnsArr[5]['id'],$columnInfoArr['id'])}><td class="j_moblieAccount" postfix="@{$v['pf']}@{$v['game_channel_id']}@{$v['accname']}" style="text-decoration:underline">{$v['accname']}</td><{/if}>
+                    <{if in_array($columnsArr[6]['id'],$columnInfoArr['id'])}><td>{$v['realm']}</td><{/if}>
+                    <{if in_array($columnsArr[8]['id'],$columnInfoArr['id'])}><td><?php  global $GCareer; echo $GCareer[$v['career']] ?></td> <{/if}>
+                    <{if in_array($columnsArr[9]['id'],$columnInfoArr['id'])}><td>{$v['lv']}</td><{/if}>
+                    <{if in_array($columnsArr[10]['id'],$columnInfoArr['id'])}><td><{if $v['status'] == 0}>正常<{elseif $v['status'] == 1}><span  style="color:red">封号</span><{elseif $v['status'] == 2}>禁言<{elseif $v['status'] == 3}>封号且禁言<{/if}></td><{/if}>
+                    <{if in_array($columnsArr[11]['id'],$columnInfoArr['id'])}><td><{if isset($player_ban_status[$v['pkey']])}><span  class="jq_ban" time="{$player_ban_status[$v['pkey']]['expire_time']}" style="color:blue"><{echo $player_ban_status[$v['pkey']]['type'] == 1 ? '普通禁言' : '特殊禁言';}></span><{else}>正常<{/if}></td><{/if}>
+                    <{if in_array($columnsArr[12]['id'],$columnInfoArr['id'])}><td><{if $v['gm'] == 0}>普通<{elseif $v['gm'] == 1}><span  style="color:red">新手指导员</span><{/if}></td><{/if}>
+                    <{if in_array($columnsArr[13]['id'],$columnInfoArr['id'])}><td>{$v['gold']}</td><{/if}>
+                    <{if in_array($columnsArr[14]['id'],$columnInfoArr['id'])}><td>{$v['coin']}</td><{/if}>
+                    <!--<{if in_array($columnsArr[15]['id'],$columnInfoArr['id'])}><td>{$v['vip_lv']}</td><{/if}>-->
+                    <{if in_array($columnsArr[16]['id'],$columnInfoArr['id'])}> <td><{echo round($v['total_online_time']/3600,2)}></td><{/if}>
+                    <{if in_array($columnsArr[17]['id'],$columnInfoArr['id'])}> <td><{echo isset($online_data[$v['pkey']]) ? $online_data[$v['pkey']] : 0;}></td><{/if}>
+                    <td>{$v['reg_time']}</td>
+                    <td>{$v['last_login_time']}</td>
+                    <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$v['pkey']}">详细</a></td>
+                </tr>
+                <{/foreach}>
+
+                </tbody>
+
+                <tfoot>
+                <tr>
+                    <td style="text-align:center;">↑</td>
+                    <td colspan="17">
+                        <input name="check" type="button" id="check" value="反选"/>
+                        <input name="uncheck" type="button" id="uncheck" value="取消选中"/>
+
+                        <script language='javascript'>
+                            $(function () {
+                                $("#uncheck").click(function () {//全不选
+                                    $("#mainForm :checkbox").attr("checked", false);
+                                });
+
+                                $("#check").click(function () {//反选
+                                    $("#mainForm :checkbox").each(function () {
+                                        $(this).attr("checked", !$(this).attr("checked"));
+                                    });
+                                });
+                            });
+
+                            var f = document.getElementById('mainForm');
+                            function op(act){
+                                if('o_1' == act){if(confirm('你确定要批量解除新手指导员吗？')){f.action='?m=SMP_Player_List&do=unset_gm'; f.method='post'; $(f).submit();}}
+                                if('o_2' == act){if(confirm('你确定要批量设为新手指导员吗？')){f.action='?m=SMP_Player_List&do=set_gm'; f.method='post'; $(f).submit();}}
+                                if('o_3' == act){if(confirm('你确定要批量封号吗？')){f.action='?m=SMP_Player_List&do=ban'; f.method='post'; $(f).submit();}}
+                                if('o_4' == act){if(confirm('你确定要批量解封吗？')){f.action='?m=SMP_Player_List&do=unban'; f.method='post'; $(f).submit();}}
+                                if('o_5' == act){if(confirm('你确定要批量禁言12小时吗？')){f.action='?m=SMP_Player_List&do=banchat'; f.method='post'; $(f).submit();}}
+                                if('o_6' == act){if(confirm('你确定要批量解除禁言吗？')){f.action='?m=SMP_Player_List&do=unbanchat'; f.method='post'; $(f).submit();}}
+                                if('o_7' == act){if(confirm('你确定要批量踢下线？')){f.action='?m=SMP_Player_List&do=kickoff'; f.method='post'; $(f).submit();}}
+                                if('o_8' == act){if(confirm('你确定要特殊禁言吗？')){f.action='?m=SMP_Player_List&do=sp_banchat'; f.method='post'; $(f).submit();}}
+                                if('o_9' == act){if(confirm('你确定要批量解除特殊禁言吗？')){f.action='?m=SMP_Player_List&do=sp_unbanchat'; f.method='post'; $(f).submit();}}
+                            }
+                        </script>
+
+                        <select onchange="alllock(this);">
+                            <option value=''>对选中项进行批量处理</option>
+                            <option value='o_1'>解除新手指导员</option>
+                            <option value='o_2'>设为新手指导员</option>
+                            <option value='o_3'>封号</option>
+                            <option value='o_4'>解封</option>
+                            <option value='o_5'>禁言</option>
+                            <option value='o_6'>解除禁言</option>
+                            <option value='o_7'>踢除</option>
+                            <option value='o_8'>特殊禁言</option>
+                            <option value='o_9'>解除特殊禁言</option>
+                        </select> <span style="color:red"></span>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+            {$page}
+        </form>
+        <script type="text/javascript">
+         function alllock(data){
+                if(data == undefined || !data) return false;
+                op(data.value);
+//        if(data.selectedIndex == 99999){
+//            op(data.value);
+//        }else{
+//            //批量封号弹窗填写原因对话框
+//            var t = prompt('请输入封号原因', '恶意拉人');
+//            t=$.trim(t);
+//            if(!t)return alert('原因不能为空');
+//            var f = document.getElementById('mainForm');
+//            f.action='#'+encodeURIComponent(t);
+//            f.method='post';
+//            $(f).submit();
+//            return true;
+//        }
+        }
+            //修改字段缓存
+            $('#submit').click(function(){
+                var obj = $("#checkall").parent().next().find('label');
+                var params = []
+                obj.each(function(){
+                    var child = $(this).find('input');
+                    if(child.attr('checked') == 'checked')
+                    {
+                        var ids = child.attr('name');
+                        params.push(ids);
+                    }
+                });
+                if(params.length == 0)
+                {
+                    layer.alert('请勾选1个以上的字段...');
+                }else{
+                    $.post('?m=SMP_Player_List&do=updatecheck',{params:params},function(data){
+                        if(data.status)
+                        {
+                            layer.msg(data.msg);
+                            setTimeout("window.location.href='?m=SMP_Player_List'",2000);
+                        }else{
+                            layer.msg(data.msg);
+                        }
+                    },'json');
+                }
+            });
+            //全选/全空
+            $("#checkall").click(function(){
+                var isChecked = $(this).attr('isChecked');
+                var obj = $(this).parent().next().find('label');
+                obj.each(function(){
+                    if(isChecked == "1")
+                    {
+                        $(this).find('input').attr('checked','checked');
+                        $('#checkall').attr('isChecked','0');
+                    }else{
+                        $(this).find('input').removeAttr('checked');
+                        $('#checkall').attr('isChecked','1');
+                    }  
+                });
+            });
+            //已选项目统计
+            $('#count').click(function(){
+                var num = 0;
+                var obj = $(this).parent().next().find('label');
+                obj.each(function(){
+                    var ischecked = $(this).find('input').attr("checked");
+                    if(ischecked == "checked") num++;
+                });
+                layer.alert("已选项目共 "+num+" 个");
+            });
+            //折叠操作
+            $('#folder').click(function(){
+                var obj = $('#selectcheck');
+                var isShow = obj.attr('isShow');
+                if(isShow == '1')
+                {
+                    $('#selectcheck').hide();
+                    $('#selectcheck').attr('isShow','0');
+                }else{
+                    $('#selectcheck').show();
+                    $('#selectcheck').attr('isShow','1');
+                }    
+            });
+
+            $('.j_moblieAccount').click(function(){
+                var pf_id = $('#roleAccount').attr('pf_gpid').split(',');
+                var pf_name = $('#roleAccount').attr('pf_name').split(',');
+                var postfix = $(this).attr('postfix');
+                var msg = '';
+                var name = '';
+                $.each(pf_id,function(i,v){
+                    name = pf_name[i] ? pf_name[i] : '未知';
+                    v = v ? v : '未知';
+                    msg += name+ ':<br> @'+v+postfix+'<br>';
+                })
+                //layer.tips(msg,this,{time:5000,area:['auto','auto']});
+                layer.alert(msg);
+            });
+
+            $('.jq_ban').hover(function(){
+                var time = $(this).attr('time');
+                layer.tips('过期时间: '+time,$(this));
+            },function(){
+                layer.closeAll();
+            });
+        </script>
+    </div>
+
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

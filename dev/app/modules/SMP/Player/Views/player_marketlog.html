@@ -1,0 +1,47 @@
+<table class="dtable tablesorter" style="width:100%;table-layout:fixed;word-break:break-all">
+	<thead>
+		<tr>
+			<th>{$player_column[0]}</th>
+			<th>{$player_column[1]}</th>
+			<th>{$player_column[2]}</th>
+			<th>{$player_column[3]}</th>
+			<th>{$player_column[4]}</th>
+			<th>{$player_column[5]}</th>
+			<th>{$player_column[6]}</th>
+			<th>{$player_column[7]}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<{if isset($info) && !empty($info)}>
+		<{foreach $info as $v}>
+			<tr>
+				<td>{$v['id']}</td>
+				<td>{$v['pkey']}</td>
+				<td>{$v['nickname']}</td>
+				<td>
+					<{if $v['type'] == 1}>
+					上架
+					<{elseif $v['type'] == 2 }>
+					取回
+					<{elseif $v['type'] == 3 }>
+					重新上架
+					<{elseif $v['type'] == 4 }>
+					购买
+					<{/if}>
+				</td>
+				<td>{$v['goods_id']} | <{if isset($Ggoods[$v['goods_id']])}>{$Ggoods[$v['goods_id']]}<{else}>未知<{/if}></td>
+				<td>{$v['num']}</td>
+				<td>{$v['price']}</td>
+				<td><{echo getDateStr($v['time'])}></td>
+			</tr>
+		<{/foreach}>
+
+		<{else}>
+			<td colspan="8">暂无数据...</td>
+		<{/if}>
+	</tbody>
+</table>
+{$page}
+<script type="text/javascript">
+
+</script>

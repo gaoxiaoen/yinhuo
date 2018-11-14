@@ -1,0 +1,29 @@
+<{if isset($tabs) && is_array($tabs)}>
+<div class="tab_group_headers">
+    <{foreach $tabs as $id=>$val}>
+    <div id="js_tab_{$id}" onclick="return onTabChanged(this);" class="tab_header<{if $val['checked']}> tab_header_selected<{/if}>">{$val['name']}</div>
+    <{/foreach}>
+</div>
+<{/if}>
+<script type="text/javascript">
+    function onTabChanged(div)
+    {
+        if($(div).hasClass('tab_header_selected'))
+            return false;
+        $('.tab_header_selected').each(function(index,ele){
+            $('#'+ele.id+'_body').hide();
+            $(ele).removeClass('tab_header_selected');
+        });
+        $(div).addClass('tab_header_selected');
+        $('#'+div.id+'_body').show();
+        $.cookie('tab_{$MODULE_NAME}', div.id);
+        return true;
+    }
+//    $(document).ready(function(){
+//        var last_tab = $.cookie('tab_{$MODULE_NAME}');
+//        if(last_tab)
+//        {
+//            $('#'+last_tab).click();
+//        }
+//    });
+</script>

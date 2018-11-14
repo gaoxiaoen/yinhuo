@@ -1,0 +1,66 @@
+<{include file="Views/Header.html"}>
+<script type="text/javascript" src="js/jquery.extend.js?v={$CONFIG['ver']}"></script>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                玩家key：<input type="text" name="role_id" value="{$req_params['pkey']}" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="role_name" value="{$req_params['name']}" style="width:80px;" class="txtinput"/>
+                类型：
+                <input type="text" id="makeupCo" class="txtinput" onfocus="setfocus(this)" oninput="setinput(this);" placeholder="请选择或输入" value="<{echo $this->consume_type[$req_params['useType']];}>" />
+                <select name="use_type" class="select_search" id="typenum" onchange="changeF(this)" size="10">
+                    <{foreach $this->consume_type as $id =>$name}>
+                    <option value="{$id}" <{if $id === $req_params['useType']}> selected<{/if}>>{$name}</option>
+                    <{/foreach}>
+                </select>
+                自定义类型：<input type="text" name="use_type2" value="{$req_params['useType2']}" style="width:80px;" class="txtinput"/>
+                日期：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出Excel">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <{include file="Views/Widget/Tab.html"}>
+
+        <table class="dtable tablesorter" style="width:100%;" id="js_tab_gold_log_body">
+            <thead>
+            <tr>
+                <th>玩家key</th>
+                <th>角色名</th>
+                <th>涉及代币</th>
+                <th>操作前代币</th>
+                <th>操作后代币</th>
+                <th>备注</th>
+                <th>类型</th>
+                <th>时间</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <{foreach $goldlog as $val}>
+            <tr>
+                <td>{$val['pkey']}</td>
+                <td>{$val['nickname']}</td>
+                <td>{$val['old_korea_token']}</td>
+                <td>{$val['new_korea_token']}</td>
+                <td>{$val['add_korea_token']}</td>
+                <td><{echo $this->consume_type[$val['addreason']]}></td>
+                <td>{$val['addreason']}</td>
+                <td><{echo date("Y-m-d H:i:s",$val['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+
+
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

@@ -1,0 +1,75 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>　
+                PKEY：<input type="text" name="pkey" value="{$req_params['pkey']}" style="width:120px;" class="txtinput"/>
+                昵称：    <input type="text" name="pname"   value="{$req_params['pname']}"   style="width:120px;" class="txtinput"/>
+                时间：    <input name="st" type="text" class="txtinput js_st" id="js_st" value="<{echo $this->getStartTime()}>" onclick="WdatePicker({dateFmt:'yyyy-M-d'})"/>
+                          &nbsp;<{include file="Views/Widget/SearchButton.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+               <th>PKEY</th>
+               <th>昵称</th>
+               <th>服区</th>
+               <th>注册日期</th>
+               <th>渠道</th>
+               <th>等级</th>
+               <th>VIP等级</th>
+               <th>战力</th>
+               <th>累计充值</th>
+               <th>开孔总数</th>
+               <th>孔位1</th>
+               <th>孔位2</th>
+               <th>孔位3</th>
+               <th>孔位4</th>
+               <th>孔位5</th>
+               <th>孔位6</th>
+               <th>孔位7</th>
+               <th>孔位8</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{if !empty($data)}>
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['pname']}</td>
+                <td>{$d['sn']}</td>
+                <td>{$d['reg_time']}</td>
+                <td>{$d['pf']}</td>
+                <td>{$d['lv']}</td>
+                <td>{$d['vip_lv']}</td>
+                <td>{$d['cbp']}</td>
+                <td>{$d['total_fee']}</td>
+                <td>{$d['pnum']}</td>
+                <td>{$d['pos_1']}</td>
+                <td>{$d['pos_2']}</td>
+                <td>{$d['pos_3']}</td>
+                <td>{$d['pos_4']}</td>
+                <td>{$d['pos_5']}</td>
+                <td>{$d['pos_6']}</td>
+                <td>{$d['pos_7']}</td>
+                <td>{$d['pos_8']}</td>
+            </tr>
+            <{/foreach}>
+            <{else}>
+            <tr><td class="hl0" colspan="18">暂无数据</td></tr>
+            <{/if}>
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

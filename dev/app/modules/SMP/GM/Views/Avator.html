@@ -1,0 +1,56 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="">
+        <div class="platsview">
+            <{foreach $plats as $key=>$plat}>
+            <input type="button" class="btn" value="{$plat['name']}"
+                   onclick="location.href='?m=SMP_GM_Avator&type={$key}'"/>
+            <{/foreach}>
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：
+                <input type="text" name="kw_content" value="{$kw_content}" style="width:70px;" class="txtinput"/>
+                玩家昵称：
+                <input type="text" name="kw_nickname" value="{$kw_nickname}" style="width:70px;" class="txtinput"/>
+                指定服：
+                <input type="text" name="kw_sn" value="{$kw_sn}" style="width:70px;" class="txtinput"/>
+            </select>
+                <{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+
+    <div id="content">
+        <form action="" method="post" id="mainForm">
+            <table class="" style="width: 1200px">
+
+                <tbody>
+                <tr>
+                <{foreach $data as $key => $u}>
+                    <td>
+                        <div style="font-size: 80% ;border: solid 1px #000000"><img src="<{echo $CONFIG['center']['api'].'/images/'.$u['url'] }>" style="width: 100px;height: 100px;">
+                            昵称:{$u['nickname']} <br/>
+                            服号:{$u['sn']}<br/>
+                            等级:{$u['lv']} VIP:{$u['vip_lv']}
+                        </div>
+                    </td>
+                    <{if ($key+1) % 10 == 0}></tr><tr><{/if}>
+                <{/foreach}>
+                </tr>
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+            {$page}
+        </form>
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>
+<script language='javascript'>
+
+</script>

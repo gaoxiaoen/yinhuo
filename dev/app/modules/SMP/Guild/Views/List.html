@@ -1,0 +1,94 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+               帮会ID：<input type="text" name="kw_id" value="" style="width:80px;" class="txtinput"/>
+               帮会名称：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+               帮主名称：<input type="text" name="kw_head_name" value="" style="width:80px;" class="txtinput"/>
+      <{include file="Views/Widget/SearchButton.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+  <th>帮会ID</th>
+  <th>服务器标识</th>
+  <th>帮会名称</th>
+  <th>帮会等级</th>
+  <th>帮主</th>
+
+  <th>升级记录</th>
+  <th>帮会经验</th>
+  <th>帮会人数</th>
+  <th>帮会资金</th> 
+  <th>帮会威望</th>
+  <th>每日维护资金</th>
+  <th>帮会福利</th>
+  <th>帮会神炉</th>
+
+  <th>创建时间</th>
+  <th>操作</th>
+  <th>更新数据</th>
+</tr>
+</thead>
+<tbody>
+
+
+<tr >
+
+  <td>153</td>
+  <td>4399_mhfx_1</td>
+  <td>紙醉金迷</td>
+  <td>31</td>
+  <td>郑巧天</td>
+  <td><a href="?m=SMP_Guild_Grade">查看</a></td>
+  <td>420000</td>
+  <td>50</td>
+  <td>22786</td>
+  <td>0</td>
+  <td>550</td>
+  <td>7</td>
+  <td>5</td>
+  <td>2012-03-11 03:48:30</td>
+
+  <td><a href="?m=SMP_Guild_Member">成员</a> <a href="?m=SMP_Guild_Store">仓库</a> <a href="?m=SMP_Guild_Stoevent">仓库事件</a> <a href="?m=SMP_Guild_Store">贡献事件</a> <a href="?m=SMP_Guild_Skill">帮会技能</a></td>
+  <td><a href="#">更新</a></td>
+</tr>
+
+<tr >
+
+  <td>69</td>
+  <td>4399_mhfx_1</td>
+  <td>倾城丶绝恋</td>
+  <td>30</td>
+  <td>东方水萱</td>
+  <td><a href="?m=SMP_Guild_Grade">查看</a></td>
+  <td>420000</td>
+  <td>40</td>
+  <td>20619</td>
+  <td>0</td>
+  <td>550</td>
+  <td>8</td>
+  <td>5</td>
+  <td>2012-03-09 20:19:48</td>
+
+  <td><a href="?m=SMP_Guild_Member">成员</a> <a href="?m=SMP_Guild_Store">仓库</a> <a href="?m=SMP_Guild_Stoevent">仓库事件</a> <a href="?m=SMP_Guild_Store">贡献事件</a> <a href="?m=SMP_Guild_Skill">帮会技能</a></td>
+  <td><a href="#">更新</a></td>
+</tr>
+
+</tbody>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

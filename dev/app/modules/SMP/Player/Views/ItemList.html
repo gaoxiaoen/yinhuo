@@ -1,0 +1,64 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                角色名称：<input type="text" name="kw_rname" value="{$params['nickname']}" style="width:80px;" class="txtinput"/>
+                物品ID：<input type="text" name="kw_gkey" value="{$params['gkey']}" style="width:80px;" class="txtinput"/>
+                物品位置：<select name='kw_itempos' >
+                <option value=''>-请选择-</option>
+                <option value='1' <{if $params['pos'] == '1'}>selected<{/if}> >身上</option>
+                <option value='2' <{if $params['pos'] == '2'}>selected<{/if}> >背包</option>
+                <option value='3' <{if $params['pos'] == '3'}>selected<{/if}> >宠物身上</option>
+                <option value='4' <{if $params['pos'] == '4'}>selected<{/if}> >已镶嵌</option>
+            </select>
+                <{include file="Views/Widget/SearchButton.html"}>
+
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+
+            <tr>
+                <th>Key</th>
+                <th>物品位置</th>
+                <th>玩家key</th>
+                <th>角色名</th>
+                <th>物品ID</th>
+                <th>物品名称</th>
+                <th>数量</th>
+                <th>来源</th>
+                <th>生成时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['ikey']}</td>
+                <td>{$locatename[$g['location']]}</td>
+                <td>{$g['pkey']}</td>
+                <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$g['pkey']}">{$g['nickname']}</a></td>
+                <td>{$g['item_id']}</td>
+                <td>{$g['goodsname']}</td>
+                <td>{$g['item_num']}</td>
+                <td>{$g['res']}</td>
+                <td>{$g['create_time']}</td>
+                <td><a onclick="if(confirm('确定删除物品将无法恢复？')){this.href='?m=SMP_Player_ItemList&act=del&gkey={$g[ikey]}'}">删除</a></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

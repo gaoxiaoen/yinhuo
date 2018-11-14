@@ -1,0 +1,39 @@
+<table class="dtable tablesorter" style="width:100%;table-layout:fixed;word-break:break-all">
+	<thead>
+		<tr>
+			<th>{$player_column[0]}</th>
+			<th>{$player_column[1]}</th>
+			<th>{$player_column[2]}</th>
+			<th>{$player_column[3]}</th>
+			<th>{$player_column[4]}</th>
+			<th>{$player_column[5]}</th>
+			<th width="15%">{$player_column[6]}</th>
+			<th>{$player_column[7]}</th>
+			<th>{$player_column[8]}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<{if isset($info) && !empty($info)}>
+		<{foreach $info as $v}>
+			<tr>
+				<td>{$v['id']}</td>
+				<td>{$v['pkey']}</td>
+				<td>{$v['nickname']}</td>
+				<td>{$v['goods_id']}</td>
+				<td><?php global $Ggoods; echo $Ggoods[$v['goods_id']]; ?></td>
+				<td><{if isset($v['type'])}>收入<{else}>消耗<{/if}></td>
+				<td><{if isset($v['res'])}><{echo $this->consume_type[$v['res']] ? $this->consume_type[$v['res']] : '未知'}> | {$v['res']}<{else}><{echo $GGoodUseReason[$v['reason']] ? $GGoodUseReason[$v['reason']] : '未知'}> | {$v['reason']}<{/if}></td>
+				<td>{$v['num']}</td>
+				<td><{echo getDateStr($v['time'])}></td>
+			</tr>
+		<{/foreach}>
+
+		<{else}>
+			<td colspan="9">暂无数据...</td>
+		<{/if}>
+	</tbody>
+</table>
+{$page}
+<script type="text/javascript">
+
+</script>

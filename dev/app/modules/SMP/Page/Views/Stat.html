@@ -1,0 +1,95 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+      <{include file="Views/Widget/ServersId.html"}>
+      日期：<{include file="Views/Widget/SearchTime.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+	<th width="70">时   段</th>
+    <th>平台跳转人数</th>
+    <th>到达创<br/>建页人数</th>
+    <th>首次加载<br/>流失率<img src="imgs/q.gif" title="（平台跳转人数 - 到达创建页人数）/ 平台跳转人数"/></th>				                    
+	<th>成功登陆<br/>游戏人数</th>
+    <th>总加载<br/>流失率<img src="imgs/q.gif" title="（平台跳转人数 - 成功登陆游戏人数）/ 平台跳转人数"/></th>
+	<th>已创建<br/>角色人数</th>
+    <th>创建角色<br/>页面流失率<img src="imgs/q.gif" title="（到达创建角色页的人数 - 已创建角色数）/ 到达创建页的人数"/></th> 
+    <th>二次加载<br/>流失率<img src="imgs/q.gif" title="（已创建角色数 - 成功登陆游戏人数）/ 已创建角色数"/></th>    
+    <th>接第一个<br/>任务人数</th>
+    <th>游戏画面<br/>流失率<img src="imgs/q.gif" title="（成功登陆游戏人数 - 接第一个任务人数）/ 成功登陆游戏人数"/></th>
+    <th>完成第一个<br/>任务人数</th>
+    <th>第一个任务<br/>流失率<img src="imgs/q.gif" title="（接第一个任务人数 - 完成第一个任务人数）/ 接第一个任务人数"/></th> 
+</tr>
+</thead>
+<tbody>
+
+
+<tr>
+  <td>总计</td> 
+  <td>286</td>
+  <td>268</td>
+  <td>6.29%</td>
+  <td>230</td>
+  <td>19.58%</td>
+  <td>327</td>
+  <td>0%</td>
+  <td>29.66%</td>
+  <td>143</td>
+  <td>37.83%</td>
+  <td>138</td>
+  <td>3.5%</td>
+  
+</tr>
+<tr>
+
+  <td>2012-08-01</td>
+  <td>12</td>
+  <td>11</td>
+  <td>8.33%</td>
+  <td>9</td>
+  <td>25%</td>
+  <td>11</td>
+  <td>0%</td>
+  <td>18.18%</td>
+  <td>7</td>
+  <td>22.22%</td>
+  <td>7</td>
+  <td>0%</td>
+</tr>
+<tr>
+
+  <td>2012-08-02                          </td>
+  <td>15</td>
+  <td>14</td>
+  <td>6.67%<font color="red">↓</font></td>
+  <td>12</td>
+  <td>20%<font color="red">↓</font></td>
+  <td>23</td>
+  <td>0%</td>
+  <td>47.83%<font color="green">↑</font></td>
+  <td>18</td>
+  <td>0%<font color="red">↓</font></td>
+  <td>18</td>
+  <td>0%</td>
+</tr>
+<tr>
+  <td colspan="13"><span style="color:red;font-size:10px;" >*注：打开游戏页面人数不统计重复刷新的玩家</span></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

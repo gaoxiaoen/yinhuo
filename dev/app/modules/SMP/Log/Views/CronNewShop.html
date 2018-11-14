@@ -1,0 +1,62 @@
+<{include file="Views/Header.html"}>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="{$req_params['kw_key']}" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="{$req_params['kw_name']}" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家KEY</th>
+                <th>玩家昵称</th>
+                <th>商店类型</th>
+                <th>消耗类型</th>
+                <th>物品ID</th>
+                <th>物品名称</th>
+                <th>购买数量</th>
+                <th>单价</th>
+                <th>消耗的总金额</th>
+                <th>折扣</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['pname']}</td>
+                <td>
+                    {$shop_type[$d['shop_type']]}
+                </td>
+                <td>
+                    {$money_type[$d['money_type']]}
+                </td>
+                <td>{$d['goods_id']}</td>
+                <td>{$goods[$d['goods_id']]}</td>
+                <td>{$d['goods_num']}</td>
+                <td>{$d['one_money']}</td>
+                <td>{$d['cost_all_money']}</td>
+                <td>{$d['discount']}%</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

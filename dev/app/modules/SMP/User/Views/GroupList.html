@@ -1,0 +1,32 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview"><input class="redbtn" type="button" name="add" value=" 新增用户组 " onclick="location.href='?m=SMP_User_GroupEdit&show_id=0';" /></div>
+</div>
+
+<div id="content">
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+  <th>名称</th>
+  <th>权限</th>
+  <th>操作</th>
+</tr>
+</thead>
+<tbody>
+<{foreach $list as $group}>
+<tr>
+  <td>{$group['name']}</td>
+  <td>{$group['permissions']}</td>
+  <td><a href="?m=SMP_User_GroupEdit&del_id={$group['id']}" onclick="return confirm('确认要删除这个用户组吗？');">删除</a>&nbsp;|&nbsp;<a href="?m=SMP_User_GroupEdit&show_id={$group['id']}">编辑</a></td>
+</tr>
+<{/foreach}>
+</tbody>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

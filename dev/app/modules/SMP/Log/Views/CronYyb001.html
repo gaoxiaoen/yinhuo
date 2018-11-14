@@ -1,0 +1,67 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput">
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput">
+                过滤的玩家key：<input type="text" name="kw_key_list" value="" style="width:200px;" class="txtinput">
+                过滤的玩家名：<input type="text" name="kw_name_list" value="" style="width:200px;" class="txtinput">
+                是否过滤未充值玩家：<select name="kw_filter_charge" >
+                <option value="0">否</option>
+                <option value="1">是</option>
+            </select>
+                <input name="date_st" type="text" class="txtinput js_st" id="js_st" value="{$date_st}" onFocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss',startDate:'%y-%M-%d 00:00:00'})"/> - <input name="date_et" type="text" class="txtinput js_et" id="js_et" value="{$date_et}" onFocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss',startDate:'%y-%M-%d 23:59:59'})"/>&nbsp;<{include file="Views/Widget/SearchButton.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>时间</th>
+                <th>账号</th>
+                <th>玩家角色名</th>
+                <th>玩家ID</th>
+                <th>玩家区服</th>
+                <th>注册渠道</th>
+                <th>注册时间</th>
+                <th>当日充值额</th>
+                <th>当日等级</th>
+                <th>当日战力</th>
+                <th>当日为止的累计充值</th>
+                <th>当前VIP等级</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['time']}</td>
+                <td>{$d['accname']}</td>
+                <td>{$d['pname']}</td>
+                <td>{$d['pkey']}</td>
+                <td>{$d['sn']}</td>
+                <td>{$d['pf']}</td>
+                <td>{$d['reg_time']}</td>
+                <td>{$d['total_fee']}</td>
+                <td>{$d['lv']}</td>
+                <td>{$d['cbp']}</td>
+                <td>{$d['acc_val']}</td>
+                <td>{$d['vip_lv']}</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

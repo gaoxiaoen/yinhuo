@@ -1,0 +1,78 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家名</th>
+                <th>玩家KEY</th>
+                <th>玩家区服</th>
+                <th>注册渠道</th>
+                <th>注册时间</th>
+                <th>等级</th>
+                <th>战力</th>
+                <th>累计充值</th>
+                <th>当前VIP等级</th>
+                <th>在线时长(分钟)</th>
+                <th>击杀boss数量(世界boss + Boss之家)</th>
+                <th>装备1信息</th>
+                <th>装备2信息</th>
+                <th>装备3信息</th>
+                <th>装备4信息</th>
+                <th>装备5信息</th>
+                <th>装备6信息</th>
+                <th>装备7信息</th>
+                <th>装备8信息</th>
+                <th>装备9信息</th>
+                <th>装备10信息</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pname']}</td>
+                <td>{$d['pkey']}</td>
+                <td>{$d['sn']}</td>
+                <td>{$d['pf']}</td>
+                <td>{$d['reg_time']}</td>
+                <td>{$d['lv']}</td>
+                <td>{$d['cbp']}</td>
+                <td>{$d['total_fee']}</td>
+                <td>{$d['vip_lv']}</td>
+                <td>{$d['total_online_time']}</td>
+                <td>{$d['boss_num']}</td>
+                <td>{$d['1_equip']}</td>
+                <td>{$d['2_equip']}</td>
+                <td>{$d['3_equip']}</td>
+                <td>{$d['4_equip']}</td>
+                <td>{$d['5_equip']}</td>
+                <td>{$d['6_equip']}</td>
+                <td>{$d['7_equip']}</td>
+                <td>{$d['8_equip']}</td>
+                <td>{$d['9_equip']}</td>
+                <td>{$d['10_equip']}</td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

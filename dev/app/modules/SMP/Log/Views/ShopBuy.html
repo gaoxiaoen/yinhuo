@@ -1,0 +1,62 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="" style="width:80px;" class="txtinput"/>
+                商店id：<input type="text" name="kw_shopid" value="" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>玩家key</th>
+                <th>玩家昵称</th>
+                <th>商店id</th>
+                <th>商店类型</th>
+                <th>购买的商店物品编号</th>
+                <th>购买的商店物品数量</th>
+                <th>物品id</th>
+                <th>物品名</th>
+                <th>物品数量</th>
+                <th>货币类型</th>
+                <th>消耗货币数量</th>
+                <th>时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['pkey']}</td>
+                <td>{$d['nickname']}</td>
+                <td>{$d['shopid']}</td>
+                <td><?php  global $GShopType; echo $GShopType[$d['shopid']] ?></td>
+                <td>{$d['shopgoodsid']}</td>
+                <td>{$d['buynum']}</td>
+                <td>{$d['goodsid']}</td>
+                <td><?php  global $Ggoods; echo $Ggoods[$d['goodsid']] ?></td>
+                <td>{$d['goodsnum']}</td>
+                <td><?php  global $GMoneyType; echo $GMoneyType[$d['currency']] ?></td>
+                <td>{$d['money']}</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

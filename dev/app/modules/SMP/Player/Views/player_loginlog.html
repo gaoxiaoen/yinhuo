@@ -1,0 +1,43 @@
+<table class="dtable tablesorter" style="width:100%;table-layout:fixed;word-break:break-all">
+	<thead>
+		<tr>
+			<th>{$player_column[0]}</th>
+			<th>{$player_column[1]}</th>
+			<th>{$player_column[2]}</th>
+			<th>{$player_column[3]}</th>
+			<th>{$player_column[4]}</th>
+			<th>{$player_column[5]}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<{if isset($info) && !empty($info)}>
+		<{foreach $info as $v}>
+			<tr>
+				<td data='{$v['data']}'>{$v['id']}</td>
+				<td>{$v['pkey']}</td>
+				<td>{$v['nickname']}</td>
+				<td><{echo getDateStr($v['time'],'Y-m-d');}></td>
+				<td class="hl2">{$v['login_num']}</td>
+				<td>{$v['online_time']}</td>
+			</tr>
+		<{/foreach}>
+
+		<{else}>
+			<td colspan="6">暂无数据...</td>
+		<{/if}>
+	</tbody>
+</table>
+{$page}
+<script type="text/javascript">
+$('.hl2').hover(function(){
+	var data = $(this).parent().children().attr('data');
+	var arr = data.split('},{');
+	var str = '';
+	$.each(arr,function(i,v){
+		str = str + v + '<br>';
+	});
+	layer.tips(str,$(this),{tips: [3,'#0FA6D8'],time:0});
+},function(){
+	layer.closeAll();
+});
+</script>

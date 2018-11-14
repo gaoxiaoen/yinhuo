@@ -1,0 +1,65 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                玩家key：<input type="text" name="kw_key" value="{$params['kw_key']}" style="width:80px;" class="txtinput"/>
+                角色名：<input type="text" name="kw_name" value="{$params['kw_name']}" style="width:80px;" class="txtinput"/>
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出日志">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>开始时间</th>
+                <th>世界等级</th>
+                <th>房间key</th>
+                <th>玩家pkey</th>
+                <th>玩家名</th>
+                <th>分组</th>
+                <th>排名</th>
+                <th>积分</th>
+                <th>击杀次数</th>
+                <th>助攻次数</th>
+                <th>占领旗子次数</th>
+                <th>物品列表</th>
+                <th>结算时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <{foreach $data as $d}>
+            <tr>
+                <td>{$d['id']}</td>
+                <td><{echo getDateStr($d['open_time'])}></td>
+                <td>{$d['wlv']}</td>
+                <td>{$d['room_key']}</td>
+                <td>{$d['pkey']}</td>
+                <td>{$d['pname']}</td>
+                <td>{$d['pgroup']}</td>
+                <td>{$d['rank']}</td>
+                <td>{$d['score']}</td>
+                <td>{$d['kill_times']}</td>
+                <td>{$d['assist_times']}</td>
+                <td>{$d['cover_times']}</td>
+                <td>{$d['goods_list']}</td>
+                <td><{echo getDateStr($d['time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

@@ -1,0 +1,146 @@
+<div id="center_col">
+    <div id="sections-header">
+        <!-- <div class="overview">
+        </div>
+        <div class="search">
+            <input class="btn" style="padding: 6px " type="button" name="back" value="返回"
+                   onclick="location.href='?m=SMP_Player_List';">
+        </div> -->
+    </div>
+    <div id="content">
+        <form id="mainForm" method="post">
+            <table class="dtable tablesorter" style="width:100%;">
+                <thead>
+                <tr>
+                    <td colspan="16" align="center"><b>角色基本信息</b></td>
+                </tr>
+                </thead>
+                <thead>
+                <tr>
+                    <th>玩家key</th>
+                    <th>服务器编号</th>
+                    <th>渠道号</th>
+                    <th>角色名</th>
+                    <th>等级</th>
+                    <th>钻石</th>
+                    <th>绑定钻石</th>
+                    <th>金币</th>
+                    <th>绑定金币</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{$player['pkey']}</td>
+                    <td>{$player['sn']}</td>
+                    <td>{$login['game_channel_id']}</td>
+                    <td>
+                        {$player['nickname']}&nbsp; <a
+                            href="javascript:;"
+                            onclick="return setval(this, 'nickname');">修改</a>
+                    </td>
+                    <td>{$player['lv']}&nbsp; <a
+                            href="javascript:;"
+                            onclick="return setval(this, 'lv');">修改</a>
+                    </td>
+
+                    <td>{$player['gold']} <a
+                            href="javascript:;"
+                            onclick="return setval(this, 'gold');">修改</a>
+                    </td>
+                    <td>{$player['bgold']} <a
+                            href="javascript:;"
+                            onclick="return setval(this, 'bgold');">修改</a>
+                    </td>
+                    <td>{$player['coin']} <a
+                            href="javascript:;"
+                            onclick="return setval(this, 'coin');">修改</a>
+                    </td>
+                    <td>{$player['bcoin']} <a
+                            href="javascript:;"
+                            onclick="return setval(this, 'bcoin');">修改</a>
+                    </td>
+
+                </tr>
+                <tr><td>注册IP</td><td>最后登录IP</td></tr>
+                <tr><td>{$login['reg_ip']}</td><td>{$login['last_login_ip']}</td></tr>
+                </tbody>
+            </table>
+
+        </form>
+
+        <form id="accountForm" method="post">
+            <table class="dtable tablesorter" style="width:40%;">
+                <thead>
+                <tr>
+                    <td colspan="16" align="center"><b>修改账号(修改账号直接影响登陆)</b></td>
+                </tr>
+                </thead>
+                <thead>
+                <tr>
+                    <th>原账号</th>
+                    <th>新账号</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+
+                    <td>
+                        <a>{$login['accname']}</a>
+                    </td>
+                    <td>
+                        <input type="text" name = "accname"/>
+                    </td>
+                    <td><input type="button" value="修改" onclick="return change_account(this,'accname')" /></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+
+
+        <script type="text/javascript">
+
+            function setval(a, key) {
+                var pkey = $('input[name=pkey]').val();
+                var val = prompt('请输入');
+                if (val === null || val === '' || !pkey) return false;
+                $.post('?m=SMP_Player_Info&act=update',{key:key,val:val,pkey:pkey},function(data){
+                        if (data.state == '1') {
+                            layer.msg(data.msg);
+                            setTimeout(function(){
+                                location.href = '?m=SMP_Player_Info&tab_type=7&pkey='+pkey;
+                            },3000);
+                        }else{
+                            layer.alert(data.msg);
+                        }        
+                },'json');
+            }
+
+            function change_account (a, key) {
+                var pkey = $('input[name=pkey]').val();
+                var val =  $('input[name=accname]').val();
+                if (!val) {
+                    layer.msg('请填写新账号...');
+                    return false;
+                }
+                if (!pkey) {
+                    layer.msg('缺少玩家pkey...');
+                    return false;
+                }
+                $.post('?m=SMP_Player_Info&act=change_account',{key:key,val:val,pkey:pkey},function(data){
+                        if (data.state == '1') {
+                            layer.msg(data.msg);
+                            setTimeout(function(){
+                                location.href = '?m=SMP_Player_Info&tab_type=7&pkey='+pkey;
+                            },3000);
+                        }else{
+                            layer.alert(data.msg);
+                        }        
+                },'json');
+            }
+        </script>
+    </div>
+
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

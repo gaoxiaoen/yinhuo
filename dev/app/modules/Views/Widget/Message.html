@@ -1,0 +1,11 @@
+<{if isset($msg) && $msg['msg']}>
+<div class="<{echo $msg['error']?'error':'success'}>">
+  <pre><{echo is_array($msg['msg']) ? implode("\n",$msg['msg']) : $msg['msg']}></pre></div>
+<{/if}>
+<script>
+  //定时移出提示语
+  setTimeout(function(){
+    $('.success').remove();
+    $('.error').remove();
+  },3000);
+</script>

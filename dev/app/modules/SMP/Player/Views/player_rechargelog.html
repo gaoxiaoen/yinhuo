@@ -1,0 +1,45 @@
+<table class="dtable tablesorter" style="width:100%;table-layout:fixed;word-break:break-all">
+	<thead>
+		<tr>
+			<th width="5%">{$player_column[0]}</th>
+			<th width="5%">{$player_column[1]}</th>
+			<th width="10%">{$player_column[2]}</th>
+			<th width="5%">{$player_column[3]}</th>
+			<th width="5%">{$player_column[4]}</th>
+			<th width="5%">{$player_column[5]}</th>
+			<th width="10%">{$player_column[6]}</th>
+			<th width="16%">{$player_column[7]}</th>
+			<th>{$player_column[8]}</th>
+			<th>{$player_column[9]}</th>
+			<th>{$player_column[10]}</th>
+			<th>{$player_column[11]}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<{if isset($info) && !empty($info)}>
+		<{foreach $info as $v}>
+			<tr>
+				<td>{$v['id']}</td>
+				<td>{$v['channel_id']}</td>
+				<td>{$v['game_channel_id']} | <{echo $gc_info[$v['game_channel_id']] ? $gc_info[$v['game_channel_id']] : '未知';}></td>
+				<td>{$v['server_id']}</td>
+				<td>{$v['app_role_id']}</td>
+				<td>{$v['nickname']}</td>
+				<td>{$v['jh_order_id']}</td>
+				<td>{$v['app_order_id']}</td>
+				<td><{echo $v['total_fee'] >0 ? $v['total_fee'] / 100 :0; }></td>
+				<td><{echo $v['state'] == 1 ? '月卡' : '钻石';}></td>
+				<td>{$v['total_gold']}</td>
+				<td><{echo getDateStr($v['time'])}></td>
+			</tr>
+		<{/foreach}>
+
+		<{else}>
+			<td colspan="12">暂无数据...</td>
+		<{/if}>
+	</tbody>
+</table>
+{$page}
+<script type="text/javascript">
+
+</script>

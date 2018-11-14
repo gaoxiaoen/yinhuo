@@ -1,0 +1,72 @@
+<{include file="Views/Header.html"}>
+<script type="text/javascript" src="js/jquery.extend.js?v={$CONFIG['ver']}"></script>
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+        玩家key：<input type="text" name="role_id" value="" style="width:80px;" class="txtinput"/>
+        角色名：<input type="text" name="role_name" value="" style="width:80px;" class="txtinput"/>
+        类型：
+        <input type="text" class="txtinput" id="makeupCo" onfocus="setfocus(this)" oninput="setinput(this);" placeholder="请选择或输入" value="<{echo $this->consume_type[$usetype];}>" /> 
+        <select name="use_type" id="typenum" class="select_search" onchange="changeF(this)" size="10">  
+            <{foreach $this->consume_type as $id =>$name}>
+             <option value="{$id}" <{if $id === $usetype}> selected<{/if}>>{$name}</option>
+            <{/foreach}>
+        </select>  
+        自定义类型：<input type="text" name="use_type2" value="" style="width:80px;" class="txtinput"/>
+        日期：<{include file="Views/Widget/SearchTime.html"}>
+        <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出Excel">
+    </form>
+  </div>
+</div>
+<div id="content">
+
+<table class="dtable tablesorter" style="width:100%;" id="js_tab_gold_log_body">
+<thead>
+<tr>
+    <th>玩家key</th>
+    <th>角色名</th>
+    <th>服号</th>
+    <th>平台号</th>
+    <th>涉及金币</th>
+    <th>操作前金币</th>
+    <th>操作后金币</th>
+    <th>备注</th>
+    <th>类型</th>
+    <th>时间</th>
+
+</tr>
+</thead>
+<tbody>
+
+
+<{foreach $coinlog as $val}>
+<tr >
+    <td>{$val['pkey']}</td>
+    <td>{$val['nickname']}</td>
+    <td>{$val['sn']}</td>
+    <td>{$val['pf']}</td>
+    <td>{$val['addcoin']} <?php if($val['newbcoin'] != $val['oldbcoin']) echo "绑定" ?> </td>
+    <td>{$val['oldcoin']}</td>
+    <td>{$val['newcoin']}</td>
+    <td><{echo $this->consume_type[$val['addreason']]}></td>
+    <td>{$val['addreason']}</td>
+    <td><{echo date("Y-m-d H:i:s",$val['time'])}></td>
+</tr>
+<{/foreach}>
+
+</tbody>
+<tfoot>
+<tr>
+    <td colspan="14">注：涉及铜钱小于1000不做记录</td>
+</tr>
+</tfoot>
+</table>
+{$page}
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

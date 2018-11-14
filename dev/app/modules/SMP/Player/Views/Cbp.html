@@ -1,0 +1,54 @@
+
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search">
+            <form method="post">
+                <{include file="Views/Widget/ServersId.html"}>
+                <input class="btn" style="padding: 6px; width:80px " type="submit" name="download" value="导出数据">
+            </form>
+        </div>
+    </div>
+    <div id="content">
+        <table class="dtable tablesorter" style="width:100%;">
+            <thead>
+            <tr>
+                <td colspan="23">
+                    人数：<span style='color:blue'>{$count_total}</span>人&nbsp;&nbsp;&nbsp;&nbsp;
+                    总战力：<span style='color:blue'>{$cbp_total}</span>人&nbsp;&nbsp;&nbsp;&nbsp;
+                    平均战力：<span style='color:blue'>{$cbp_per}</span>人&nbsp;&nbsp;&nbsp;&nbsp;
+                    平均等级：<span style='color:blue'>{$lv_per}</span>人&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <th>玩家key</th>
+                <th>角色名</th>
+                <th>vip</th>
+                <th>等级</th>
+                <th>战力</th>
+                <th>上次登陆时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach $data as $g}>
+            <tr>
+                <td>{$g['pkey']}</td>
+                <td><a target="_blank" href="?m=SMP_Player_Info&pkey={$g['pkey']}">{$g['nickname']}</a></td>
+                <td>{$g['vip_lv']}</td>
+                <td>{$g['lv']}</td>
+                <td>{$g['combat_power']}</td>
+                <td><{echo getDateStr($g['last_login_time'])}></td>
+            </tr>
+            <{/foreach}>
+
+            </tbody>
+        </table>
+        {$page}
+
+    </div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

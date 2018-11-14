@@ -1,0 +1,64 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+  </div>
+  <div class="search">
+    <form method="post">
+           统计时间：<{include file="Views/Widget/SearchTime.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<{include file="Views/Widget/Message.html"}>
+<form id="mainForm" method="post">
+<table class="dtable tablesorter" style="width:50%;">
+<thead>
+<tr>
+  <th style="width:30px;">渠道</th>
+  <th style="width:30px;">注册量</th>
+  <th style="width:30px;">充值(rmb)</th>
+</tr>
+</thead>
+<tbody>
+
+<{foreach $qdinfo as $qd}>
+<tr>
+  <td><{if $qdname[$qd['pf']] }> {$qdname[$qd['pf']]} <{else}> {$qd['pf']} <{/if}></td>
+  <td>{$qd['num']}</td>
+  <td>{$qd['charge']}</td>
+
+</tr>
+<{/foreach}>
+
+</tbody>
+
+</table>
+{$page}
+</form>
+<script type="text/javascript">
+    function alllock(data){
+        if(data == undefined || !data) return false;
+        op(data.value);
+//        if(data.selectedIndex == 99999){
+//            op(data.value);
+//        }else{
+//            //批量封号弹窗填写原因对话框
+//            var t = prompt('请输入封号原因', '恶意拉人');
+//            t=$.trim(t);
+//            if(!t)return alert('原因不能为空');
+//            var f = document.getElementById('mainForm');
+//            f.action='#'+encodeURIComponent(t);
+//            f.method='post';
+//            $(f).submit();
+//            return true;
+//        }
+    }
+</script>
+</div>
+
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

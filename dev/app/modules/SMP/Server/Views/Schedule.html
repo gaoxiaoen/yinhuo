@@ -1,0 +1,227 @@
+<{include file="Views/Header.html"}>
+
+<div id="center_col">
+<div id="sections-header">
+  <div class="overview">
+     <span style="font-size:10px;color:red">*开服计划操作时间为每天0:00—18:50</span>
+  </div>
+  <div class="search">
+    <form method="post" action="?m=SMP_Server_Schedule">
+      <{include file="Views/Widget/ServersId.html"}>
+               服务器编号：<input type="text" name="kw[platform_srv_cn]" value="{$kw[platform_srv_cn]}" style="width:80px;" class="txtinput"/>
+               申请状态：<select name='kw[status]' >
+                    <option value=''>--</option>
+                    <option value='1' <{if $kw[status] == 1}> selected="selected" <{/if}>>待审核</option>
+                    <option value='2' <{if $kw[status] == 2}> selected="selected" <{/if}>>通过审核</option>
+                    <option value='3' <{if $kw[status] == 3}> selected="selected" <{/if}>>不通过审核</option>
+                </select>
+                正式开服时间：<{include file="Views/Widget/SearchTime.html"}>
+    </form>
+  </div>
+</div>
+
+<div id="content">
+<{include file="Views/Widget/Tab.html"}>
+
+<div id="js_tab_listSchedule_body">
+<{if $tpye == 1}>
+<{include file="Views/Widget/Message.html"}>
+<{/if}>
+<table class="dtable tablesorter" style="width:100%;">
+<thead>
+<tr>
+  <th>平台标识</th>
+  <th>服务器ID</th>
+  <th>服务器编号</th>
+  <th>服务器名称</th>
+  <th>游戏名称</th>
+  <th>测试开服时间</th>
+  <th>正式开服时间</th>
+  <th>审核状态</th>
+  <th>服务器配置状态</th>
+  <th>备注/未通过原因</th>
+  <th>操作</th>
+</tr>
+</thead>
+<tbody>
+
+<{foreach $list as $v}>
+  <tr >
+    <td>{$v['platform']}</td>
+    <td>{$v['srv_id']}</td>
+    <td>{$v['platform_srv_cn']}</td>
+    <td>{$v['name']}</td>
+    <td>{$v['game_name']}</td>
+    <td>{$v['open_time_test']}</td>
+    <td>{$v['open_time']}</td>
+    <td><{if $v['status'] == 2}><strong><font color='#369'>通过审核</font></strong><{elseif $v['status'] == 3}><strong><font color='#DD4B39'>不通过审核</font></strong><{else}>待审核<{/if}></td>
+    <td><{if $v['srv_status'] == 2}><strong><font color='#369'>配置完毕</font></strong><{else}><strong><font color='#DD4B39'>等待配置</font></strong><{/if}></td>
+    <td>{$v['memo']}</td>
+    <td><{if $v['status'] == 1}><{if $permission !== 1}><span style=" cursor:pointer"><a href="?m=SMP_Server_Schedule&do=audit&id={$v[id]}" onclick="return confirm_audit(this);">审核</a> | <a href="?m=SMP_Server_Schedule&do=reject&id={$v[id]}" onclick="return confirm_reject(this);">拒绝</a> |<{/if}> <a href="?m=SMP_Server_Schedule&do=showedit&id={$v[id]}" >修改</a><{if $permission == 1}> | <a href="?m=SMP_Server_Schedule&do=delete&id={$v[id]}" onclick="return confirm('确认要删除这个开服申请吗？');">删除</a></span><{/if}><{else}>已操作<{/if}></td>
+  </tr>
+<{/foreach}>
+</tbody>
+</table>
+{$page}
+</div>
+
+<div id="js_tab_addSchedule_body" style="display:none">
+<{if $tpye == 2}>
+<{include file="Views/Widget/Message.html"}>
+<{/if}>
+<form action="?m=SMP_Server_Schedule&do=add" method="post" onsubmit="return checkit(this);">
+<table class="dtable tablesorter" style="width:100%;">
+<tr>
+    <td valign="top">平台申请开服区：</td>
+    <td><span style="color:#15C">平台1区一般由厂商填写，如要申请10区，填写示例：10</span><br>
+        <input type="text" name="items[platform_num]" value="" size="20" class="txtinput"/>
+        <input type="hidden" name="items[platform]" value="">
+    </td>
+</tr>
+<tr>
+    <td valign="top">正式开服时间：</td>
+    <td>
+    <span style="color:#15C">一般设置为官方开服时间的前10分钟，格式为: 年-月-日 时:分:秒，如: 2012-03-09 12:50:00</span><br> 
+          时间：<input name="items[st]" type="text" class="txtinput js_st" id="js_st" value="" readonly="true"/>&nbsp;&nbsp;
+    <select name="seltime" id="seltime">
+        <option value="00:00:00">00:00:00</option>
+        <option value="07:50:00">07:50:00</option>
+        <option value="08:50:00">08:50:00</option>
+        <option value="09:50:00">09:50:00</option>
+        <option value="10:50:00">10:50:00</option>
+        <option value="11:50:00">11:50:00</option>
+        <option value="12:50:00">12:50:00</option>
+        <option value="13:50:00">13:50:00</option>
+        <option value="14:50:00">14:50:00</option>
+    </select>&nbsp;&nbsp;
+          自定义时分秒:<input name="diyst" type="text" class="txtinput" />&nbsp;&nbsp; <span style="color:#15C">自定义时分秒格式为: 时:分:秒，如: 12:50:00</span>
+    </td>
+</tr>
+<tr>
+    <td valign="top">服务器名称：</td>
+    <td><span style="color:#15C">服务器名称，也作为页面title</span><br>
+        <input type="text" name="items[name]" value="" size="50" class="txtinput"/>
+    </td>
+</tr>
+<tr>
+    <td valign="top"></td>
+    <td>
+        <input type="submit" name="submit" class="btn" value="提交" />
+        <input type="button" class="btn" value="返回" onclick="history.go(-1);" />
+</td>
+</tr>
+</table>
+</form>
+</div>
+
+<script language='javascript'>
+
+    $(document).ready(function(){ 
+    	
+        if($('#js_tab_addSchedule_body').css('display') == 'block'){
+            $("div.search").hide();
+        }else{
+        	$("div.search").show();
+        }
+        
+        $("div#js_tab_addSchedule").click(function(){
+        	$("div.search").hide();
+        });
+        
+        $("div#js_tab_listSchedule").click(function(){
+        	$("div.search").show();
+        });
+        
+        var msg = [];
+        
+        if(msg.length > 0)
+        {
+            alert(msg.join("\n"));
+            return false;
+        }
+  
+        $("#seltime").change(function(){
+      
+        var st = $("input[name='items[st]']").val().substring(0,10);
+        if(st == ''){
+            alert('请先选择日期时间！');
+            return false;
+        }
+      
+        var seltime = $("#seltime").val();
+            var editTime = st+' '+seltime;
+            $("input[name='items[st]']").val(editTime);
+        });
+      
+      $("input[name='diyst']").blur(function(){
+          var st = $("input[name='items[st]']").val().substring(0,10);
+            if(st == ''){
+                alert('请先选择日期时间！');
+                return false;
+            }
+            
+            var diyst = $("input[name='diyst']").val();
+            var editTime = st+' '+diyst;
+            $("input[name='items[st]']").val(editTime);
+    });
+          
+          
+          
+      $("ul.nolist li").change(function(){
+      var id = $("input[name='gp_id']:checked").val();
+      $("input[name='items[platform]']").val(id);
+     });
+    
+     var cid = $("input[name='gp_id']:checked").val();
+        $("input[name='items[platform]']").val(cid);
+     
+    });
+    
+    function confirm_reject(a){
+        var res = confirm('确认要拒绝这个开服申请吗？');
+        if(res){
+            var memo = prompt('请填写拒绝原因','');
+            $(a).attr("href",$(a).attr("href")+"&memo="+memo); 
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    function confirm_audit(a){
+        var res = confirm('需要添加到服务器列表吗？');
+        if(res){
+            var status = prompt('请选择服务器状态：0正常，1已停服，2测试，3合服','');
+            $(a).attr("href",$(a).attr("href")+"&addToServerList=1&status="+status); 
+            return true;
+        }else{
+            return true;
+        }
+    }
+    
+    function checkit(form)
+    {
+      var msg = [];
+      if(!$.trim($(form['items[platform_num]']).val()))
+          msg.push('平台申请开服区不能为空！');
+      
+      if($.trim($(form['items[name]']).val()) == '')
+          msg.push('服务器名称不能为空！');
+      
+      if($.trim($(form['items[st]']).val()) == '')
+          msg.push('日期时间不能为空！');
+      
+      if(msg.length > 0)
+      {
+        alert(msg.join("\n"));
+        return false;
+      }
+    }
+    
+   
+</script>
+
+</div>
+</div>
+<!-- end center_col  -->
+<{include file="Views/Footer.html"}>

@@ -1,0 +1,99 @@
+<{include file="Views/Header.html"}>
+<style>
+.player_nav{
+    width:1000px;
+    margin-left:200px;
+    margin-top:50px;
+}
+.player_info{
+    width:480px;
+    float:left;
+    padding:10px;
+}
+.player_topic{
+    margin-left:300px;
+    font-weight:bold;
+    font-size:15px;
+    color:grey;
+}
+</style>
+<div id="center_col">
+    <div id="sections-header">
+        <div class="overview">
+        </div>
+        <div class="search" >
+            <form method="post">
+                <{if $params['tab_type'] == 3}>
+                goods_id: <input class="txtinput" name='goods_id' value="{$params['goods_id']}" style="width:100px;">
+                <{/if}>
+                pkey: <input class="txtinput" name='pkey' value="{$params['pkey']}" style="width:100px;">
+                时间：<{include file="Views/Widget/SearchTime.html"}>
+            </form>
+        </div>
+    </div>
+
+    <div id="content">
+    <{if isset($tabs) && is_array($tabs)}>
+    <div class="tab_group_headers">
+        <{foreach $tabs as $val}>
+        <div class="tab_header<{if $val['type'] == $params['tab_type']}> tab_header_selected<{/if}> j_first_tab" type="{$val['type']}">{$val['name']}</div>
+        <{/foreach}>
+        </div>
+        <{if $params['tab_type'] == '1'}>
+        <label style="float: left;width:200px;">
+            <{if isset($sideColumn) && is_array($sideColumn)}>
+            <{foreach $sideColumn as $val}>
+            <span class="side_column<{if $val['type'] == $params['side_type']}> side_column_selected<{/if}>" type="{$val['type']}">{$val['name']}</span><br/>
+            <{/foreach}>
+            <{else}>
+            <div>暂无相关栏目...</div>
+            <{/if}>
+        </label>
+        <div class='player_nav'>
+        <{/if}>
+        <{if isset($player_column) && !empty($player_column)}>
+            <{if $params['tab_type'] ==1}>
+                <{include file="SMP/Player/Views/player_base.html"}>
+            <{elseif $params['tab_type'] == 2}>
+                <{include file="SMP/Player/Views/player_loginlog.html"}>
+            <{elseif $params['tab_type'] == 3}>
+                <{include file="SMP/Player/Views/player_goodslog.html"}>
+            <{elseif $params['tab_type'] == 4}>
+                <{include file="SMP/Player/Views/player_currencylog.html"}>
+            <{elseif $params['tab_type'] == 5}>
+                <{include file="SMP/Player/Views/player_rechargelog.html"}>
+            <{elseif $params['tab_type'] == 6}>
+                <{include file="SMP/Player/Views/player_marketlog.html"}>
+            <{/if}>
+         <{elseif ($params['tab_type'] == 7)}>
+                <{include file="SMP/Player/Views/Detail.html"}>
+         <{else}>
+            <div>暂无数据...</div>
+         <{/if}>
+        </div>
+    </div>
+    <{else}>
+    <div class="tab_group_headers">暂未设置任何标题...</div>
+    <{/if}>
+</div>
+<{include file="Views/Footer.html"}>
+<script type="text/javascript">
+$('.j_first_tab').click(function(){
+    var tab_type = $(this).attr('type');
+    var pkey = $('input[name=pkey]').val();
+    var side_type = $('.side_column_selected').attr('type');
+    if(!pkey) {layer.msg('pkey不能为空...');exit;}
+    if(tab_type > 1){
+        window.location.href = '?m=SMP_Player_Info&tab_type='+tab_type+'&pkey='+pkey;
+    }else{
+        window.location.href = '?m=SMP_Player_Info&tab_type='+tab_type+'&side_type='+side_type+'&pkey='+pkey;
+    }
+});
+
+$('.side_column').click(function(){
+     var pkey = $('input[name=pkey]').val();
+     var tab_type = $('.tab_header_selected').attr('type');
+     var side_type = $(this).attr('type');
+     window.location.href = '?m=SMP_Player_Info&tab_type='+tab_type+'&side_type='+side_type+'&pkey='+pkey;
+});
+</script>
