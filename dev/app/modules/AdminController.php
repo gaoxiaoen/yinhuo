@@ -45,7 +45,8 @@ class AdminController extends View
         //初始化一些常用的类
         $this->db = DB::getInstance('db_admin');
         $this->db_game = DB::getInstance('db_game');
-        $this->cache = Cache::getInstance();
+		$drive = $CONFIG['cache_driver'];
+        $this->cache = Cache::getInstance($drive,'common');
 
         $this->gameHelper = new SMP_Game_Helper();
         $this->widget = new Widget($this);
